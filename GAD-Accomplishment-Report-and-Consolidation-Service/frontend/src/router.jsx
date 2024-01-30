@@ -1,10 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
+import GuestLayout from "./views/components/GuestLayout";
+import Login from "./views/unauthorizedVieew/Login";
 
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <App />
+        path: 'guest/',
+        element: <GuestLayout />,
+        children:[
+            {
+                path: '',
+                element: <Login />
+            }
+        ]
     }
 ])
 
