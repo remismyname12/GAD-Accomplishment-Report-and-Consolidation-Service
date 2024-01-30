@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
+import GuestLayout from "./views/components/GuestLayout";
 
 const router = createBrowserRouter([
     {
-        path: '/',
-        element: <App />
+        path: 'guest/',
+        element: <GuestLayout />
     }
 ])
 
