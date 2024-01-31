@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { createContext } from 'react'
+import React, { createContext, useContext, useState } from 'react';
 
 const StateContext = createContext({
     currentUser: {},
@@ -7,7 +6,6 @@ const StateContext = createContext({
     setCurrentUser: () => {},
     setUserToken: () => {}
 })
-
 
 export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
@@ -17,7 +15,6 @@ export const ContextProvider = ({ children }) => {
         <StateContext.Provider value = {{
             currentUser,
             setCurrentUser,
-
             userToken,
             setUserToken
         }}>
@@ -26,4 +23,4 @@ export const ContextProvider = ({ children }) => {
     )
 }
 
-export const useStateContext = () => useContext(StateContext)
+export const useStateContext = () => useContext(StateContext);

@@ -1,5 +1,5 @@
 import React from 'react'
-import Submit from '../components/buttons/Submit'
+import Submit from '../../components/buttons/Submit'
 
 export default function Login() {
   return (
