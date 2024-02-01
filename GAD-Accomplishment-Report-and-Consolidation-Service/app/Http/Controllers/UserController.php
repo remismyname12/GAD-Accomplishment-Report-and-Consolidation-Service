@@ -105,4 +105,21 @@ class UserController extends Controller
 
         return response()->json($users);
     }
+
+    public function deleteuser($id)
+    {
+        // Find the user by ID
+        $user = User::withTrashed()
+        ->find($id);
+
+        // Check if the user exists
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+
+        // Force delete the user
+        $user->forceDelete();
+
+        return response()->json(['message' => 'User permanently deleted']);
+    }
 }

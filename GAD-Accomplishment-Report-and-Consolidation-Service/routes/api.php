@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/updateuser/{id}', [UserController::class, 'updateuser']);
     Route::put('/archiveuser/{id}', [UserController::class, 'archiveuser']);
     Route::put('/restoreuser/{id}', [UserController::class, 'restoreuser']);
+    Route::put('/deleteuser/{id}', [UserController::class, 'deleteuser']);
     Route::get('/showusers', [UserController::class, 'index']);
     Route::get('/showarchivedusers', [UserController::class, 'userarchiveindex']);
 
