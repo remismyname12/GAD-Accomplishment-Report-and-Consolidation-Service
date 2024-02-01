@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
-import Submit from '../../../../components/buttons/Submit';
 import axiosClient from '../../../../../axios';
+import WarningButton from '../../../../components/buttons/WarningButton';
 
 export default function DeleteUserModal({selectedUser}) {
   const [error, setError] = useState("");
@@ -30,7 +30,7 @@ export default function DeleteUserModal({selectedUser}) {
 
       {/**BUTTONS */}
       <div className='mt-5'>
-          <Submit label="Delete User" onClick={onSubmit}/*disabled={ your condition }*/ />
+          <WarningButton label="Delete User" onClick={onSubmit}/*disabled={ your condition }*/ />
         </div>
     </div>
   )
