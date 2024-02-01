@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { createContext } from 'react'
+import React, { createContext, useContext, useState } from 'react';
 
 const StateContext = createContext({
     currentUser: {},
@@ -8,16 +7,24 @@ const StateContext = createContext({
     setUserToken: () => {}
 })
 
-
 export const ContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState({});
-    const [userToken, setUserToken] = useState('123');
+    const [userToken, _setUserToken] = useState(localStorage.getItem('TOKEN') || '');
+
+    {/**When LOGIN is SUCCESS, SET the userToken else REMOVE existing tokens */}
+    const setUserToken = (token) => {
+        if (token) {
+          localStorage.setItem('TOKEN', token)
+        } else {
+          localStorage.removeItem('TOKEN')
+        }
+        _setUserToken(token);
+      }
 
     return (
         <StateContext.Provider value = {{
             currentUser,
             setCurrentUser,
-
             userToken,
             setUserToken
         }}>
@@ -26,4 +33,4 @@ export const ContextProvider = ({ children }) => {
     )
 }
 
-export const useStateContext = () => useContext(StateContext)
+export const useStateContext = () => useContext(StateContext);
