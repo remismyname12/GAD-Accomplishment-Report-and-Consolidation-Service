@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserController extends Controller
 {
@@ -62,5 +63,46 @@ class UserController extends Controller
 
         // Return a success response
         return response()->json(['message' => 'User updated successfully']);
+    }
+
+    public function archiveuser($id)
+    {
+        // Find the user by ID
+        $user = User::find($id);
+    
+        // Check if the user exists
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $user->delete();
+    
+        return response()->json(['message' => 'User archived successfully']);
+    }
+
+    public function restoreuser($id)
+    {
+        // Find the user by ID
+        $user = User::withTrashed()
+        ->find($id);
+    
+        // Check if the user exists
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $user->restore();
+    
+        return response()->json(['message' => 'User Restored successfully']);
+    }
+
+    public function userarchiveindex()
+    {
+        $users = User::onlyTrashed()
+        ->get();
+
+        return response()->json($users);
     }
 }

@@ -3,6 +3,7 @@ import GuestLayout from "./views/unauthorizedView/main_views/GuestLayout";
 import AddUser from "./views/authorizedView/admin/AddUser";
 import ManageUsers from "./views/authorizedView/admin/ManageUsers";
 import AdminLayout from "./views/authorizedView/AdminLayout";
+import ArchivedUser from "./views/authorizedView/admin/ArchivedUser";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,11 @@ const router = createBrowserRouter([
             {
                 path: 'manageusers',
                 element: <ManageUsers />
+            },
+
+            {
+                path:'archiveduser',
+                element: <ArchivedUser />
             }
         ]
     },

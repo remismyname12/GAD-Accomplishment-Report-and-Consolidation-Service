@@ -28,8 +28,6 @@ export default function EditUserModal({ selectedUser }) {
       });
   };
 
-  console.log(selectedUser);
-
   return (
     <>
       {/**For ERROR handling */}

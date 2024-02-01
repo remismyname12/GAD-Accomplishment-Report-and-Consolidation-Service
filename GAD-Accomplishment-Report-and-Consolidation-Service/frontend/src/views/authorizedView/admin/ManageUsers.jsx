@@ -45,8 +45,9 @@ export default function ManageUsers() {
         }
         
         // For User Archive
-        const handleArchiveClick = (ev) => {
+        const handleArchiveClick = (selected_user) => {
             setIsArchiveModalOpen(true)
+            setSelectedUser(selected_user)
         }
 
   return (
@@ -105,7 +106,9 @@ export default function ManageUsers() {
         >
             <div>
                 <ArchiveUserModal
-                 closeModal={() => setIsArchiveModalOpen(false)}/>
+                 closeModal={() => setIsArchiveModalOpen(false)}
+                 selectedUser={selectedUser}
+                 />
             </div>
         </ReactModal>
     </>
