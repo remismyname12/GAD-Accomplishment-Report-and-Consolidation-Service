@@ -6,7 +6,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
-  { name: 'Team', href: '#', current: false },
+  { name: 'Manage Users', to: '/admin/manageusers'},
   { name: 'Add User', to: '/admin/adduser'},
   { name: 'Calendar', href: '#', current: false },
 ]
@@ -15,11 +15,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DefaultLayout() {
+export default function AdminLayout() {
     const { userToken } = useStateContext();
 
     if(!userToken){
-        return <Navigate to='/guest' />
+        return <Navigate to='/' />
     }
 
     console.log('User Token', userToken)
