@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from 'react'
 import axiosClient from '../../../axios';
-import { ArrowLeftStartOnRectangleIcon } from '@heroicons/react/24/solid';
+import { ArrowLeftStartOnRectangleIcon, TrashIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import RestoreUserModal from './components/RestoreUserModal';
+import DeleteUserModal from './components/ManageUser/DeleteUserModal';
 
 export default function ArchivedUser() {
     const [filterText, setFilterText] = useState(''); //for search
@@ -10,6 +11,7 @@ export default function ArchivedUser() {
     const [users, setUsers] = useState([]); 
     const [selectedUser, setSelectedUser] = useState('')
     const [isRestoreUserModalOpen, setIsRestoreUserModalOpen] = useState(false);
+    const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
 
     useEffect(() => {
         fetchCurriculum();
@@ -41,6 +43,12 @@ export default function ArchivedUser() {
         setSelectedUser(selected_user)
     }
 
+    // For User RESTOREUSER
+    const handleDeleteUserClick = (selected_user) => {
+        setIsDeleteUserModalOpen(true)
+        setSelectedUser(selected_user)
+    }
+
   return (
     <>
     <div className="table-container overflow-y-auto">
@@ -65,6 +73,9 @@ export default function ArchivedUser() {
                                 <button onClick={() => handleRestoreUserClick(users)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
+                                <button onClick={() => handleDeleteUserClick(users)}>
+                                    <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                                </button>
                               </td>
                             </tr>
                             ))}
@@ -81,6 +92,20 @@ export default function ArchivedUser() {
             <div>
                 <RestoreUserModal
                  closeModal={() => setIsRestoreUserModalOpen(false)}
+                 selectedUser={selectedUser}
+                 />
+            </div>
+        </ReactModal>
+
+        {/** Modal For User ARCHIVE */}                
+        <ReactModal
+            isOpen={isDeleteUserModalOpen}
+            onRequestClose={() => setIsDeleteUserModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <DeleteUserModal
+                 closeModal={() => setIsDeleteUserModalOpen(false)}
                  selectedUser={selectedUser}
                  />
             </div>
