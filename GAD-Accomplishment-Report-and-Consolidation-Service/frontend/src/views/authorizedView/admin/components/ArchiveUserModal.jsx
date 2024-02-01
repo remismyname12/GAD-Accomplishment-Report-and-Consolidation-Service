@@ -28,7 +28,7 @@ export default function ArchiveUserModal({selectedUser}) {
 
       {/**BUTTONS */}
       <div className='mt-5'>
-          <Submit label="Add User" onClick={onSubmit}/*disabled={ your condition }*/ />
+          <Submit label="Archive User" onClick={onSubmit}/*disabled={ your condition }*/ />
         </div>
     </div>
   )
