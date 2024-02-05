@@ -8,8 +8,6 @@ import axiosClient from '../../axios';
 const navigation = [
   { name: 'Home', href: '#', current: false },
   { name: 'Manage Users', to: '/admin/manageusers'},
-  { name: 'Add User', to: '/admin/adduser'},
-  { name: 'Archived User', to: '/admin/archiveduser'},
 ]
 
 function classNames(...classes) {

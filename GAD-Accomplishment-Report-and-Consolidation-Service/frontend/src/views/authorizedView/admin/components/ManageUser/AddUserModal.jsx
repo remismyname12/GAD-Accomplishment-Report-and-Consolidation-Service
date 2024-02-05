@@ -2,7 +2,7 @@ import { React, useState} from 'react'
 import Submit from '../../../../components/buttons/Submit'
 import axiosClient from '../../../../../axios'
 
-export default function AddUser() {
+export default function AddUserModal() {
     const [error, setError] = useState("");
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');

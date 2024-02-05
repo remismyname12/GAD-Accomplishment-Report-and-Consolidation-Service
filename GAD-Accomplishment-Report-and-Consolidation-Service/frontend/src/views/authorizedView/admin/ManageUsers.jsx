@@ -4,6 +4,9 @@ import { PencilIcon, ArchiveBoxArrowDownIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import EditUserModal from './components/Modals/EditUserModal';
 import ArchiveUserModal from './components/Modals/ArchiveUserModal';
+import AddUser from './components/ManageUser/AddUserModal';
+import ArchivedUser from './components/ManageUser/ArchivedUser';
+import NeutralButton from '../../components/buttons/NeutralButton';
 
 export default function ManageUsers() {
 
@@ -11,8 +14,12 @@ export default function ManageUsers() {
 
     const [users, setUsers] = useState([]); 
     const [selectedUser, setSelectedUser] = useState('')
+
+    //For Modals
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
+    const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+    const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
 
         useEffect(() => {
             fetchCurriculum();
@@ -53,6 +60,16 @@ export default function ManageUsers() {
   return (
     <>
         <div className="table-container overflow-y-auto">
+
+          <div>
+            <button>
+              <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
+            </button>
+            <button>
+              <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
+            </button>
+          </div>
+
             <table className='border-solid border-2 border-sky-500'>
                 <thead className='border-solid border-2 border-sky-500'>
                     <tr>
@@ -84,6 +101,32 @@ export default function ManageUsers() {
             </table>
         </div>
 
+        {/** Modal For Archived User List */}
+        <ReactModal
+            isOpen={isArchivedUserModalOpen}
+            onRequestClose={() => setIsArchivedUserModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <ArchivedUser
+                 closeModal={() => setIsArchivedUserModalOpen(false)}
+                 />
+            </div>
+        </ReactModal>
+
+        {/** Modal For Add User */}
+        <ReactModal
+            isOpen={isAddUserModalOpen}
+            onRequestClose={() => setIsAddUserModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <AddUser
+                 closeModal={() => setIsAddUserModalOpen(false)}
+                 />
+            </div>
+        </ReactModal>
+        
         {/** Modal For User EDIT */}
         <ReactModal
             isOpen={isEditModalOpen}
