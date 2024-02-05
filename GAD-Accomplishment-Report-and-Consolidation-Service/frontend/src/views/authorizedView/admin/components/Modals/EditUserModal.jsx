@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
-import Submit from '../../../components/buttons/Submit';
-import axiosClient from '../../../../axios';
+import Submit from '../../../../components/buttons/Submit';
+import axiosClient from '../../../../../axios';
 
 export default function EditUserModal({ selectedUser }) {
   const [error, setError] = useState("");
@@ -63,7 +63,7 @@ export default function EditUserModal({ selectedUser }) {
 
         {/**BUTTONS */}
         <div className='mt-5'>
-          <Submit label="Add User" /*disabled={ your condition }*/ />
+          <Submit label="Edit User" /*disabled={ your condition }*/ />
         </div>
       </form>
     </>
