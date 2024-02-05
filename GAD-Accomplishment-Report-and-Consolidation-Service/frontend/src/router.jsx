@@ -1,9 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import GuestLayout from "./views/unauthorizedView/main_views/GuestLayout";
-import AddUser from "./views/authorizedView/admin/components/ManageUser/Modals/AddUserModal";
-import ManageUsers from "./views/authorizedView/admin/ManageUsers";
 import AdminLayout from "./views/authorizedView/AdminLayout";
-import ArchivedUser from "./views/authorizedView/admin/components/ManageUser/ArchivedUser";
+import ManageUsers from "./views/authorizedView/admin/ManageUsers";
+import Forms from "./views/authorizedView/admin/Forms";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +18,10 @@ const router = createBrowserRouter([
                 path: 'manageusers',
                 element: <ManageUsers />
             },
+            {
+                path: 'forms',
+                element: <Forms />
+            }
         ]
     },
 ])
