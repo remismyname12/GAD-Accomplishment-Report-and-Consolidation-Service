@@ -13,6 +13,16 @@ return new class extends Migration
     {
         Schema::create('form_employee', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('purpose');
+            $table->string('legal_bases');
+            $table->string('date_of_activity');
+            $table->string('venue');
+            $table->string('participants');
+            $table->string('no_of_target_participants');
+            $table->string('learning_service_providers');
+            $table->string('expected_outputs');
+            $table->string('fund_source');
             $table->timestamps();
         });
     }
