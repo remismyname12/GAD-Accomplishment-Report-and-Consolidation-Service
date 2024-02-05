@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('expenditure_list', function (Blueprint $table) {
             $table->id();
+            $table->string('items');
+            $table->string('per_head_per_day'); // store as COLLECTION
+            $table->string('total');
             $table->timestamps();
         });
     }

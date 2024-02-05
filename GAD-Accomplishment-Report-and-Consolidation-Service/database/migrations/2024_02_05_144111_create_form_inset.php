@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('form_inset', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('purpose');
+            $table->string('legal_bases');
+            $table->string('date_of_LEAD_activity');
+            $table->string('venue');
+            $table->string('participants');
+            $table->string('learning_service_providers');
+            $table->string('expected_outputs');
+            $table->string('fund_source');
             $table->timestamps();
         });
     }

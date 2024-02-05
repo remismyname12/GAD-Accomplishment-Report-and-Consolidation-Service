@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('expenditure_gad', function (Blueprint $table) {
             $table->id();
+            $table->string('expenditure'); //expenditure item name
+            $table->string('actual_expenses');
+            $table->string('attribution');
             $table->timestamps();
         });
     }
