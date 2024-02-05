@@ -75,7 +75,7 @@ class User extends Authenticatable
     */
 
     //FOR GAD ACTIVITES
-        public function gad_activites()
+        public function gad_activities()
         {
             return $this->hasOne(gadActivites::class);
         }
@@ -87,5 +87,7 @@ class User extends Authenticatable
             return $this->hasOne(expenditureSum::class);
         }
     */
+
+    //LEARN COLLECTION FOR PER HEAD PER DAY
 
 }
