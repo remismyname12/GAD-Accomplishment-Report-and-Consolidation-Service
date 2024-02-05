@@ -3,6 +3,7 @@ import { useStateContext } from '../../context/ContextProvider'
 import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import axiosClient from '../../axios';
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
@@ -17,6 +18,15 @@ function classNames(...classes) {
 
 export default function AdminLayout() {
     const { userToken } = useStateContext();
+
+    const logout = (ev) => {
+      ev.preventDefault();
+      axiosClient.post('/logout')
+        .then(res => {
+          setCurrentUser({})
+          setUserToken(null)
+        })
+    };
 
     if(!userToken){
         return <Navigate to='/' />
@@ -136,6 +146,7 @@ export default function AdminLayout() {
                             {({ active }) => (
                               <a
                                 href="#"
+                                onClick={(ev) => logout(ev)}
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                               >
                                 Sign out
