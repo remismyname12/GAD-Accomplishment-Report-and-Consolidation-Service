@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expenditure_list', function (Blueprint $table) {
+        Schema::create('expenditure_inset', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('form_id')->constrained('form_inset')->onDelete('cascade');
             $table->string('items');
             $table->string('per_head_per_day'); // store as COLLECTION
             $table->string('total');
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expenditure_list');
+        Schema::dropIfExists('expenditure_inset');
     }
 };

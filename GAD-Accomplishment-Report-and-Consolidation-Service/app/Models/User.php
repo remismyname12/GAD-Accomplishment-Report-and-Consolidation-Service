@@ -72,6 +72,8 @@ class User extends Authenticatable
         }
 
         MOVE TO FORMS INSTEAD
+        
+        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
     */
 
     //FOR GAD ACTIVITES

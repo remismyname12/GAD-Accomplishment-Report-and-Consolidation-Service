@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('form_employee', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title');
             $table->string('purpose');
             $table->string('legal_bases');
