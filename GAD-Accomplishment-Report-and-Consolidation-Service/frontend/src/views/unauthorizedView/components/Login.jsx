@@ -68,11 +68,11 @@ export default function Login() {
               value={password}
               onChange={ev => setPassword(ev.target.value)}
             />
-        </form>
 
-        <div className='mt-5'>
-          <Submit label="Login" onClick={onSubmit} /*disabled={ your condition }*/ />
-        </div>
+            <div className='mt-5'>
+              <Submit label="Login" onClick={onSubmit} /*disabled={ your condition }*/ />
+            </div>
+        </form>
     </div>
   )
 }
