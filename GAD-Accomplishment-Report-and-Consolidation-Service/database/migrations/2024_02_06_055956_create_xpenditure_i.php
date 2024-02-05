@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('form_research', function (Blueprint $table) {
+        Schema::create('xpenditure_i', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('form_id')->constrained('form_inset')->onDelete('cascade');
+            $table->string('items');
+            $table->string('per_head_per_day'); // store as COLLECTION
+            $table->string('total');
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_research');
+        Schema::dropIfExists('xpenditure_i');
     }
 };
