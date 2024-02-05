@@ -16,19 +16,9 @@ const router = createBrowserRouter([
         element: <AdminLayout />,
         children:[
             {
-                path: 'adduser',
-                element: <AddUser />
-            },
-
-            {
                 path: 'manageusers',
                 element: <ManageUsers />
             },
-
-            {
-                path:'archiveduser',
-                element: <ArchivedUser />
-            }
         ]
     },
 ])
