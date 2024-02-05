@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         $users = [
         [
-            'user_id' => '1',
+            'id' => '1',
             'username' => 'Admin',
             'email' => 'admin@gmail.com',
             'password' => '$2y$10$YOmO1o82p8a05a1lJxxGyeVVfYXEMdKbZQ5Ink9jqIYyYnqJFA2lm',
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
 
         //staff
         [
-            'user_id' => '2',
+            'id' => '2',
             'username' => 'staff',
             'email' => 'staff@gmail.com',
             'password' => '$2y$10$YOmO1o82p8a05a1lJxxGyeVVfYXEMdKbZQ5Ink9jqIYyYnqJFA2lm',
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
 
         //college
         [
-            'user_id' => '3',
+            'id' => '3',
             'username' => 'college',
             'email' => 'college@gmail.com',
             'password' => '$2y$10$YOmO1o82p8a05a1lJxxGyeVVfYXEMdKbZQ5Ink9jqIYyYnqJFA2lm',
