@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
-import Submit from '../../../../components/buttons/Submit';
-import axiosClient from '../../../../../axios';
+import Submit from '../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios';
 
 export default function EditUserModal({ selectedUser }) {
   const [error, setError] = useState("");

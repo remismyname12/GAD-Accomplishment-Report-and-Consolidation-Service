@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react'
 import axiosClient from '../../../axios';
 import { PencilIcon, ArchiveBoxArrowDownIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
-import EditUserModal from './components/Modals/EditUserModal';
-import ArchiveUserModal from './components/Modals/ArchiveUserModal';
-import AddUser from './components/ManageUser/AddUserModal';
+import EditUserModal from '../admin/components/ManageUser/Modals/EditUserModal';
+import ArchiveUserModal from './components/ManageUser/Modals/ArchiveUserModal';
+import AddUserModal from './components/ManageUser/Modals/AddUserModal';
 import ArchivedUser from './components/ManageUser/ArchivedUser';
 import NeutralButton from '../../components/buttons/NeutralButton';
 
@@ -121,7 +121,7 @@ export default function ManageUsers() {
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
-                <AddUser
+                <AddUserModal
                  closeModal={() => setIsAddUserModalOpen(false)}
                  />
             </div>
