@@ -1,8 +1,8 @@
 import { React, useState } from 'react'
-import axiosClient from '../../../../../axios';
-import WarningButton from '../../../../components/buttons/WarningButton';
+import Submit from '../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios';
 
-export default function DeleteUserModal({selectedUser}) {
+export default function ArchiveUserModal({selectedUser}) {
   const [error, setError] = useState("");
 
   const onSubmit = (ev) => {
@@ -10,7 +10,7 @@ export default function DeleteUserModal({selectedUser}) {
     setError({ __html: "" });
 
     axiosClient
-      .put(`/deleteuser/${selectedUser.id}`)
+      .put(`/archiveuser/${selectedUser.id}`)
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -24,13 +24,11 @@ export default function DeleteUserModal({selectedUser}) {
     };
 
   return (
-    <div>
-        Are you sure you want to delete? 
-        This will delete the user permanently
+    <div>ArchiveUserModal
 
       {/**BUTTONS */}
       <div className='mt-5'>
-          <WarningButton label="Delete User" onClick={onSubmit}/*disabled={ your condition }*/ />
+          <Submit label="Archive User" onClick={onSubmit}/*disabled={ your condition }*/ />
         </div>
     </div>
   )

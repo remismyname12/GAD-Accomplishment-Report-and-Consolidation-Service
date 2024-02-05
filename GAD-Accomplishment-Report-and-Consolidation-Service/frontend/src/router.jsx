@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import GuestLayout from "./views/unauthorizedView/main_views/GuestLayout";
-import AddUser from "./views/authorizedView/admin/components/ManageUser/AddUserModal";
+import AddUser from "./views/authorizedView/admin/components/ManageUser/Modals/AddUserModal";
 import ManageUsers from "./views/authorizedView/admin/ManageUsers";
 import AdminLayout from "./views/authorizedView/AdminLayout";
 import ArchivedUser from "./views/authorizedView/admin/components/ManageUser/ArchivedUser";

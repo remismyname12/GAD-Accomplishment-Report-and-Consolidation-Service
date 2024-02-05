@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Submit({ label, onClick, /*disabled*/ }) {
+export default function NeutralButton({ label, onClick, /*disabled*/ }) {
 
   return (
     <div>
