@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react'
-import axiosClient from '../../../../../axios';
+import axiosClient from '../../../../axios/axios';
 import { ArrowLeftStartOnRectangleIcon, TrashIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import RestoreUserModal from './Modals/RestoreUserModal';
