@@ -17,6 +17,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
+                'form_type' => 'employee',
                 'title' => 'Training 1',
                 'purpose' => 'For Compliance',
                 'legal_bases' => 'LEGALITY',
@@ -32,6 +33,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '2',
                 'user_id' => '2',
+                'form_type' => 'employee',
                 'title' => 'Training 2',
                 'purpose' => 'For the horde',
                 'legal_bases' => 'LEGALITY',
@@ -47,6 +49,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '3',
                 'user_id' => '3',
+                'form_type' => 'employee',
                 'title' => 'Training 3',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
@@ -66,6 +69,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
+                'form_type' => 'inset',
                 'title' => 'Training 1',
                 'purpose' => 'For Compliance',
                 'legal_bases' => 'LEGALITY',
@@ -80,6 +84,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '2',
                 'user_id' => '2',
+                'form_type' => 'inset',
                 'title' => 'Training 2',
                 'purpose' => 'For the horde',
                 'legal_bases' => 'LEGALITY',
@@ -94,6 +99,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '3',
                 'user_id' => '3',
+                'form_type' => 'inset',
                 'title' => 'Training 3',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
