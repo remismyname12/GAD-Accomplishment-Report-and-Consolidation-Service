@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/form_employee', [FormController::class, 'form_employee_store']);
     Route::post('/form_inset', [FormController::class, 'form_inset_store']);
 
-
+    //logout
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
