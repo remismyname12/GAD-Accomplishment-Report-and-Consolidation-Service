@@ -1,7 +1,29 @@
-import React from 'react'
+import { React, useState } from 'react'
 import Submit from '../../../../../components/buttons/Submit'
 
 export default function InsetForm() {
+  const [details, setDetails] = useState({
+    title: '',
+    purpose: '',
+    legalbases: '',
+    dateofleadactivity: '',
+    venue: '',
+    participants: '',
+    leraningserviceproviders: '',
+    expectedoutputs: '',
+    fundsource: '',
+  });
+
+  const handleChange = (name) => (ev) => {
+    const { value } = ev.target;
+    setDetails((prevDetails) => ({
+      ...prevDetails,
+      [name]: value,
+    }));
+  };
+
+  console.log(details);
+
   return (
     <div className='bg-gray-300 m-5 p-3'>
       
@@ -17,8 +39,8 @@ export default function InsetForm() {
               type="text"
               autoComplete="title"
               required
-              // value={email}
-              // onChange={ev => setEmail(ev.target.value)}
+              value={details.title}
+              onChange={handleChange}
             />
 
           <label htmlFor="purpose">Purpose: </label>
@@ -28,8 +50,8 @@ export default function InsetForm() {
               type="text"
               autoComplete="purpose"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.purpose}
+              onChange={handleChange}
             />
 
           <label htmlFor="legalbases">Legal Bases: </label>
@@ -39,8 +61,8 @@ export default function InsetForm() {
               type="text"
               autoComplete="legalbases"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.legalbases}
+              onChange={handleChange}
             />
 
           <label htmlFor="dateofleadactivity">Date of lead Activity: </label>
@@ -50,8 +72,8 @@ export default function InsetForm() {
               type="text"
               autoComplete="dateofleadactivity"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.dateofleadactivity}
+              onChange={handleChange}
             />
 
           <label htmlFor="venue">Venue: </label>

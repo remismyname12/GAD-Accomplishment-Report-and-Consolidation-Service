@@ -1,5 +1,5 @@
 import { React, useState } from 'react'
-import axiosClient from '../../../../../../axios';
+import axiosClient from '../../../../../axios/axios';
 import WarningButton from '../../../../../components/buttons/WarningButton';
 
 export default function DeleteUserModal({selectedUser}) {

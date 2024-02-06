@@ -25,6 +25,7 @@ class AddUserRequest extends FormRequest
         return [
             'username' => 'required|string',
             'email' => 'required|string',
+            'role' => 'required|string',
             'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
         ];
     }

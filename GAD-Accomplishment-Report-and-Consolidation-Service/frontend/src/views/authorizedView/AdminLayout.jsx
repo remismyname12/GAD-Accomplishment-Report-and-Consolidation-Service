@@ -3,7 +3,7 @@ import { useStateContext } from '../../context/ContextProvider'
 import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import axiosClient from '../../axios';
+import axiosClient from '../axios/axios';
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
