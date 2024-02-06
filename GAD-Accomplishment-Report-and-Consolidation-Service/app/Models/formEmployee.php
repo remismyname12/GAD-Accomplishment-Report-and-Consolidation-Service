@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class formInset extends Controller
+class formEmployee extends Model
 {
+    use HasFactory;
+
     // BELONGS TO USER
     public function user()
     {

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Models;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class expenditureList extends Controller
+class expenditureList extends Model
 {
-    //
+    use HasFactory;
+
     public function form_Employee()
     {
         return $this->belongsTo(formEmployee::class);
