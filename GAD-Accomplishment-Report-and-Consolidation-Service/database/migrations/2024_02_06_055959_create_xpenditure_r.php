@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('xpenditure_r', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_id')->constrained('form_research')->onDelete('cascade');
+            $table->foreignId('form_id')->constrained('form_research')->onDelete('cascade'); //form_employee_id
             $table->timestamps();
         });
     }
