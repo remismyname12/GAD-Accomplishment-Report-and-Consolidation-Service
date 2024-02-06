@@ -9,6 +9,22 @@ class formInset extends Model
 {
     use HasFactory;
 
+    protected $table = 'form_inset';
+
+    protected $fillable = [
+        'title',
+        'user_id',
+        'purpose',
+        'legal_bases',
+        'date_of_LEAD_activity',
+        'venue',
+        'participants',
+        'no_of_target_participants',
+        'learning_service_providers',
+        'expected_outputs',
+        'fund_source',
+    ];
+
      // BELONGS TO USER
      public function user()
      {

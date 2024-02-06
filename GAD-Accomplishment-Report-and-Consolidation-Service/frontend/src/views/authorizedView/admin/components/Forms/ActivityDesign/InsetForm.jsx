@@ -1,25 +1,38 @@
 import { React, useState } from 'react'
 import Submit from '../../../../../components/buttons/Submit'
+import axiosClient from '../../../../../axios/axios'
 
 export default function InsetForm() {
   const [details, setDetails] = useState({
     title: '',
     purpose: '',
-    legalbases: '',
-    dateofleadactivity: '',
+    legal_bases: '',
+    date_of_LEAD_activity: '',
     venue: '',
     participants: '',
-    leraningserviceproviders: '',
-    expectedoutputs: '',
-    fundsource: '',
+    learning_service_providers: '',
+    expected_outputs: '',
+    fund_source: '',
   });
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try{
+        const response = await axiosClient.post('/form_inset', details);
+    } catch (error) {
+      if (error.response) {
+        const finalErrors = Object.values(error.response.data.errors).reduce(
+          (accum, next) => [...accum, ...next],
+          []
+        );
+        setError({ __html: finalErrors.join("<br>") });
+      }
+      console.error(error);
+    }
+  };
 
-  const handleChange = (name) => (ev) => {
-    const { value } = ev.target;
-    setDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+  const handleChange = (e) => {
+    setDetails({ ...details, [e.target.name]: e.target.value });
   };
 
   console.log(details);
@@ -54,25 +67,25 @@ export default function InsetForm() {
               onChange={handleChange}
             />
 
-          <label htmlFor="legalbases">Legal Bases: </label>
+          <label htmlFor="legal_bases">Legal Bases: </label>
             <input 
-              id="legalbases"
-              name="legalbases"
+              id="legal_bases"
+              name="legal_bases"
               type="text"
-              autoComplete="legalbases"
+              autoComplete="legal_bases"
               required
-              value={details.legalbases}
+              value={details.legal_bases}
               onChange={handleChange}
             />
 
-          <label htmlFor="dateofleadactivity">Date of lead Activity: </label>
+          <label htmlFor="date_of_LEAD_activity">Date of lead Activity: </label>
             <input 
-              id="dateofleadactivity"
-              name="dateofleadactivity"
+              id="date_of_LEAD_activity"
+              name="date_of_LEAD_activity"
               type="text"
-              autoComplete="dateofleadactivity"
+              autoComplete="date_of_LEAD_activity"
               required
-              value={details.dateofleadactivity}
+              value={details.date_of_LEAD_activity}
               onChange={handleChange}
             />
 
@@ -83,8 +96,8 @@ export default function InsetForm() {
               type="text"
               autoComplete="venue"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.venue}
+              onChange={handleChange}
             />
 
           <label htmlFor="participants">Participants: </label>
@@ -94,44 +107,44 @@ export default function InsetForm() {
               type="text"
               autoComplete="participants"
               required
-              // value={email}
-              // onChange={ev => setEmail(ev.target.value)}
+              value={details.participants}
+              onChange={handleChange}
             />
 
-          <label htmlFor="leraningserviceproviders">Learning service providers: </label>
+          <label htmlFor="learning_service_providers">Learning service providers: </label>
             <input 
-              id="leraningserviceproviders"
-              name="leraningserviceproviders"
+              id="learning_service_providers"
+              name="learning_service_providers"
               type="text"
-              autoComplete="leraningserviceproviders"
+              autoComplete="learning_service_providers"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.learning_service_providers}
+              onChange={handleChange}
             />
 
-          <label htmlFor="expectedoutputs">Expected outputs: </label>
+          <label htmlFor="expected_outputs">Expected outputs: </label>
             <input 
-              id="expectedoutputs"
-              name="expectedoutputs"
+              id="expected_outputs"
+              name="expected_outputs"
               type="text"
-              autoComplete="expectedoutputs"
+              autoComplete="expected_outputs"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.expected_outputs}
+              onChange={handleChange}
             />
 
-          <label htmlFor="fundsource">Fund Source: </label>
+          <label htmlFor="fund_source">Fund Source: </label>
             <input 
-              id="fundsource"
-              name="fundsource"
+              id="fund_source"
+              name="fund_source"
               type="text"
-              autoComplete="fundsource"
+              autoComplete="fund_source"
               required
-              // value={password}
-              // onChange={ev => setPassword(ev.target.value)}
+              value={details.fund_source}
+              onChange={handleChange}
             />
             <div className='mt-5'>
-              <Submit label="Submit" /*onClick={onSubmit} disabled={ your condition }*/ />
+              <Submit label="Submit" onClick={handleSubmit} /*disabled={ your condition }*/ />
             </div>
         </form>
     </div>

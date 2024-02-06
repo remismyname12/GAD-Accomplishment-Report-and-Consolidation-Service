@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
+use App\Http\Requests\FormRequest_I;
 use App\Models\formEmployee;
+use App\Models\formInset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,5 +33,29 @@ class FormController extends Controller
        $formEmployee->save();
 
        return response()->json(['message' => 'success', $user]);
+    }
+
+    public function form_inset_store(FormRequest_I $request)
+    {
+       $formData = $request->validated();
+       $user = Auth::user();
+       
+       $user = formInset::create([
+        'title' => $formData['title'],
+        'user_id' => $user->id,
+        'purpose' => $formData['purpose'],
+        'legal_bases' => $formData['legal_bases'],
+        'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
+        'venue' => $formData['venue'],
+        'participants' => $formData['participants'],
+        'learning_service_providers' => $formData['learning_service_providers'],
+        'expected_outputs' => $formData['expected_outputs'],
+        'fund_source' => $formData['fund_source'],
+        ]);
+
+       return response([
+        'Success' => true,
+        'Message' => 'Form Added'
+    ]);
     }
 }
