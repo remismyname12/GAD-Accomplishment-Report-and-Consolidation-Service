@@ -16,7 +16,7 @@ class FormController extends Controller
        $user = Auth::user();
 
        $formEmployee = new formEmployee();
-       //$formEmployee->user_id = $user;
+       $formEmployee->user_id = $user->id;
        $formEmployee->title = $formData['title'];
        $formEmployee->purpose = $formData['purpose'];
        $formEmployee->legal_bases = $formData['legalbases'];
@@ -28,6 +28,8 @@ class FormController extends Controller
        $formEmployee->expected_outputs = $formData['expectedoutputs'];
        $formEmployee->fund_source = $formData['fundsource'];
 
-       return response()->json(['message' => 'success']);
+       $formEmployee->save();
+
+       return response()->json(['message' => 'success', $user]);
     }
 }
