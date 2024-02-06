@@ -37,7 +37,7 @@ class GADSeeder extends Seeder
             [
                 'id' => '3',
                 'activity_title' => 'Training 3',
-                'activity_type' => 'Client-Focuses',
+                'activity_type' => 'Client-Focused',
                 'attendance_male' => '221',
                 'attendance_female' => '382',
                 'total_actual_expenses' => 'Php 1,500,000',
