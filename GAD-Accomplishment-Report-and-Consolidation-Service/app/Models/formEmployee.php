@@ -9,6 +9,21 @@ class formEmployee extends Model
 {
     use HasFactory;
 
+    protected $table = 'form_employee';
+
+    protected $fillable = [
+        'title',
+        'purpose',
+        'legalbases',
+        'dateofactivity',
+        'venue',
+        'participants',
+        'nooftargetparticipants',
+        'learningserviceproviders',
+        'expectedoutputs',
+        'fundsource',
+    ];
+
     // BELONGS TO USER
     public function user()
     {
