@@ -17,7 +17,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
-                'form_type' => 'employee',
+                //'form_type' => 'employee',
                 'title' => 'Training 1',
                 'purpose' => 'For Compliance',
                 'legal_bases' => 'LEGALITY',
@@ -33,7 +33,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '2',
                 'user_id' => '2',
-                'form_type' => 'employee',
+                //'form_type' => 'employee',
                 'title' => 'Training 2',
                 'purpose' => 'For the horde',
                 'legal_bases' => 'LEGALITY',
@@ -49,7 +49,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '3',
                 'user_id' => '3',
-                'form_type' => 'employee',
+                //'form_type' => 'employee',
                 'title' => 'Training 3',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
@@ -69,7 +69,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
-                'form_type' => 'inset',
+                //'form_type' => 'inset',
                 'title' => 'Training 1',
                 'purpose' => 'For Compliance',
                 'legal_bases' => 'LEGALITY',
@@ -84,7 +84,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '2',
                 'user_id' => '2',
-                'form_type' => 'inset',
+                //'form_type' => 'inset',
                 'title' => 'Training 2',
                 'purpose' => 'For the horde',
                 'legal_bases' => 'LEGALITY',
@@ -99,7 +99,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '3',
                 'user_id' => '3',
-                'form_type' => 'inset',
+                //'form_type' => 'inset',
                 'title' => 'Training 3',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
@@ -169,6 +169,50 @@ class FormSeeder extends Seeder
         ];
 
         DB::table('xpenditure_i')->insert($xpenditure_i);
+
+        //Acccomplishment Report
+        $acc_report = [
+            [
+                'id' => '1',
+                'form_id' => '1',
+                'form_type' => 'INSET',
+                'title_of_activity' => 'Q',
+                'date_of_activity' => 'Q',
+                'venue' => 'Q',
+                'proponents' => 'Q',
+                'no_of_participants_male' => '10',
+                'no_of_participants_female' => '15',
+                'no_of_participants_total' => '25',
+            ],
+
+            [
+                'id' => '2',
+                'form_id' => '2',
+                'form_type' => 'INSET',
+                'title_of_activity' => 'W',
+                'date_of_activity' => 'W',
+                'venue' => 'W',
+                'proponents' => 'W',
+                'no_of_participants_male' => '200',
+                'no_of_participants_female' => '200',
+                'no_of_participants_total' => '400',
+            ],
+
+            [
+                'id' => '3',
+                'form_id' => '3',
+                'form_type' => 'EMPLOYEE',
+                'title_of_activity' => 'E',
+                'date_of_activity' => 'E',
+                'venue' => 'E',
+                'proponents' => 'E',
+                'no_of_participants_male' => '100',
+                'no_of_participants_female' => '150',
+                'no_of_participants_total' => '250',
+            ],
+        ];
+
+        DB::table('acc_report')->insert($acc_report);
 
     }
 }

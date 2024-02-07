@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('acc_report', function (Blueprint $table) {
             $table->id();
+            $table->string('form_id');
+            $table->string('form_type');
             $table->string('title_of_activity');
             $table->string('date_of_activity');
             $table->string('venue');
