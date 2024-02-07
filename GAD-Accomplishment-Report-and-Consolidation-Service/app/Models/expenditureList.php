@@ -9,6 +9,14 @@ class expenditureList extends Model
 {
     use HasFactory;
 
+    protected $table = 'xpenditure_e';
+
+    protected $fillable = [
+        'items',
+        'per_head_per_day',
+        'total',
+    ];
+
     public function form_Employee()
     {
         return $this->belongsTo(formEmployee::class);

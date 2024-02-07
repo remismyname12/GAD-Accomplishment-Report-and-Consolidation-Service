@@ -34,6 +34,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show_form_employee', [FormController::class, 'indexEmployeeForms']);
     Route::get('/show_form_inset', [FormController::class, 'indexInsetForms']);
 
+    //expenditure list
+    Route::post('/xpenditure_e', [FormController::class, 'xpenditure_e_store']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

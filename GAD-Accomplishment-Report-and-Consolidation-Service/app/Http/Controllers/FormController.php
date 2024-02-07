@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
+use App\Http\Requests\XpenditureRequest;
 use App\Models\formEmployee;
 use App\Models\formInset;
+use App\Models\expenditureList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +51,21 @@ class FormController extends Controller
        $formEmployee->save();
 
        return response()->json(['message' => 'success', $user]);
+    }
+
+    public function xpenditure_e_store(XpenditureRequest $request){
+        $formData = $request->validated();
+        $user = Auth::user();
+
+        $formEmployee = new expenditureList();
+        $formEmployee->form_id = $user->id;
+        $formEmployee->items = $formData['item'];
+        $formEmployee->per_head_per_day = $formData['phpd'];
+        $formEmployee->total = $formData['total'];
+
+        $formEmployee->save();
+
+        return response()->json(['message' => 'success']);
     }
 
     public function form_inset_store(FormRequest_I $request)
