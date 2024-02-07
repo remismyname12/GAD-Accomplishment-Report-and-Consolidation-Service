@@ -4,7 +4,52 @@ import axiosClient from '../../../axios/axios';
 
 export default function EmployeeForm() {
 
-  const [formData1, setFormData1] = useState({
+  //----------for exenditure
+
+  const [inputFields, setInputFields] = useState([
+    {item: '', phpd: '', total:''}
+  ])// <><><>
+
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields];
+    data[index][event.target.name] = event.target.value;
+    setInputFields(data);
+  }
+
+  const addFields = () => {
+    let newfield = { item: '', phpd: '', total:'' }
+
+    setInputFields([...inputFields, newfield])
+  }
+
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1)
+    setInputFields(data)
+}
+
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log(inputFields)
+    try{
+      const response = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
+      console.log('Form submitted successfully:', response.data);
+    } catch (error){
+      console.error('Error submitting expenditure.', error);
+    }
+  }
+
+  //----------
+
+  //----------For submission
+  const handleAllSubmit = () => {
+    e.preventDefault();
+    handleSubmit();
+    submit();
+  };
+  //----------
+
+  const [formData, setFormData] = useState({
     title: '',
     purpose: '',
     legalbases: '',
@@ -17,24 +62,15 @@ export default function EmployeeForm() {
     fundsource: '',
   });
 
-  const [formData2, setFormData2] = useState({
-    item: '',
-    phpd: '',
-    total: '',
-  });
-
   const handleChange = (e) => {
-    setFormData1({ ...formData1, [e.target.name]: e.target.value });
-    setFormData2({ ...formData2, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response1 = await axiosClient.post('/form_employee', formData1);
-        console.log('Form data submitted: ', response1.data);
-        const response2 = await axiosClient.post('/xpenditure_e', formData2);
-        console.log('Form data submitted: ', response2.data);
+        const response = await axiosClient.post('/form_employee', formData);
+        console.log('Form data submitted: ', response.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -55,7 +91,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="title"
               required
-              value={formData1.title}
+              value={formData.title}
               onChange={handleChange}
             />
 
@@ -66,7 +102,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="purpose"
               required
-              value={formData1.purpose}
+              value={formData.purpose}
               onChange={handleChange}
             />
 
@@ -77,7 +113,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="legalbases"
               required
-              value={formData1.legalbases}
+              value={formData.legalbases}
               onChange={handleChange}
             />
 
@@ -88,7 +124,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="dateofactivity"
               required
-              value={formData1.dateofactivity}
+              value={formData.dateofactivity}
               onChange={handleChange}
             />
 
@@ -99,7 +135,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="venue"
               required
-              value={formData1.venue}
+              value={formData.venue}
               onChange={handleChange}
             />
 
@@ -110,7 +146,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="participants"
               required
-              value={formData1.participants}
+              value={formData.participants}
               onChange={handleChange}
             />
 
@@ -121,7 +157,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="nooftargetparticipants"
               required
-              value={formData1.nooftargetparticipants}
+              value={formData.nooftargetparticipants}
               onChange={handleChange}
             />
 
@@ -132,7 +168,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="learningserviceproviders"
               required
-              value={formData1.learningserviceproviders}
+              value={formData.learningserviceproviders}
               onChange={handleChange}
             />
 
@@ -143,7 +179,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="expectedoutputs"
               required
-              value={formData1.expectedoutputs}
+              value={formData.expectedoutputs}
               onChange={handleChange}
             />
 
@@ -154,53 +190,66 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="fundsource"
               required
-              value={formData1.fundsource}
+              value={formData.fundsource}
               onChange={handleChange}
             />
            
-        
-        <h1 className='text-center mt-3'>
-        Budgetary Requirements
+        <h1 className='text-center m-3'>
+          Budgetary Requirements
         </h1>
+        <div>
+          <form onSubmit={submit}>
+            {inputFields.map((input, index) => {
+              return(
+                <div key={index} className="flex space-x-4 mb-2">
+                  <input
+                    id="item"
+                    name="item"
+                    type="text"
+                    placeholder="Item"
+                    autoComplete="item"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.item}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="phpd"
+                    name="phpd"
+                    type="text"
+                    placeholder="Per Head/Per Day"
+                    autoComplete="phpd"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.phpd}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="total"
+                    name="total"
+                    type="text"
+                    placeholder="Total"
+                    autoComplete="total"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.total}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <button onClick={() => removeFields(index)}>Remove</button>
+                </div>
+                
+              )
+            })}
+            <div className="flex justify-center">
+            <button onClick={addFields} className='m-1'>Add More..</button>
+            <button onClick={submit} className='m-1'>Submit</button>
+            </div>
+          </form>
+          
+        </div>
+        
       
-        <div style={{ display: 'flex' }}>
-            <div style={{ flex: 1 }}>
-              <input 
-                id="item"
-                name="item"
-                type="text"
-                placeholder="Item"
-                autoComplete="item"
-                required
-                value={formData2.item}
-                onChange={handleChange}
-              />
-            </div>
-            <div style={{ flex: 1 }}>
-              <input 
-                id="phpd"
-                name="phpd"
-                type="text"
-                placeholder="Per Head/Per Day"
-                autoComplete="phpd"
-                required
-                value={formData2.phpd}
-                onChange={handleChange}
-              />
-            </div>
-            <div style={{ flex: 1 }}>
-              <input 
-                id="total"
-                name="total"
-                type="text"
-                placeholder="Total"
-                autoComplete="total"
-                required
-                value={formData2.total}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+        
         <div className='mt-5'>
           <Submit label="Submit" onClick={handleSubmit}/>
         </div>
