@@ -4,7 +4,7 @@ import axiosClient from '../../../axios/axios';
 
 export default function EmployeeForm() {
 
-  const [formData, setFormData] = useState({
+  const [formData1, setFormData1] = useState({
     title: '',
     purpose: '',
     legalbases: '',
@@ -17,15 +17,24 @@ export default function EmployeeForm() {
     fundsource: '',
   });
 
+  const [formData2, setFormData2] = useState({
+    item: '',
+    phpd: '',
+    total: '',
+  });
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData1({ ...formData1, [e.target.name]: e.target.value });
+    setFormData2({ ...formData2, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axiosClient.post('/form_employee', formData);
-        console.log('Form data submitted: ', response.data);
+        const response1 = await axiosClient.post('/form_employee', formData1);
+        console.log('Form data submitted: ', response1.data);
+        const response2 = await axiosClient.post('/xpenditure_e', formData2);
+        console.log('Form data submitted: ', response2.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -46,7 +55,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="title"
               required
-              value={formData.title}
+              value={formData1.title}
               onChange={handleChange}
             />
 
@@ -57,7 +66,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="purpose"
               required
-              value={formData.purpose}
+              value={formData1.purpose}
               onChange={handleChange}
             />
 
@@ -68,7 +77,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="legalbases"
               required
-              value={formData.legalbases}
+              value={formData1.legalbases}
               onChange={handleChange}
             />
 
@@ -79,7 +88,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="dateofactivity"
               required
-              value={formData.dateofactivity}
+              value={formData1.dateofactivity}
               onChange={handleChange}
             />
 
@@ -90,7 +99,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="venue"
               required
-              value={formData.venue}
+              value={formData1.venue}
               onChange={handleChange}
             />
 
@@ -101,7 +110,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="participants"
               required
-              value={formData.participants}
+              value={formData1.participants}
               onChange={handleChange}
             />
 
@@ -112,7 +121,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="nooftargetparticipants"
               required
-              value={formData.nooftargetparticipants}
+              value={formData1.nooftargetparticipants}
               onChange={handleChange}
             />
 
@@ -123,7 +132,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="learningserviceproviders"
               required
-              value={formData.learningserviceproviders}
+              value={formData1.learningserviceproviders}
               onChange={handleChange}
             />
 
@@ -134,7 +143,7 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="expectedoutputs"
               required
-              value={formData.expectedoutputs}
+              value={formData1.expectedoutputs}
               onChange={handleChange}
             />
 
@@ -145,13 +154,58 @@ export default function EmployeeForm() {
               type="text"
               autoComplete="fundsource"
               required
-              value={formData.fundsource}
+              value={formData1.fundsource}
               onChange={handleChange}
             />
-            <div className='mt-5'>
-              <Submit label="Submit" onClick={handleSubmit}/>
+           
+        
+        <h1 className='text-center mt-3'>
+        Budgetary Requirements
+        </h1>
+      
+        <div style={{ display: 'flex' }}>
+            <div style={{ flex: 1 }}>
+              <input 
+                id="item"
+                name="item"
+                type="text"
+                placeholder="Item"
+                autoComplete="item"
+                required
+                value={formData2.item}
+                onChange={handleChange}
+              />
             </div>
-        </form>
+            <div style={{ flex: 1 }}>
+              <input 
+                id="phpd"
+                name="phpd"
+                type="text"
+                placeholder="Per Head/Per Day"
+                autoComplete="phpd"
+                required
+                value={formData2.phpd}
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ flex: 1 }}>
+              <input 
+                id="total"
+                name="total"
+                type="text"
+                placeholder="Total"
+                autoComplete="total"
+                required
+                value={formData2.total}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        <div className='mt-5'>
+          <Submit label="Submit" onClick={handleSubmit}/>
+        </div>
+      </form>
     </div>
   )
+  
 }

@@ -141,10 +141,45 @@ export default function InsetForm() {
               value={details.fund_source}
               onChange={handleChange}
             />
+            
+        <h1 className='text-center mt-3'>
+        Budgetary Requirements
+        </h1>
+      
+        <label htmlFor="items">Items: </label>
+            <input 
+              id="items"
+              name="items"
+              type="text"
+              autoComplete="itmes"
+              required
+              //value={formData.items}
+              //onChange={handleChange}
+            />
+        <label htmlFor="phpd">Per head/Per day: </label>
+            <input 
+              id="phpd"
+              name="phpd"
+              type="text"
+              autoComplete="phpd"
+              required
+              //value={formData.title}
+              //onChange={handleChange}
+            />
+        <label htmlFor="total">Total: </label>
+            <input 
+              id="total"
+              name="total"
+              type="text"
+              autoComplete="total"
+              required
+              //value={formData.title}
+              //onChange={handleChange}
+            />
             <div className='mt-5'>
-              <Submit label="Submit" onClick={handleSubmit} /*disabled={ your condition }*/ />
+              <Submit label="Submit" onClick={handleSubmit}/>
             </div>
-        </form>
+      </form>
     </div>
   )
 }
