@@ -11,6 +11,22 @@ use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
+    //for show all users
+    public function indexEmployeeForms()
+    {
+        $forms = formEmployee::all();
+
+        return response()->json($forms);
+    }
+
+    //for show all users
+    public function indexInsetForms()
+    {
+        $forms = formInset::all();
+
+        return response()->json($forms);
+    }
+
     //for employee training design
     public function form_employee_store(FormRequest_E $request)
     {

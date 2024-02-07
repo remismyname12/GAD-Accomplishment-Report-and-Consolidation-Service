@@ -1,6 +1,6 @@
 import { React, useState } from 'react'
-import Submit from '../../../../../components/buttons/Submit'
-import axiosClient from '../../../../../axios/axios'
+import Submit from '../../../components/buttons/Submit';
+import axiosClient from '../../../axios/axios';
 
 export default function InsetForm() {
   const [details, setDetails] = useState({
@@ -34,8 +34,6 @@ export default function InsetForm() {
   const handleChange = (e) => {
     setDetails({ ...details, [e.target.name]: e.target.value });
   };
-
-  console.log(details);
 
   return (
     <div className='bg-gray-300 m-5 p-3'>

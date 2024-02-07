@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import { React, useEffect, useState } from 'react';
+import axiosClient from '../../../axios/axios';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
+import ActivityDesign from './activityForms/ActivityDesign';
+import AccomplishmentReport from './accomplishmentReport/AccomplishmentReport';
 
-import EmployeeForm from './components/Forms/ActivityDesign/EmployeeForm';
-import InsetForm from './components/Forms/ActivityDesign/InsetForm';
-
-export default function Forms() {
+export default function SubmitedForms() {
   const [selectedForm, setSelectedForm] = useState(null);
+  const [isEmployeeActivityFormModalOpen,setIsEmployeeActivityFormModalOpen ] = useState('employee');
+  const [isInsetActivityFormModalOpen,setIsInsetActivityFormModalOpen ] = useState(false);
+
+    
 
   return (
     <div>
@@ -26,11 +30,11 @@ export default function Forms() {
 
                 <Disclosure.Panel className="px-4 pb-2 pt-4 text-sm text-gray-500">
                   <div className="flex flex-col">
-                    <button onClick={() => setSelectedForm('employee')}>
-                      Employees Activity Form
+                    <button onClick={() => setSelectedForm('activityDesign')}>
+                      Activity Design
                     </button>
-                    <button onClick={() => setSelectedForm('inset')}>
-                      Inset New Leads Form
+                    <button onClick={() => setSelectedForm('accomplishmentreport')}>
+                      Accompishment Report
                     </button>
                   </div>
                 </Disclosure.Panel>
@@ -40,11 +44,12 @@ export default function Forms() {
         </div>
       </div>
 
-      {/**Type of Forms */}
+        {/**Type of Forms */}
       <div>
-        {selectedForm === 'employee' && <EmployeeForm />}
-        {selectedForm === 'inset' && <InsetForm />}
+        {selectedForm === 'activityDesign' && <ActivityDesign />}
+        {selectedForm === 'accomplishmentreport' && <AccomplishmentReport />}
       </div>
+
     </div>
-  );
+  )
 }
