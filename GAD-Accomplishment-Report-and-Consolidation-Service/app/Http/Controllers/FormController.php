@@ -27,5 +27,7 @@ class FormController extends Controller
        $formEmployee->learning_service_providers = $formData['learningserviceproviders'];
        $formEmployee->expected_outputs = $formData['expectedoutputs'];
        $formEmployee->fund_source = $formData['fundsource'];
+
+       return response()->json(['message' => 'success']);
     }
 }
