@@ -87,4 +87,17 @@ class FormController extends Controller
              'Message' => 'Form Added'
        ]);
     }
+
+    public function form_inset_update(FormRequest_I $request, $id)
+    {
+       $validatedData = $request->validated();
+       $form = formInset::find($id);
+       
+       $form->update($validatedData);
+
+            return response([
+             'Success' => true,
+             'Message' => 'Form Updated'
+       ]);
+    }
 }
