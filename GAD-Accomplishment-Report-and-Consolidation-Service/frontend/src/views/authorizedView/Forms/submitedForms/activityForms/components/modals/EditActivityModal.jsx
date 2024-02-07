@@ -8,14 +8,14 @@ export default function EditActivityModal({ selectedForm }) {
   const [formData, setFormData] = useState({
     title: selectedForm.title,
     purpose: selectedForm.purpose,
-    legalbases: selectedForm.legal_bases,
-    dateofactivity: selectedForm.date_of_activity,
+    legal_bases: selectedForm.legal_bases,
+    date_of_activity: selectedForm.date_of_activity,
     venue: selectedForm.venue,
     participants: selectedForm.participants,
-    nooftargetparticipants: selectedForm.no_of_target_participants,
-    learningserviceproviders: selectedForm.learning_service_providers,
-    expectedoutputs: selectedForm.expected_outputs,
-    fundsource: selectedForm.fund_source,
+    no_of_target_participants: selectedForm.no_of_target_participants,
+    learning_service_providers: selectedForm.learning_service_providers,
+    expected_outputs: selectedForm.expected_outputs,
+    fund_source: selectedForm.fund_source,
   });
 
   const handleChange = (e) => {
@@ -27,7 +27,7 @@ export default function EditActivityModal({ selectedForm }) {
     setError({ __html: "" });
 
     axiosClient
-      .put(`/updateuser/${selectedForm.id}`, formData) // Changed updatedUser to formData
+      .put(`/update_form_employee/${selectedForm.id}`, formData) // Changed updatedUser to formData
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -42,7 +42,7 @@ export default function EditActivityModal({ selectedForm }) {
 
   //For Unified Inputs 
   const renderInput = (name, label) => (
-    <div>
+    <div className='flex flex-1 flex-col'>
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
@@ -57,6 +57,7 @@ export default function EditActivityModal({ selectedForm }) {
     </div>
   );
 
+  console.log(formData);
   return (
     <>
       {/**For ERROR handling */}
@@ -70,14 +71,14 @@ export default function EditActivityModal({ selectedForm }) {
       <form action="" className="flex flex-1 flex-col">
         {renderInput("title", "Title: ")}
         {renderInput("purpose", "Purpose: ")}
-        {renderInput("legalbases", "Legal Bases: ")}
-        {renderInput("dateofactivity", "Date of Activity: ")}
+        {renderInput("legal_bases", "Legal Bases: ")}
+        {renderInput("date_of_activity", "Date of Activity: ")}
         {renderInput("venue", "Venue: ")}
         {renderInput("participants", "Participants: ")}
-        {renderInput("nooftargetparticipants", "Number of Target Participants: ")}
-        {renderInput("learningserviceproviders", "Learning Service Providers: ")}
-        {renderInput("expectedoutputs", "Expected Outputs: ")}
-        {renderInput("fundsource", "Fund Source: ")}
+        {renderInput("no_of_target_participants", "Number of Target Participants: ")}
+        {renderInput("learning_service_providers", "Learning Service Providers: ")}
+        {renderInput("expected_outputs", "Expected Outputs: ")}
+        {renderInput("fund_source", "Fund Source: ")}
         <div className="mt-5">
           <Submit label="Submit" onClick={handleSubmit} />
         </div>

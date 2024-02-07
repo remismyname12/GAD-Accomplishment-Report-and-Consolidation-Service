@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class FormController extends Controller
 {
     //for show all users
-    public function indexEmployeeForms()
+    public function index_employee_forms()
     {
         $forms = formEmployee::all();
 
@@ -33,24 +33,37 @@ class FormController extends Controller
        $formData = $request->validated();
        $user = Auth::user();
 
-       $formEmployee = new formEmployee();
-       $formEmployee->user_id = $user->id;
-       $formEmployee->title = $formData['title'];
-       $formEmployee->purpose = $formData['purpose'];
-       $formEmployee->legal_bases = $formData['legalbases'];
-       $formEmployee->date_of_activity = $formData['dateofactivity'];
-       $formEmployee->venue = $formData['venue'];
-       $formEmployee->participants = $formData['participants'];
-       $formEmployee->no_of_target_participants = $formData['nooftargetparticipants'];
-       $formEmployee->learning_service_providers = $formData['learningserviceproviders'];
-       $formEmployee->expected_outputs = $formData['expectedoutputs'];
-       $formEmployee->fund_source = $formData['fundsource'];
-
-       $formEmployee->save();
+       $user = formEmployee::create([
+        'title' => $formData['title'],
+        'user_id' => $user->id,
+        'purpose' => $formData['purpose'],
+        'legal_bases' => $formData['legal_bases'],
+        'date_of_activity' => $formData['date_of_activity'],
+        'venue' => $formData['venue'],
+        'participants' => $formData['participants'],
+        'no_of_target_participants' => $formData['no_of_target_participants'],
+        'learning_service_providers' => $formData['learning_service_providers'],
+        'expected_outputs' => $formData['expected_outputs'],
+        'fund_source' => $formData['fund_source'],
+        ]);
 
        return response()->json(['message' => 'success', $user]);
     }
 
+    public function form_employee_update(FormRequest_E $request, $id)
+    {
+       $validatedData = $request->validated();
+       $form = formEmployee::find($id);
+       
+       $form->update($validatedData);
+
+            return response([
+             'Success' => true,
+             'Message' => 'Form Updated'
+       ]);
+    }
+
+    //for inset training design
     public function form_inset_store(FormRequest_I $request)
     {
        $formData = $request->validated();
@@ -69,9 +82,9 @@ class FormController extends Controller
         'fund_source' => $formData['fund_source'],
         ]);
 
-       return response([
-        'Success' => true,
-        'Message' => 'Form Added'
-    ]);
+            return response([
+             'Success' => true,
+             'Message' => 'Form Added'
+       ]);
     }
 }

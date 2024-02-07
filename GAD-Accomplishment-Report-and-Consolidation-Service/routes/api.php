@@ -31,7 +31,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //Forms
     Route::post('/form_employee', [FormController::class, 'form_employee_store']);
     Route::post('/form_inset', [FormController::class, 'form_inset_store']);
-    Route::get('/show_form_employee', [FormController::class, 'indexEmployeeForms']);
+    Route::get('/show_form_employee', [FormController::class, 'index_employee_forms']);
+    Route::put('/update_form_employee/{id}', [FormController::class, 'form_employee_update']);
     Route::get('/show_form_inset', [FormController::class, 'indexInsetForms']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
