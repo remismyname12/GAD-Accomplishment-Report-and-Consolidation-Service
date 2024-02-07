@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FormController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,7 +27,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/deleteuser/{id}', [UserController::class, 'deleteuser']);
     Route::get('/showusers', [UserController::class, 'index']);
     Route::get('/showarchivedusers', [UserController::class, 'userarchiveindex']);
-
+    
+    //Forms
+    Route::post('/form_employee', [FormController::class, 'form_employee_store']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
