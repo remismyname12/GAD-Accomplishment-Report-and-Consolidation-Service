@@ -9,6 +9,8 @@ const navigation = [
   { name: 'Home', href: '#', current: false },
   { name: 'Manage Users', to: '/admin/manageusers'},
   { name: 'Forms', to: '/admin/forms'},
+  { name: 'Submited Forms', to: '/admin/submitedforms'},
+  { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
 
 function classNames(...classes) {
