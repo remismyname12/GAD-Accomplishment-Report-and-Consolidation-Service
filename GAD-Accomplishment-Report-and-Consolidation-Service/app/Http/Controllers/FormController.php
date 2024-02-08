@@ -46,11 +46,11 @@ class FormController extends Controller
     public function form_employee_store(FormRequest_E $request)
     {
        $formData = $request->validated();
-       $form = Auth::form();
+       $user= Auth::user();
 
        $form = formEmployee::create([
         'title' => $formData['title'],
-        'user_id' => $form->id,
+        'user_id' => $user->id,
         'purpose' => $formData['purpose'],
         'legal_bases' => $formData['legal_bases'],
         'date_of_activity' => $formData['date_of_activity'],
@@ -152,11 +152,11 @@ class FormController extends Controller
     public function form_inset_store(FormRequest_I $request)
     {
        $formData = $request->validated();
-       $form = Auth::form();
+       $user = Auth::user();
        
        $form = formInset::create([
         'title' => $formData['title'],
-        'user_id' => $form->id,
+        'user_id' => $user->id,
         'purpose' => $formData['purpose'],
         'legal_bases' => $formData['legal_bases'],
         'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
