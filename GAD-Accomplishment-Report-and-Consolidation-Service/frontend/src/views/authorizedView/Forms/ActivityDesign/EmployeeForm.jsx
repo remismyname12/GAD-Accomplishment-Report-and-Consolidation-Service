@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
+import NeutralButton from '../../../components/buttons/NeutralButton';
 
 export default function EmployeeForm() {
 
@@ -241,6 +242,17 @@ export default function EmployeeForm() {
               )
             })}
             <div className="flex justify-center">
+            {/*<button>
+              <NeutralButton label="Add more.." onClick={() => {addFields}} />
+            </button>
+            <button>
+              <Submit label="Submit" onClick={() => {Submit}} />
+            </button>
+            
+            */}
+
+
+
             <button onClick={addFields} className='m-1'>Add More..</button>
             <button onClick={submit} className='m-1'>Submit</button>
             </div>

@@ -188,7 +188,7 @@ export default function InsetForm() {
               onChange={handleChange}
             />
             
-        <h1 className='text-center mt-3'>
+        <h1 className='text-center m-3'>
         Budgetary Requirements
         </h1>
         <div>
@@ -235,6 +235,13 @@ export default function InsetForm() {
               )
             })}
             <div className="flex justify-center">
+             {/*<button>
+              <NeutralButton label="Add more.." onClick={() => {addFields}} />
+            </button>
+            <button>
+              <Submit label="Submit" onClick={() => {Submit}} />
+            </button>*/}
+
             <button onClick={addFields} className='m-1'>Add More..</button>
             <button onClick={submit} className='m-1'>Submit</button>
             </div>
