@@ -4,16 +4,30 @@ import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import ActivityDesign from './activityForms/ActivityDesign';
 import AccomplishmentReport from './accomplishmentReport/AccomplishmentReport';
+import NeutralButton from '../../../components/buttons/NeutralButton';
+import ArchivedActivityForms from './activityForms/ArchivedActivityForms';
+import ReactModal from 'react-modal';
 
 export default function SubmitedForms() {
   const [selectedForm, setSelectedForm] = useState(null);
   const [isEmployeeActivityFormModalOpen,setIsEmployeeActivityFormModalOpen ] = useState('employee');
+
+  //For Modals
   const [isInsetActivityFormModalOpen,setIsInsetActivityFormModalOpen ] = useState(false);
+  const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
 
     
 
   return (
     <div>
+          <div>
+            {/* <button>
+              <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
+            </button> */}
+            <button>
+              <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
+            </button>
+          </div>
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
           <Disclosure>
@@ -50,6 +64,18 @@ export default function SubmitedForms() {
         {selectedForm === 'accomplishmentreport' && <AccomplishmentReport />}
       </div>
 
+      {/** Modal For Archived Forms List */}
+      <ReactModal
+            isOpen={isArchivedUserModalOpen}
+            onRequestClose={() => setIsArchivedUserModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <ArchivedActivityForms
+                 closeModal={() => setIsArchivedUserModalOpen(false)}
+                 />
+            </div>
+        </ReactModal>
     </div>
   )
 }

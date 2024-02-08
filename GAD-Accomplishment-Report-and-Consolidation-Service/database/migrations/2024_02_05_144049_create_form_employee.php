@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('learning_service_providers');
             $table->string('expected_outputs');
             $table->string('fund_source');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

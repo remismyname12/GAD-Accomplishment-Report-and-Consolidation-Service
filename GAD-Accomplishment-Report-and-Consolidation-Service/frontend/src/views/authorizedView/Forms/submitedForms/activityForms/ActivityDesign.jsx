@@ -48,7 +48,7 @@ export default function ActivityDesign() {
   // For User Archive
   const handleArchiveClick = (selected_form) => {
     setIsArchiveModalOpen(true)
-    setSelectedUser(selected_form)
+    setSelectedForm(selected_form)
   }
 
   return (

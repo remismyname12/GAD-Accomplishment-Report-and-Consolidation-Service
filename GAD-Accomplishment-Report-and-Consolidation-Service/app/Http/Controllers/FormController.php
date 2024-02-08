@@ -6,8 +6,8 @@ use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
 use App\Models\formEmployee;
 use App\Models\formInset;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FormController extends Controller
 {
@@ -27,15 +27,26 @@ class FormController extends Controller
         return response()->json($forms);
     }
 
-    //for employee training design
+    public function index_all_archived_forms()
+    {
+        $employeeForms = formEmployee::onlyTrashed()->get();
+        $insetForms = formInset::onlyTrashed()->get();
+
+        // Merge the collections of forms
+        $allForms = $employeeForms->merge($insetForms);
+
+        return response()->json($allForms);
+    }
+
+    //for EMPLOYEE training design==============================================================================================
     public function form_employee_store(FormRequest_E $request)
     {
        $formData = $request->validated();
-       $user = Auth::user();
+       $form = Auth::form();
 
-       $user = formEmployee::create([
+       $form = formEmployee::create([
         'title' => $formData['title'],
-        'user_id' => $user->id,
+        'user_id' => $form->id,
         'purpose' => $formData['purpose'],
         'legal_bases' => $formData['legal_bases'],
         'date_of_activity' => $formData['date_of_activity'],
@@ -47,7 +58,7 @@ class FormController extends Controller
         'fund_source' => $formData['fund_source'],
         ]);
 
-       return response()->json(['message' => 'success', $user]);
+       return response()->json(['message' => 'success', $form]);
     }
 
     public function form_employee_update(FormRequest_E $request, $id)
@@ -63,15 +74,64 @@ class FormController extends Controller
        ]);
     }
 
-    //for inset training design
+    public function form_employee_archive($id){
+        // Find the form by ID
+        $form = formEmployee::find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->delete();
+    
+        return response()->json(['message' => 'Form archived successfully']);
+    }
+
+    public function form_employee_restore($id)
+    {
+        // Find the form by ID
+        $form = formEmployee::withTrashed()
+        ->find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->restore();
+    
+        return response()->json(['message' => 'Form Restored successfully']);
+    }
+
+    public function form_employee_delete($id)
+    {
+        // Find the form by ID
+        $form = formEmployee::withTrashed()
+        ->find($id);
+
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        // Force delete the form
+        $form->forceDelete();
+
+        return response()->json(['message' => 'Form permanently deleted']);
+    }
+
+    //for INSET training design=================================================================================================================
     public function form_inset_store(FormRequest_I $request)
     {
        $formData = $request->validated();
-       $user = Auth::user();
+       $form = Auth::form();
        
-       $user = formInset::create([
+       $form = formInset::create([
         'title' => $formData['title'],
-        'user_id' => $user->id,
+        'user_id' => $form->id,
         'purpose' => $formData['purpose'],
         'legal_bases' => $formData['legal_bases'],
         'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
@@ -99,5 +159,54 @@ class FormController extends Controller
              'Success' => true,
              'Message' => 'Form Updated'
        ]);
+    }
+
+    public function form_inset_archive($id){
+        // Find the form by ID
+        $form = formInset::find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->delete();
+    
+        return response()->json(['message' => 'Form archived successfully']);
+    }
+
+    public function form_inset_restore($id)
+    {
+        // Find the form by ID
+        $form = formInset::withTrashed()
+        ->find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->restore();
+    
+        return response()->json(['message' => 'Form Restored successfully']);
+    }
+
+    public function form_inset_delete($id)
+    {
+        // Find the form by ID
+        $form = formInset::withTrashed()
+        ->find($id);
+
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        // Force delete the form
+        $form->forceDelete();
+
+        return response()->json(['message' => 'Form permanently deleted']);
     }
 }
