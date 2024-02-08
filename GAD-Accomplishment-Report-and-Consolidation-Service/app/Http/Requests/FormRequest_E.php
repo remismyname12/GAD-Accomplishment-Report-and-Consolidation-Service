@@ -24,14 +24,14 @@ class FormRequest_E extends FormRequest
         return [
             'title' => 'required|string',
             'purpose' => 'required|string',
-            'legalbases' => 'required|string',
-            'dateofactivity' => 'required|string',
+            'legal_bases' => 'required|string',
+            'date_of_activity' => 'required|string',
             'venue' => 'required|string',
             'participants' => 'required|string',
-            'nooftargetparticipants' => 'required|string',
-            'learningserviceproviders' => 'required|string',
-            'expectedoutputs' => 'required|string',
-            'fundsource' => 'required|string',
+            'no_of_target_participants' => 'required|string',
+            'learning_service_providers' => 'required|string',
+            'expected_outputs' => 'required|string',
+            'fund_source' => 'required|string',
         ];
     }
 }
