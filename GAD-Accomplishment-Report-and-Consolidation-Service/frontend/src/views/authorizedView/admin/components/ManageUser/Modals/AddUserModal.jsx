@@ -2,7 +2,7 @@ import { React, useState} from 'react'
 import { Menu } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import Submit from '../../../../../components/buttons/Submit'
-import axiosClient from '../../../../../axios/axios';
+import getAxios from '../../../../../axios/axiosMethods/getAxios';
 
 export default function AddUserModal() {
     const [error, setError] = useState("");
@@ -11,27 +11,28 @@ export default function AddUserModal() {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
-    const onSubmit = (ev) => {
+    const onSubmit = async (ev) => {
       ev.preventDefault();
       setError({__html: ""});
     
-      axiosClient
-        .post('/adduser', {
-          email,
-          username: userName,
-          role: role,
-          password
-        })
-        .catch((error) => {
-          if (error.response) {
-            const finalErrors = Object.values(error.response.data.message).reduce(
-              (accum, next) => [...accum, ...next],
-              []
-            );
-            setError({ __html: finalErrors.join("<br>") });
-          }
-          console.error(error);
+      try {
+        // Call getAxios to make the POST request
+        const response = await getAxios({
+            endPoint: "adduser",
+            data: { email, username: userName, password, role: role },
+            
+            
+        }).then((error,response) => {
+          console.log(error);  // Assuming res.data is an array
+          console.log(response)
         });
+        // Handle response if needed
+        console.log(response);
+    } catch (error) {
+        // Handle error
+        console.error(error);
+    }
+
     };
     
     console.log(role);
