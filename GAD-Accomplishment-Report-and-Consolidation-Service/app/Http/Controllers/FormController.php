@@ -148,10 +148,11 @@ class FormController extends Controller
         
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
+        $form = $formData['title'];
         $user = Auth::user();
         
         $form = formInset::create([
-            'title' => $formData['title'],
+            'title' => $form,
             'user_id' => $user->id,
             'purpose' => $formData['purpose'],
             'legal_bases' => $formData['legal_bases'],
@@ -161,18 +162,21 @@ class FormController extends Controller
             'learning_service_providers' => $formData['learning_service_providers'],
             'expected_outputs' => $formData['expected_outputs'],
             'fund_source' => $formData['fund_source'],
-            ]);
+        ]);
+
+        // Find the first item with the given title
+        $firstItem = formInset::where('title', $formData['title'])->first();
 
         foreach ($inputFields as $data) {
             expenditureList_i::create([
-                'form_id' => $user->id,
+                'form_id' => $firstItem->id,
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
             ]);
         }
 
-                return response([
+        return response([
                 'Success' => true,
                 'Message' => 'Form Added'
         ]);
