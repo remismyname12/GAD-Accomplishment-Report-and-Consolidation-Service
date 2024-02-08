@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class expenditureList extends Model
+class expenditureList_i extends Model
 {
     use HasFactory;
 
-    protected $table = 'xpenditure_e';
+    protected $table = 'xpenditure_i';
 
     protected $fillable = [
         'form_id',

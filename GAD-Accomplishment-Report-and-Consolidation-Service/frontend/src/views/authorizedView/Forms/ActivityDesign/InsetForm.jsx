@@ -3,6 +3,52 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 
 export default function InsetForm() {
+
+  //----------for exenditure
+
+  const [inputFields, setInputFields] = useState([
+    {item: '', phpd: '', total:''}
+  ])// <><><>
+
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields];
+    data[index][event.target.name] = event.target.value;
+    setInputFields(data);
+  }
+
+  const addFields = () => {
+    let newfield = { item: '', phpd: '', total:'' }
+
+    setInputFields([...inputFields, newfield])
+  }
+
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1)
+    setInputFields(data)
+}
+
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log(inputFields)
+    try{
+      const response = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
+      console.log('Form submitted successfully:', response.data);
+    } catch (error){
+      console.error('Error submitting expenditure.', error);
+    }
+  }
+
+  //----------
+
+  //----------For submission
+  const handleAllSubmit = () => {
+    e.preventDefault();
+    handleSubmit();
+    submit();
+  };
+  //----------
+
   const [details, setDetails] = useState({
     title: '',
     purpose: '',
@@ -141,10 +187,64 @@ export default function InsetForm() {
               value={details.fund_source}
               onChange={handleChange}
             />
-            <div className='mt-5'>
-              <Submit label="Submit" onClick={handleSubmit} /*disabled={ your condition }*/ />
+            
+        <h1 className='text-center mt-3'>
+        Budgetary Requirements
+        </h1>
+        <div>
+          <form onSubmit={submit}>
+            {inputFields.map((input, index) => {
+              return(
+                <div key={index} className="flex space-x-4 mb-2">
+                  <input
+                    id="item"
+                    name="item"
+                    type="text"
+                    placeholder="Item"
+                    autoComplete="item"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.item}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="phpd"
+                    name="phpd"
+                    type="text"
+                    placeholder="Per Head/Per Day"
+                    autoComplete="phpd"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.phpd}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="total"
+                    name="total"
+                    type="text"
+                    placeholder="Total"
+                    autoComplete="total"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.total}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <button onClick={() => removeFields(index)}>Remove</button>
+                </div>
+                
+              )
+            })}
+            <div className="flex justify-center">
+            <button onClick={addFields} className='m-1'>Add More..</button>
+            <button onClick={submit} className='m-1'>Submit</button>
             </div>
-        </form>
+          </form>
+          
+        </div>
+            <div className='mt-5'>
+              <Submit label="Submit" onClick={handleSubmit}/>
+            </div>
+      </form>
     </div>
   )
 }

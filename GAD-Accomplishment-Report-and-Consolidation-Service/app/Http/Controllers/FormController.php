@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
+use App\Http\Requests\XpenditureRequest;
 use App\Models\formEmployee;
 use App\Models\formInset;
+use App\Models\expenditureList;
+use App\Models\expenditureList_i;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -123,7 +127,28 @@ class FormController extends Controller
         return response()->json(['message' => 'Form permanently deleted']);
     }
 
-    //for INSET training design=================================================================================================================
+
+    public function xpenditure_e_store(XpenditureRequest $request){
+
+        $formData = $request->all();
+        $user = Auth::user();
+        // Access the form data as an array (equivalent to an object in JavaScript) 
+        $xp_data = $formData['xp_data'];
+
+        // Iterate through xp_data and save each entry to the database
+        foreach ($xp_data as $data) {
+            expenditureList::create([
+                'form_id' => $user->id,
+                'items' => $data['item'],
+                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'total' => $data['total'],
+            ]);
+        }
+       
+
+        return response()->json(['message' => 'success', $formData]);
+    
+    }
     public function form_inset_store(FormRequest_I $request)
     {
        $formData = $request->validated();
@@ -209,4 +234,27 @@ class FormController extends Controller
 
         return response()->json(['message' => 'Form permanently deleted']);
     }
+
+    public function xpenditure_i_store(XpenditureRequest $request){
+
+        $formData = $request->all();
+        $user = Auth::user();
+        // Access the form data as an array (equivalent to an object in JavaScript) 
+        $xp_data = $formData['xp_data'];
+
+        // Iterate through xp_data and save each entry to the database
+        foreach ($xp_data as $data) {
+            expenditureList_i::create([
+                'form_id' => $user->id,
+                'items' => $data['item'],
+                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'total' => $data['total'],
+            ]);
+        }
+       
+
+        return response()->json(['message' => 'success', $formData]);
+    
+    }
+
 }
