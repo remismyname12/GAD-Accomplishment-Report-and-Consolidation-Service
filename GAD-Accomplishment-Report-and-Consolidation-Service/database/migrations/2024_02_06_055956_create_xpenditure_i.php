@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('items');
             $table->string('per_head_per_day'); // store as COLLECTION
             $table->string('total');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
