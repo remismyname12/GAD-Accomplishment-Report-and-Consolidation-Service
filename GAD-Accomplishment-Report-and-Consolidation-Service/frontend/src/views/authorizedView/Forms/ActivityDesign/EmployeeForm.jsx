@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
+import NeutralButton from '../../../components/buttons/NeutralButton';
 
 export default function EmployeeForm() {
 
@@ -49,10 +50,11 @@ export default function EmployeeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axiosClient.post('/form_employee', formData);
-        console.log('Form data submitted: ', response.data);
-        const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
-        console.log('Form submitted successfully:', response2.data);
+      const response = await axiosClient.post('/form_employee', {form_data: formData, xp_data:inputFields});
+        //const response = await axiosClient.post('/form_employee', formData);
+        //console.log('Form data submitted: ', response.data);
+        //const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
+        //console.log('Form submitted successfully:', response2.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -94,9 +96,6 @@ export default function EmployeeForm() {
         {renderInput("learning_service_providers", "Learning Service Providers: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
         {renderInput("fund_source", "Fund Source: ")}
-        <div className="mt-5">
-          <Submit label="Submit" onClick={handleSubmit} />
-        </div>   
         <h1 className='text-center m-3'>
           Budgetary Requirements
         </h1>
@@ -144,6 +143,17 @@ export default function EmployeeForm() {
               )
             })}
             <div className="flex justify-center">
+            {/*<button>
+              <NeutralButton label="Add more.." onClick={() => {addFields}} />
+            </button>
+            <button>
+              <Submit label="Submit" onClick={() => {Submit}} />
+            </button>
+            
+            */}
+
+
+
             <button onClick={addFields} className='m-1'>Add More..</button>
             {/*<button onClick={submit} className='m-1'>Submit</button>*/}
             </div>

@@ -21,7 +21,7 @@ class FormRequest_E extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        /*return [
             'title' => 'required|string',
             'purpose' => 'required|string',
             'legal_bases' => 'required|string',
@@ -32,6 +32,7 @@ class FormRequest_E extends FormRequest
             'learning_service_providers' => 'required|string',
             'expected_outputs' => 'required|string',
             'fund_source' => 'required|string',
-        ];
+        ];*/
+        return[];
     }
 }
