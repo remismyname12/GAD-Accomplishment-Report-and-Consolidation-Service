@@ -1,5 +1,4 @@
-import { React, useEffect, useState } from 'react';
-import axiosClient from '../../../axios/axios';
+import { React, useState } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import ActivityDesign from './activityForms/ActivityDesign';
@@ -10,10 +9,8 @@ import ReactModal from 'react-modal';
 
 export default function SubmitedForms() {
   const [selectedForm, setSelectedForm] = useState(null);
-  const [isEmployeeActivityFormModalOpen,setIsEmployeeActivityFormModalOpen ] = useState('employee');
 
   //For Modals
-  const [isInsetActivityFormModalOpen,setIsInsetActivityFormModalOpen ] = useState(false);
   const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
 
     
@@ -21,9 +18,6 @@ export default function SubmitedForms() {
   return (
     <div>
           <div>
-            {/* <button>
-              <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
-            </button> */}
               <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
           </div>
       <div className="w-full px-4 pt-16">

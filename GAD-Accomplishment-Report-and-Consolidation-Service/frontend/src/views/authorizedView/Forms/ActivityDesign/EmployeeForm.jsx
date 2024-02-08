@@ -18,10 +18,9 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = { item: '', phpd: '', total:'' }
-
-    setInputFields([...inputFields, newfield])
-  }
+    let newfield = { item: '', phpd: '', total:'' };
+    setInputFields([...inputFields, newfield]);
+  };
 
   const removeFields = (index) => {
     let data = [...inputFields];
@@ -33,7 +32,7 @@ export default function EmployeeForm() {
     title: '',
     purpose: '',
     legal_bases: '',
-    date_of_LEAD_activity: '',
+    date_of_activity: '',
     venue: '',
     participants: '',
     no_of_target_participants: '',
@@ -42,7 +41,7 @@ export default function EmployeeForm() {
     fund_source: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -100,7 +99,6 @@ export default function EmployeeForm() {
           Budgetary Requirements
         </h1>
         <div>
-          <form>
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="flex space-x-4 mb-2">
@@ -143,21 +141,10 @@ export default function EmployeeForm() {
               )
             })}
             <div className="flex justify-center">
-            {/*<button>
-              <NeutralButton label="Add more.." onClick={() => {addFields}} />
-            </button>
-            <button>
-              <Submit label="Submit" onClick={() => {Submit}} />
-            </button>
-            
-            */}
 
-
-
-            <button onClick={addFields} className='m-1'>Add More..</button>
-            {/*<button onClick={submit} className='m-1'>Submit</button>*/}
+            <NeutralButton label="Add more.." onClick={() => addFields()} />
+            {/* <button onClick={addFields} className='m-1'>Add More..</button> */}
             </div>
-          </form>
           
         </div>
         
