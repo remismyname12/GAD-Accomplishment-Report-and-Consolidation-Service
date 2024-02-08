@@ -4,24 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class formEmployee extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'form_employee';
 
     protected $fillable = [
         'title',
+        'user_id',
         'purpose',
-        'legalbases',
-        'dateofactivity',
+        'legal_bases',
+        'date_of_activity',
         'venue',
         'participants',
-        'nooftargetparticipants',
-        'learningserviceproviders',
-        'expectedoutputs',
-        'fundsource',
+        'no_of_target_participants',
+        'learning_service_providers',
+        'expected_outputs',
+        'fund_source',
     ];
 
     // BELONGS TO USER

@@ -48,7 +48,7 @@ export default function ActivityDesign() {
   // For User Archive
   const handleArchiveClick = (selected_form) => {
     setIsArchiveModalOpen(true)
-    setSelectedUser(selected_form)
+    setSelectedForm(selected_form)
   }
 
   return (
@@ -148,13 +148,6 @@ export default function ActivityDesign() {
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                     </ul>
-                    <a
-                      href="#"
-                      className={classNames(
-                        'absolute inset-0 rounded-md',
-                        'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2'
-                      )}
-                    />
                   </li>
                 ))}
               </ul>
