@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('no_of_participants_male');
             $table->string('no_of_participants_female');
             $table->string('no_of_participants_total');
+            $table->softDeletes();
             $table->timestamps();
             //this table is linked to expenditure_list
         });

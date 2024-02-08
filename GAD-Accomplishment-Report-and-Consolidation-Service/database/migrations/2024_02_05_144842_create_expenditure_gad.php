@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('expenditure'); //expenditure item name
             $table->string('actual_expenses');
             $table->string('attribution');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

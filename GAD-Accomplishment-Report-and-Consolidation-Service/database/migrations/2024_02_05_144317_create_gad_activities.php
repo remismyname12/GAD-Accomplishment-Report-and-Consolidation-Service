@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('attendance_female');
             $table->string('total_actual_expenses');
             $table->string('total_attribution');
+            $table->softDeletes();
             $table->timestamps();
             //this table is linked to expenditure_gad
         });
