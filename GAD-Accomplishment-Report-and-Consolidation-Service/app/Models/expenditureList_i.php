@@ -18,7 +18,12 @@ class expenditureList_i extends Model
         'total',
     ];
 
-    public function form_Employee()
+    public function form_Inset()
+    {
+        return $this->belongsTo(formInset::class);
+    }
+
+    /*public function form_Employee()
     {
         return $this->belongsTo(formEmployee::class);
     }
@@ -31,5 +36,5 @@ class expenditureList_i extends Model
     public function form_Research()
     {
         return $this->belongsTo(formResearch::class);
-    }
+    }*/
 }
