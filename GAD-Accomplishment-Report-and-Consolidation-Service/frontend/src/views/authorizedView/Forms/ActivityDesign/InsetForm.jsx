@@ -43,10 +43,11 @@ export default function InsetForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axiosClient.post('/form_inset', details);
-        console.log('Form submitted successfully:', response.data);
-        const response2 = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
-        console.log('Form submitted successfully:', response2.data);
+      const response = await axiosClient.post('/form_inset', { form_data: details, xp_data: inputFields });
+        //const response = await axiosClient.post('/form_inset', details);
+        //console.log('Form submitted successfully:', response.data);
+        //const response2 = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
+        //console.log('Form submitted successfully:', response2.data);
     } catch (error) {
       if (error.response) {
         const finalErrors = Object.values(error.response.data.errors).reduce(

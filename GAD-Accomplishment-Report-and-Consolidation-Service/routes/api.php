@@ -48,7 +48,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);
   
     //expenditure list
-    Route::post('/xpenditure_e', [FormController::class, 'xpenditure_e_store']);
     Route::post('/xpenditure_i', [FormController::class, 'xpenditure_i_store']);
 
     Route::post('/logout', [AuthController::class, 'logout']);

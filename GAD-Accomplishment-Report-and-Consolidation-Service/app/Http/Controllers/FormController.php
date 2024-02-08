@@ -45,24 +45,40 @@ class FormController extends Controller
     //for EMPLOYEE training design==============================================================================================
     public function form_employee_store(FormRequest_E $request)
     {
-       $formData = $request->validated();
-       $user= Auth::user();
+        $formData = $request->input('form_data');
+        $inputFields = $request->input('xp_data');
+        $user = Auth::user();
+        
+        $form = formEmployee::create([
+            'title' => $formData['title'],
+            'user_id' => $user->id,
+            'purpose' => $formData['purpose'],
+            'legal_bases' => $formData['legal_bases'],
+            'date_of_activity' => $formData['date_of_activity'],
+            'venue' => $formData['venue'],
+            'participants' => $formData['participants'],
+            'no_of_target_participants' => $formData['no_of_target_participants'],
+            'learning_service_providers' => $formData['learning_service_providers'],
+            'expected_outputs' => $formData['expected_outputs'],
+            'fund_source' => $formData['fund_source'],
+        ]);
+ 
+        foreach ($inputFields as $data) {
+            expenditureList::create([
+                'form_id' => $user->id,
+                'items' => $data['item'],
+                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'total' => $data['total'],
+            ]);
+        }
 
-       $form = formEmployee::create([
-        'title' => $formData['title'],
-        'user_id' => $user->id,
-        'purpose' => $formData['purpose'],
-        'legal_bases' => $formData['legal_bases'],
-        'date_of_activity' => $formData['date_of_activity'],
-        'venue' => $formData['venue'],
-        'participants' => $formData['participants'],
-        'no_of_target_participants' => $formData['no_of_target_participants'],
-        'learning_service_providers' => $formData['learning_service_providers'],
-        'expected_outputs' => $formData['expected_outputs'],
-        'fund_source' => $formData['fund_source'],
+        return response([
+              'Success' => true,
+              'Message' => 'Form Added'
         ]);
 
        return response()->json(['message' => 'success', $form]);
+       
     }
 
     public function form_employee_update(FormRequest_E $request, $id)
@@ -126,56 +142,29 @@ class FormController extends Controller
 
         return response()->json(['message' => 'Form permanently deleted']);
     }
-
-
-    public function xpenditure_e_store(XpenditureRequest $request){
-
-        $formData = $request->all();
-        $user = Auth::user();
-        // Access the form data as an array (equivalent to an object in JavaScript) 
-        $xp_data = $formData['xp_data'];
-
-        // Iterate through xp_data and save each entry to the database
-        foreach ($xp_data as $data) {
-            expenditureList::create([
-                'form_id' => $user->id,
-                'items' => $data['item'],
-                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
-                'total' => $data['total'],
-            ]);
-        }
-       
-
-        return response()->json(['message' => 'success', $formData]);
-    
-    }
     
     public function form_inset_store(FormRequest_I $request)
     {
+        
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
         $user = Auth::user();
         
         $form = formInset::create([
-         'title' => $formData['title'],
-         'user_id' => $user->id,
-         'purpose' => $formData['purpose'],
-         'legal_bases' => $formData['legal_bases'],
-         'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
-         'venue' => $formData['venue'],
-         'participants' => $formData['participants'],
-         'learning_service_providers' => $formData['learning_service_providers'],
-         'expected_outputs' => $formData['expected_outputs'],
-         'fund_source' => $formData['fund_source'],
-         ]);
- 
-             return response([
-              'Success' => true,
-              'Message' => 'Form Added'
-        ]);
+            'title' => $formData['title'],
+            'user_id' => $user->id,
+            'purpose' => $formData['purpose'],
+            'legal_bases' => $formData['legal_bases'],
+            'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
+            'venue' => $formData['venue'],
+            'participants' => $formData['participants'],
+            'learning_service_providers' => $formData['learning_service_providers'],
+            'expected_outputs' => $formData['expected_outputs'],
+            'fund_source' => $formData['fund_source'],
+            ]);
 
         foreach ($inputFields as $data) {
-            expenditureList::create([
+            expenditureList_i::create([
                 'form_id' => $user->id,
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
@@ -183,27 +172,10 @@ class FormController extends Controller
             ]);
         }
 
-
-        /*$formData = $request->validated();
-       $user = Auth::user();
-       
-       $form = formInset::create([
-        'title' => $formData['title'],
-        'user_id' => $user->id,
-        'purpose' => $formData['purpose'],
-        'legal_bases' => $formData['legal_bases'],
-        'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
-        'venue' => $formData['venue'],
-        'participants' => $formData['participants'],
-        'learning_service_providers' => $formData['learning_service_providers'],
-        'expected_outputs' => $formData['expected_outputs'],
-        'fund_source' => $formData['fund_source'],
+                return response([
+                'Success' => true,
+                'Message' => 'Form Added'
         ]);
-
-            return response([
-             'Success' => true,
-             'Message' => 'Form Added'
-       ]);*/
     }
 
     public function form_inset_update(FormRequest_I $request, $id)
@@ -266,28 +238,6 @@ class FormController extends Controller
         $form->forceDelete();
 
         return response()->json(['message' => 'Form permanently deleted']);
-    }
-
-    public function xpenditure_i_store(XpenditureRequest $request){
-
-        $formData = $request->all();
-        $user = Auth::user();
-        // Access the form data as an array (equivalent to an object in JavaScript) 
-        $xp_data = $formData['xp_data'];
-
-        // Iterate through xp_data and save each entry to the database
-        foreach ($xp_data as $data) {
-            expenditureList_i::create([
-                'form_id' => $user->id,
-                'items' => $data['item'],
-                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
-                'total' => $data['total'],
-            ]);
-        }
-       
-
-        return response()->json(['message' => 'success', $formData]);
-    
     }
 
 }
