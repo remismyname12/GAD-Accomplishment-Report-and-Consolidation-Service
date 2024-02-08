@@ -21,7 +21,7 @@ class FormRequest_I extends FormRequest
      */
     public function rules(): array
     {
-        /*return [
+        /*return [ form_data
             'title' => 'required|string',
             'purpose' => 'required|string',
             'legal_bases' => 'required|string',
@@ -31,7 +31,16 @@ class FormRequest_I extends FormRequest
             'learning_service_providers' => 'required|string',
             'expected_outputs' => 'required|string',
             'fund_source' => 'required|string',
+        ]; 
+        return [ xp_data
+            'form_id' => 'required|string',
+            'items' => 'required|string',
+            'per_head_per_day' => 'required|string',
+            'total' => 'required|string',
         ];*/
-        return [];
+        return [
+            'xp_data' => 'required|array',
+            'form_data' => 'required|array',
+        ];
     }
 }

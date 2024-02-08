@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
-use App\Http\Requests\XpenditureRequest;
 use App\Models\formEmployee;
 use App\Models\formInset;
 use App\Models\expenditureList;
@@ -45,10 +44,12 @@ class FormController extends Controller
     {
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
+        $form = $formData['title'];
         $user = Auth::user();
         
         $form = formEmployee::create([
-            'title' => $formData['title'],
+            //'title' => $formData['title'],
+            'title' => $form,
             'user_id' => $user->id,
             'purpose' => $formData['purpose'],
             'legal_bases' => $formData['legal_bases'],
@@ -60,10 +61,13 @@ class FormController extends Controller
             'expected_outputs' => $formData['expected_outputs'],
             'fund_source' => $formData['fund_source'],
         ]);
+
+        // Find the first item with the given title
+        $firstItem = formEmployee::where('title', $formData['title'])->first();
  
         foreach ($inputFields as $data) {
             expenditureList::create([
-                'form_id' => $user->id,
+                'form_id' => $firstItem->id,
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
@@ -75,8 +79,6 @@ class FormController extends Controller
               'Message' => 'Form Added'
         ]);
 
-       return response()->json(['message' => 'success', $form]);
-       
     }
 
     public function form_employee_update(FormRequest_E $request, $id)
