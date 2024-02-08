@@ -8,7 +8,7 @@ export default function EmployeeForm() {
 
   const [inputFields, setInputFields] = useState([
     {item: '', phpd: '', total:''}
-  ])// <><><>
+  ])
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -28,27 +28,6 @@ export default function EmployeeForm() {
     setInputFields(data)
 }
 
-  const submit = async (e) => {
-    e.preventDefault();
-    console.log(inputFields)
-    try{
-      const response = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
-      console.log('Form submitted successfully:', response.data);
-    } catch (error){
-      console.error('Error submitting expenditure.', error);
-    }
-  }
-
-  //----------
-
-  //----------For submission
-  const handleAllSubmit = () => {
-    e.preventDefault();
-    handleSubmit();
-    submit();
-  };
-  //----------
-
   const [formData, setFormData] = useState({
     title: '',
     purpose: '',
@@ -66,15 +45,19 @@ export default function EmployeeForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //----------axiosClient
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
         const response = await axiosClient.post('/form_employee', formData);
         console.log('Form data submitted: ', response.data);
+        const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
+        console.log('Form submitted successfully:', response2.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
   };
+  //----------
 
   return (
     <div className='bg-gray-300 m-5 p-3'>
@@ -198,7 +181,7 @@ export default function EmployeeForm() {
           Budgetary Requirements
         </h1>
         <div>
-          <form onSubmit={submit}>
+          <form>
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="flex space-x-4 mb-2">
@@ -242,7 +225,7 @@ export default function EmployeeForm() {
             })}
             <div className="flex justify-center">
             <button onClick={addFields} className='m-1'>Add More..</button>
-            <button onClick={submit} className='m-1'>Submit</button>
+            {/*<button onClick={submit} className='m-1'>Submit</button>*/}
             </div>
           </form>
           

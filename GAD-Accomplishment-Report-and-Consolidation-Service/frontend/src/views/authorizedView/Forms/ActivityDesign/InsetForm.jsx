@@ -28,27 +28,6 @@ export default function InsetForm() {
     setInputFields(data)
 }
 
-  const submit = async (e) => {
-    e.preventDefault();
-    console.log(inputFields)
-    try{
-      const response = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
-      console.log('Form submitted successfully:', response.data);
-    } catch (error){
-      console.error('Error submitting expenditure.', error);
-    }
-  }
-
-  //----------
-
-  //----------For submission
-  const handleAllSubmit = () => {
-    e.preventDefault();
-    handleSubmit();
-    submit();
-  };
-  //----------
-
   const [details, setDetails] = useState({
     title: '',
     purpose: '',
@@ -65,6 +44,9 @@ export default function InsetForm() {
     e.preventDefault();
     try{
         const response = await axiosClient.post('/form_inset', details);
+        console.log('Form submitted successfully:', response.data);
+        const response2 = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
+        console.log('Form submitted successfully:', response2.data);
     } catch (error) {
       if (error.response) {
         const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -73,7 +55,7 @@ export default function InsetForm() {
         );
         setError({ __html: finalErrors.join("<br>") });
       }
-      console.error(error);
+      console.error('Error submitting forms.', error);
     }
   };
 
@@ -192,7 +174,7 @@ export default function InsetForm() {
         Budgetary Requirements
         </h1>
         <div>
-          <form onSubmit={submit}>
+          <form>
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="flex space-x-4 mb-2">
@@ -236,7 +218,7 @@ export default function InsetForm() {
             })}
             <div className="flex justify-center">
             <button onClick={addFields} className='m-1'>Add More..</button>
-            <button onClick={submit} className='m-1'>Submit</button>
+            {/*<button onClick={submit} className='m-1'>Submit</button>*/}
             </div>
           </form>
           
