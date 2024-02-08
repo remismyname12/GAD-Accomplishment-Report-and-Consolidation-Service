@@ -22,9 +22,7 @@ class XpenditureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item' => 'required|string',
-            'phpd' => 'required|string',
-            'total' => 'required|string',
+            'xp_data' => 'required|array',
         ];
     }
 }
