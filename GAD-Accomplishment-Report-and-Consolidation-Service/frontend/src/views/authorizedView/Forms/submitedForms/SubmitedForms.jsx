@@ -24,9 +24,7 @@ export default function SubmitedForms() {
             {/* <button>
               <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
             </button> */}
-            <button>
               <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
-            </button>
           </div>
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
