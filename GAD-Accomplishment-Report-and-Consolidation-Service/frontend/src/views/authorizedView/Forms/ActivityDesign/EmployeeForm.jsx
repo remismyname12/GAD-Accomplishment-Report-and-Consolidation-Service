@@ -50,10 +50,11 @@ export default function EmployeeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-        const response = await axiosClient.post('/form_employee', formData);
-        console.log('Form data submitted: ', response.data);
-        const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
-        console.log('Form submitted successfully:', response2.data);
+      const response = await axiosClient.post('/form_employee', {form_data: formData, xp_data:inputFields});
+        //const response = await axiosClient.post('/form_employee', formData);
+        //console.log('Form data submitted: ', response.data);
+        //const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
+        //console.log('Form submitted successfully:', response2.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -95,9 +96,6 @@ export default function EmployeeForm() {
         {renderInput("learning_service_providers", "Learning Service Providers: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
         {renderInput("fund_source", "Fund Source: ")}
-        <div className="mt-5">
-          <Submit label="Submit" onClick={handleSubmit} />
-        </div>   
         <h1 className='text-center m-3'>
           Budgetary Requirements
         </h1>

@@ -149,9 +149,42 @@ class FormController extends Controller
         return response()->json(['message' => 'success', $formData]);
     
     }
+    
     public function form_inset_store(FormRequest_I $request)
     {
-       $formData = $request->validated();
+        $formData = $request->input('form_data');
+        $inputFields = $request->input('xp_data');
+        $user = Auth::user();
+        
+        $form = formInset::create([
+         'title' => $formData['title'],
+         'user_id' => $user->id,
+         'purpose' => $formData['purpose'],
+         'legal_bases' => $formData['legal_bases'],
+         'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
+         'venue' => $formData['venue'],
+         'participants' => $formData['participants'],
+         'learning_service_providers' => $formData['learning_service_providers'],
+         'expected_outputs' => $formData['expected_outputs'],
+         'fund_source' => $formData['fund_source'],
+         ]);
+ 
+             return response([
+              'Success' => true,
+              'Message' => 'Form Added'
+        ]);
+
+        foreach ($inputFields as $data) {
+            expenditureList::create([
+                'form_id' => $user->id,
+                'items' => $data['item'],
+                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'total' => $data['total'],
+            ]);
+        }
+
+
+        /*$formData = $request->validated();
        $user = Auth::user();
        
        $form = formInset::create([
@@ -170,7 +203,7 @@ class FormController extends Controller
             return response([
              'Success' => true,
              'Message' => 'Form Added'
-       ]);
+       ]);*/
     }
 
     public function form_inset_update(FormRequest_I $request, $id)
