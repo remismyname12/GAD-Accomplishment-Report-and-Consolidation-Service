@@ -6,6 +6,7 @@ use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
 use App\Models\formEmployee;
 use App\Models\formInset;
+use App\Models\User;
 use App\Models\expenditureList;
 use App\Models\expenditureList_i;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +47,7 @@ class FormController extends Controller
         $inputFields = $request->input('xp_data');
         $form = $formData['title'];
         $user = Auth::user();
-        
+
         //if $form exists in table return, training design with the name X already exists
         //create pop-up in frontend to tell user
 
@@ -87,6 +88,26 @@ class FormController extends Controller
                 'total' => $data['total'],
             ]);
         }
+
+        //test 1: find associated user
+        $form_id =  7;
+        $form = formEmployee::findOrFail($form_id);
+        $user2 = $form->user;
+
+        //test 2: find associated form
+        $xpn =  7;
+        $xxx = expenditureList::findOrFail($xpn);
+        $xlist = $xxx->employee_form;
+
+        //test 3: find associated form by user_id
+        $gg = $user->id;
+        $uuu = User::findOrFail($gg);
+        $forma = $uuu->form_employee;
+
+        /*return response([
+            'Success' => $xlist,
+            'Message' => 'Form Added'
+      ]);*/
 
         return response([
               'Success' => true,

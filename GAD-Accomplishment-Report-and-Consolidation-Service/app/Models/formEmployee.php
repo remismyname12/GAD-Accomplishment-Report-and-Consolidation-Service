@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class formEmployee extends Model
@@ -40,8 +41,8 @@ class formEmployee extends Model
             return $this->hasOne(accReport::class);
         }
 
-        public function expenditure_list(): HasOne
+        public function expenditure_list(): HasMany
         {
-            return $this->hasOne(expenditureList::class);
+            return $this->hasMany(expenditureList::class);
         }
 }
