@@ -2,8 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import GuestLayout from "./views/unauthorizedView/main_views/GuestLayout";
 import AdminLayout from "./views/authorizedView/AdminLayout";
 import ManageUsers from "./views/authorizedView/admin/ManageUsers";
-import Forms from "./views/authorizedView/Forms/Forms";
+import Forms from "./views/authorizedView/Forms/ActivityDesignForms";
 import SubmitedForms from "./views/authorizedView/Forms/submitedForms/SubmitedForms";
+import AccomplishmentReport from "./views/authorizedView/Forms/AccomplishmentReport";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: 'submitedforms',
                 element: <SubmitedForms />
+            },
+            {
+                path: 'accomplishmentreport',
+                element: <AccomplishmentReport />
             }
         ]
     },
