@@ -62,7 +62,6 @@ class User extends Authenticatable
             return $this->hasMany(formResearch::class);
         }
 
-
     //FOR GAD ACTIVITES
         public function gad_activities(): HasMany
         {

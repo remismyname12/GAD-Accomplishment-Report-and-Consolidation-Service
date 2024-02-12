@@ -20,24 +20,10 @@ class expenditureList extends Model
         'total',
     ];
 
-    public function form_Employee(): BelongsTo
+    public function employee_form(): BelongsTo
     {
-        return $this->belongsTo(formEmployee::class);
+        return $this->belongsTo(formEmployee::class, 'form_id'); 
+        //foreign key specified because it doesn't follow laravel convention
     }
 
-    /*
-    public function form_Employee()
-    {
-        return $this->belongsTo(formEmployee::class);
-    }
-
-    public function form_Inset()
-    {
-        return $this->belongsTo(formInset::class);
-    }
-
-    public function form_Research()
-    {
-        return $this->belongsTo(formResearch::class);
-    }*/
 }
