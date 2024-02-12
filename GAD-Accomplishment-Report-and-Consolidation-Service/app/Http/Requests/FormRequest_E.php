@@ -29,6 +29,7 @@ class FormRequest_E extends FormRequest
             'xp_data.*.phpd' => 'required|string',
             'xp_data.*.total' => 'required|string',
             //-----*/
+            //uncomment after expenditure is added to update 
             'form_data' => 'required|array',
             //-----
             'form_data.title' => 'required|string',

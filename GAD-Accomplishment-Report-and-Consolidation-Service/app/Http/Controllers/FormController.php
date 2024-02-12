@@ -122,7 +122,7 @@ class FormController extends Controller
         $form = formEmployee::find($id);
         $test = $validatedData['form_data'];
 
-         $form->update($test);
+        $form->update($test);
 
             return response([
              'Success' => true,
@@ -234,8 +234,9 @@ class FormController extends Controller
     {
        $validatedData = $request->validated();
        $form = formInset::find($id);
-       
-       $form->update($validatedData);
+       $test = $validatedData['form_data'];
+
+       $form->update($test);
 
             return response([
              'Success' => true,
