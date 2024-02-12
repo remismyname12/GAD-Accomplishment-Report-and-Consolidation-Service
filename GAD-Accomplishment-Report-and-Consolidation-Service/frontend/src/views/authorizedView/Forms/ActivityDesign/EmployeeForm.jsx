@@ -102,7 +102,7 @@ export default function EmployeeForm() {
         <div>
             {inputFields.map((input, index) => {
               return(
-                <div key={index} className="flex space-x-4 mb-2">
+                <div key={index} className="space-x-4 space-y-2">
                   <select
                     id="type"
                     name="type"
@@ -113,6 +113,7 @@ export default function EmployeeForm() {
                     onChange={event => handleFormChange(index, event)}
                     //<option value="" disabled selected>Select Type</option>
                   >
+                    <option value="" disabled selected>Select Type</option>
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>
