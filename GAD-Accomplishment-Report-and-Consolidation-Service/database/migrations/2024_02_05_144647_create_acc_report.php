@@ -25,6 +25,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
             //this table is linked to expenditure_list
+            //will fetch data from expenditures and training design
+            //remove redundant fields?
         });
     }
 

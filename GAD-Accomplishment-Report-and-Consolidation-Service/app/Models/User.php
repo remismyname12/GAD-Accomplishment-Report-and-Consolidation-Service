@@ -80,7 +80,7 @@ class User extends Authenticatable
     //FOR GAD ACTIVITES
         public function gad_activities()
         {
-            return $this->hasOne(gadActivites::class);
+            return $this->hasMany(gadActivites::class); //used to be has one
         }
     
     //ATTACH TO GAD ACTIVITIES

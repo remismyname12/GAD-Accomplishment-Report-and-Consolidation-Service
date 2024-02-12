@@ -70,6 +70,7 @@ class FormController extends Controller
         foreach ($inputFields as $data) {
             expenditureList::create([
                 'form_id' => $firstItem->id,
+                'type' => $data['type'],
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
@@ -172,6 +173,7 @@ class FormController extends Controller
         foreach ($inputFields as $data) {
             expenditureList_i::create([
                 'form_id' => $firstItem->id,
+                'type' => $data['type'],
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
