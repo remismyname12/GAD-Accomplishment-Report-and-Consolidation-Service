@@ -178,7 +178,7 @@ export default function InsetForm() {
           <form>
             {inputFields.map((input, index) => {
               return(
-                <div key={index} className="flex space-x-4 mb-2">
+                <div key={index} className="space-x-4 space-y-2">
                   <select
                     id="type"
                     name="type"
