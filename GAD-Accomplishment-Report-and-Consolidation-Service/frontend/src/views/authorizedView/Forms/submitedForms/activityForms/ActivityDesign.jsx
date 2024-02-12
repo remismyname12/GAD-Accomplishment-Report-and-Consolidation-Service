@@ -1,10 +1,11 @@
 import { React, useState, useEffect } from 'react'
 import { Tab } from '@headlessui/react'
 import axiosClient from '../../../../axios/axios';
-import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/outline';
+import { ArchiveBoxArrowDownIcon, PencilIcon, SparklesIcon } from '@heroicons/react/24/outline';
 import ReactModal from 'react-modal';
 import EditActivityModal from './components/modals/EditActivityModal';
 import ArchiveActivityModal from './components/modals/ArchiveActivityModal';
+import GenerateAccomplishmentReport from '../activityForms/components/modals/GenerateAccomplishmentReport';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -14,6 +15,7 @@ export default function ActivityDesign() {
   const [employeeForms, setEmployeeForms] = useState([]);
   const [insetForms, setInsetForms] = useState([]);
   const [selectedForm, setSelectedForm] = useState('')
+  const [isGenerateAccomplishmentReportOpen, setIsGenerateAccomplishmentReportOpen] = useState(false);
 
   //For Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -51,6 +53,12 @@ export default function ActivityDesign() {
     setSelectedForm(selected_form)
   }
 
+  // For Generate Accomplishment Report
+  const handleGenerateAccomplishmentReportClick = (selected_form) => {
+    setIsGenerateAccomplishmentReportOpen(true)
+    setSelectedForm(selected_form)
+  }
+  
   return (
     <div className='flex justify-center'>
       <div className="w-full max-w-md px-2 py-5 sm:px-0">
@@ -114,6 +122,9 @@ export default function ActivityDesign() {
                       <button onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
+                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                          <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
                     </ul>
                   </li>
                 ))}
@@ -147,6 +158,9 @@ export default function ActivityDesign() {
                       <button onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
+                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                          <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
                     </ul>
                   </li>
                 ))}
@@ -179,6 +193,20 @@ export default function ActivityDesign() {
             <div>
                 <ArchiveActivityModal
                  closeModal={() => setIsArchiveModalOpen(false)}
+                 selectedForm={selectedForm}
+                 />
+            </div>
+        </ReactModal>
+        
+        {/** Modal For Generate Accomplishment Report */}                
+        <ReactModal
+            isOpen={isGenerateAccomplishmentReportOpen}
+            onRequestClose={() => setIsGenerateAccomplishmentReportOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <GenerateAccomplishmentReport
+                 closeModal={() => setIsGenerateAccomplishmentReportOpen(false)}
                  selectedForm={selectedForm}
                  />
             </div>
