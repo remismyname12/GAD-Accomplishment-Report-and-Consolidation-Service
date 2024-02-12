@@ -1,10 +1,8 @@
-import { useState } from "react";
 import axiosClient from "../axios";
 
-export default async function getAxios({ endPoint, data }) {
-    console.log('This is the data: ', data);
+export default async function getAxios({ endPoint }) {
     try {
-        const response = await axiosClient.post(endPoint, data);
+        const response = await axiosClient.get(endPoint);
         return { response };
     } catch (error) {
         if (error.response) {

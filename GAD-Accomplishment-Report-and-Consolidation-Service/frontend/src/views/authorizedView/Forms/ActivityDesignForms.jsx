@@ -5,7 +5,7 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import EmployeeForm from './ActivityDesign/EmployeeForm';
 import InsetForm from './ActivityDesign/InsetForm';
 
-export default function Forms() {
+export default function ActivityDesignForms() {
   const [selectedForm, setSelectedForm] = useState(null);
 
   return (
