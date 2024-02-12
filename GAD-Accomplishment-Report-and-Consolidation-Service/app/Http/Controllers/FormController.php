@@ -47,6 +47,9 @@ class FormController extends Controller
         $form = $formData['title'];
         $user = Auth::user();
         
+        //if $form exists in table return, training design with the name X already exists
+        //create pop-up in frontend to tell user
+
         $form = formEmployee::create([
             //'title' => $formData['title'],
             'title' => $form,
