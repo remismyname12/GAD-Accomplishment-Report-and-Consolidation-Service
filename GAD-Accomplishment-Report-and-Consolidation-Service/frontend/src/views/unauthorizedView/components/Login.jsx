@@ -79,18 +79,7 @@ export default function Login() {
         <div className="mt-5">
           <Submit label="Login" onClick={onSubmit} /*disabled={ your condition }*/ />
         </div>
-      </form>
-
-      {/* Modal For Axios Response */}
-      <ReactModal
-        isOpen={isFeedbackModalOpen}
-        onRequestClose={() => setIsFeedbackModalOpen(false)}
-        className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-      >
-        <div>
-          <Feedback closeModal={() => setIsFeedbackModalOpen(false)} axiosResponse={axiosRes} />
-        </div>
-      </ReactModal>
+      </form> 
     </div>
   );
 }
