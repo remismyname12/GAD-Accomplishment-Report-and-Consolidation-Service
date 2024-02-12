@@ -110,7 +110,7 @@ export default function EmployeeForm() {
                     onChange={event => handleFormChange(index, event)}
                     //<option value="" disabled selected>Select Type</option>
                   >
-                    <option value="" disabled selected>Select Type</option>
+                    
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>

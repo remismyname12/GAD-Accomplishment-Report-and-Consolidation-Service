@@ -53,8 +53,11 @@ class FormController extends Controller
         $existingRecord = formEmployee::where('title', $form )->exists();
 
         if ($existingRecord) {
-            //return response()->json(['message' => 'Title must be unique']);
-            return response()->json(['error' => 'Title must be unique'], 422);
+            return response([
+                'Success' => false,
+                'Message' => 'Title must be unique',
+            ]);
+            //return response()->json(['error' => 'Title must be unique'], 422);
         }
 
         $form = formEmployee::create([
@@ -165,8 +168,11 @@ class FormController extends Controller
         $existingRecord = formInset::where('title', $form )->exists();
 
         if ($existingRecord) {
-            //return response()->json(['message' => 'Title must be unique']);
-            return response()->json(['error' => 'Title must be unique'], 422);
+            return response([
+                'Success' => false,
+                'Message' => 'Title must be unique',
+            ]);
+            //return response()->json(['error' => 'Title must be unique'], 422);
         }
 
         $form = formInset::create([
