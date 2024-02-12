@@ -2,7 +2,7 @@ import { React, useState} from 'react'
 import { Menu } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import Submit from '../../../../../components/buttons/Submit'
-import getAxios from '../../../../../axios/axiosMethods/getAxios';
+import getAxios from '../../../../../axios/axiosMethods/postAxios';
 
 export default function AddUserModal() {
     const [error, setError] = useState("");
@@ -17,7 +17,7 @@ export default function AddUserModal() {
     
       try {
         // Call getAxios to make the POST request
-        const response = await getAxios({
+        const response = await postAxios({
             endPoint: "adduser",
             data: { email, username: userName, password, role: role },
             
