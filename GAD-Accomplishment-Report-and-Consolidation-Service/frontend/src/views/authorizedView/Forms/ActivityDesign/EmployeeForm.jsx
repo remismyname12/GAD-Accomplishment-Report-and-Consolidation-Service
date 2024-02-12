@@ -160,9 +160,7 @@ export default function EmployeeForm() {
               )
             })}
             <div className="flex justify-center">
-
-            <NeutralButton label="Add more.." onClick={() => addFields()} />
-            {/* <button onClick={addFields} className='m-1'>Add More..</button> */}
+              <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>
           
         </div>
