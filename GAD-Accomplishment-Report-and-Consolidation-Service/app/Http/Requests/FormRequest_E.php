@@ -22,13 +22,13 @@ class FormRequest_E extends FormRequest
     public function rules(): array
     {
         return [
-            'xp_data' => 'required|array',
+            /*'xp_data' => 'required|array',
             //-----
             'xp_data.*.type' => 'required|string',
             'xp_data.*.item' => 'required|string',
             'xp_data.*.phpd' => 'required|string',
             'xp_data.*.total' => 'required|string',
-            //-----
+            //-----*/
             'form_data' => 'required|array',
             //-----
             'form_data.title' => 'required|string',
