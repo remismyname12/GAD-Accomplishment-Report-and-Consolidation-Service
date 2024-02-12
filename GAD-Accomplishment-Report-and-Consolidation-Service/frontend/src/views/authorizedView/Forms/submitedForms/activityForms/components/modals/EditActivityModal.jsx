@@ -47,7 +47,7 @@ export default function EditActivityModal({ selectedForm }) {
     } else {
       //For INSET UPDATE
       axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, formData)
+      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
