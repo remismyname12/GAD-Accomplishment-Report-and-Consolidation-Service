@@ -1,7 +1,7 @@
 import { React, useState } from 'react'
 import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
-
+import NeutralButton from '../../../components/buttons/NeutralButton';
 export default function InsetForm() {
 
   //----------for exenditure
@@ -175,7 +175,6 @@ export default function InsetForm() {
         Budgetary Requirements
         </h1>
         <div>
-          <form>
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="space-x-4 space-y-2">
@@ -238,17 +237,8 @@ export default function InsetForm() {
               )
             })}
             <div className="flex justify-center">
-             {/*<button>
-              <NeutralButton label="Add more.." onClick={() => {addFields}} />
-            </button>
-            <button>
-              <Submit label="Submit" onClick={() => {Submit}} />
-            </button>*/}
-
-            <button onClick={addFields} className='m-1'>Add More..</button>
-            {/*<button onClick={submit} className='m-1'>Submit</button>*/}
+              <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>
-          </form>
           
         </div>
             <div className='mt-5'>
