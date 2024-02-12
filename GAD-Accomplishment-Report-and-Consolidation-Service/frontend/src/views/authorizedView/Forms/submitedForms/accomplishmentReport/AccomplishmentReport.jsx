@@ -1,6 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import { Tab } from '@headlessui/react'
 import axiosClient from '../../../../axios/axios';
+import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/outline';
+import ReactModal from 'react-modal';
+import EditActivityModal from '../activityForms/components/modals/EditActivityModal';
+import ArchiveActivityModal from '../activityForms/components/modals/ArchiveActivityModal';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -9,6 +13,11 @@ function classNames(...classes) {
 export default function AccomplishmentReport() {
   const [employeeForms, setEmployeeForms] = useState([]);
   const [insetForms, setInsetForms] = useState([]);
+  const [selectedForm, setSelectedForm] = useState('')
+
+  //For Modals
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
 
   useEffect(() => {
     fetchForms();
@@ -18,6 +27,7 @@ export default function AccomplishmentReport() {
     try {
       const employeeFormData = await axiosClient.get('/show_form_employee');
       const insetFormData = await axiosClient.get('/show_form_inset');
+
       if (employeeFormData.data) {
         setEmployeeForms(employeeFormData.data);
       }
@@ -28,6 +38,18 @@ export default function AccomplishmentReport() {
       console.error(error);
     }
   };
+
+  // For Form EDIT
+  const handleEditClick = (selected_form) => {
+    setIsEditModalOpen(true)
+    setSelectedForm(selected_form)
+  }
+
+  // For Form Archive
+  const handleArchiveClick = (selected_form) => {
+    setIsArchiveModalOpen(true)
+    setSelectedForm(selected_form)
+  }
 
   return (
     <div className='flex justify-center'>
@@ -63,10 +85,7 @@ export default function AccomplishmentReport() {
               Inset
             </Tab>
           </Tab.List>
-
           <Tab.Panels className="mt-2">
-            
-          <h1>AccomplishmentReport</h1>
             <Tab.Panel
               key="Employee"
               className={classNames(
@@ -88,13 +107,14 @@ export default function AccomplishmentReport() {
                     <li>{form.title}</li>
                   </ul>
 
-                    <a
-                      href="#"
-                      className={classNames(
-                        'absolute inset-0 rounded-md',
-                        'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2'
-                      )}
-                    />
+                  <ul>
+                      <button onClick={() => handleEditClick(form)}>
+                          <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
+                      <button onClick={() => handleArchiveClick(form)}>
+                          <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
+                    </ul>
                   </li>
                 ))}
               </ul>
@@ -120,13 +140,17 @@ export default function AccomplishmentReport() {
                       <li>{form.title}</li>
                     </ul>
 
-                    <a
-                      href="#"
-                      className={classNames(
-                        'absolute inset-0 rounded-md',
-                        'ring-blue-400 focus:z-10 focus:outline-none focus:ring-2'
-                      )}
-                    />
+                    <ul>
+                      <button onClick={() => handleEditClick(form)}>
+                          <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
+                      <button onClick={() => handleArchiveClick(form)}>
+                          <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
+                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                          <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      </button>
+                    </ul>
                   </li>
                 ))}
               </ul>
@@ -134,6 +158,34 @@ export default function AccomplishmentReport() {
           </Tab.Panels>
         </Tab.Group>
       </div>
+
+      {/** Modal For User EDIT */}
+        <ReactModal
+            isOpen={isEditModalOpen}
+            onRequestClose={() => setIsEditModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <EditActivityModal
+                 closeModal={() => setIsEditModalOpen(false)}
+                 selectedForm={selectedForm}
+                 />
+            </div>
+        </ReactModal>
+
+        {/** Modal For User ARCHIVE */}                
+        <ReactModal
+            isOpen={isArchiveModalOpen}
+            onRequestClose={() => setIsArchiveModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <ArchiveActivityModal
+                 closeModal={() => setIsArchiveModalOpen(false)}
+                 selectedForm={selectedForm}
+                 />
+            </div>
+        </ReactModal>
     </div>
   )
 }

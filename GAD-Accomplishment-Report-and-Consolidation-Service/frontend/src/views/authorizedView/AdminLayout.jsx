@@ -8,7 +8,7 @@ import axiosClient from '../axios/axios';
 const navigation = [
   { name: 'Home', href: '#', current: false },
   { name: 'Manage Users', to: '/admin/manageusers'},
-  { name: 'Acitity Design Forms', to: '/admin/forms'},
+  { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
