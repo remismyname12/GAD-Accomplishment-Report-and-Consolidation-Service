@@ -118,14 +118,16 @@ class FormController extends Controller
 
     public function form_employee_update(FormRequest_E $request, $id)
     {
-       $validatedData = $request->validated();
-       $form = formEmployee::find($id);
-       
-       $form->update($validatedData);
+        $validatedData = $request->validated();
+        $form = formEmployee::find($id);
+        $test = $validatedData['form_data'];
+
+         $form->update($test);
 
             return response([
              'Success' => true,
-             'Message' => 'Form Updated'
+             'Message' => 'Form Updated',
+             //'Message' => 'Form Updated'
        ]);
     }
 
