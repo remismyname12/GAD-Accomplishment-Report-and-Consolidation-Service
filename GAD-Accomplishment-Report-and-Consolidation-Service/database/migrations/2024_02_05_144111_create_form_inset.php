@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('form_type')->default('INSET');
-            $table->string('title');
+            $table->string('title')->unique();
             $table->string('purpose');
             $table->string('legal_bases');
             $table->string('date_of_LEAD_activity');
