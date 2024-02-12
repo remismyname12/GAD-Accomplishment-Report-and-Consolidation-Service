@@ -16,7 +16,7 @@ class FormController extends Controller
     //for show all users
     public function index_employee_forms()
     {
-        $forms = formEmployee::with()->all();
+        $forms = formEmployee::all();
 
         return response()->json($forms);
     }
