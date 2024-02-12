@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class expenditureList_i extends Model
 {
@@ -19,7 +20,7 @@ class expenditureList_i extends Model
         'total',
     ];
 
-    public function form_Inset()
+    public function form_Inset(): BelongsTo
     {
         return $this->belongsTo(formInset::class);
     }
