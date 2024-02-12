@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class expenditureList extends Model
 {
@@ -19,7 +20,7 @@ class expenditureList extends Model
         'total',
     ];
 
-    public function form_Employee()
+    public function form_Employee(): BelongsTo
     {
         return $this->belongsTo(formEmployee::class);
     }

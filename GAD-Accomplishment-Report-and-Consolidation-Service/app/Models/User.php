@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -46,39 +47,24 @@ class User extends Authenticatable
     ];
 
     //FOR FORMS/TRAINING DESIGN
-        public function form_employee()
+        public function form_employee(): HasMany
         {
-            return $this->hasOne(formEmployee::class);
+            return $this->hasMany(formEmployee::class);
         }
 
-        public function form_inset()
+        public function form_inset(): HasMany
         {
-            return $this->hasOne(formInset::class);
+            return $this->hasMany(formInset::class);
         }
         
-        public function form_research()
+        public function form_research(): HasMany
         {
-            return $this->hasOne(formResearch::class);
+            return $this->hasMany(formResearch::class);
         }
 
-    //FOR ACCOMPLISHMENT REPORTS + EXPENDITURE
-    /*  public function acc_report()
-        {
-            return $this->hasOne(accReport::class);
-        }
-
-        public function expenditure_list()
-        {
-            return $this->hasOne(expenditureList::class);
-        }
-
-        MOVE TO FORMS INSTEAD
-        
-        $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-    */
 
     //FOR GAD ACTIVITES
-        public function gad_activities()
+        public function gad_activities(): HasMany
         {
             return $this->hasMany(gadActivites::class); //used to be has one
         }
