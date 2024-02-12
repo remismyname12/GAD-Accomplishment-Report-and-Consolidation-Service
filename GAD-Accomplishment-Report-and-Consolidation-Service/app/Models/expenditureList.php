@@ -13,6 +13,7 @@ class expenditureList extends Model
 
     protected $fillable = [
         'form_id',
+        'type',
         'items',
         'per_head_per_day',
         'total',

@@ -7,7 +7,7 @@ export default function InsetForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {item: '', phpd: '', total:''}
+    {type: '', item: '', phpd: '', total:''}
   ])// <><><>
 
   const handleFormChange = (index, event) => {
@@ -17,7 +17,7 @@ export default function InsetForm() {
   }
 
   const addFields = () => {
-    let newfield = { item: '', phpd: '', total:'' }
+    let newfield = { type: '', item: '', phpd: '', total:'' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -179,6 +179,25 @@ export default function InsetForm() {
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="flex space-x-4 mb-2">
+                  <select
+                    id="type"
+                    name="type"
+                    autoComplete="type"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.type}
+                    onChange={event => handleFormChange(index, event)}
+                  >
+                    <option value="Meals and Snacks">Meals and Snacks</option>
+                    <option value="Function Room/Venue">Venue</option>
+                    <option value="Accomodation">Accomodation</option>
+                    <option value="Equipment Rental">Equipment Rental</option>
+                    <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                    <option value="Token/s">Token/s</option>
+                    <option value="Materials and Supplies">Materials and Supplies</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Others">Others...</option>
+                  </select>
                   <input
                     id="item"
                     name="item"

@@ -35,6 +35,7 @@ class FormRequest_E extends FormRequest
         ];
         return [ xp_data
             'form_id' => 'required|string',
+            'type' => 'required|string',
             'items' => 'required|string',
             'per_head_per_day' => 'required|string',
             'total' => 'required|string',
