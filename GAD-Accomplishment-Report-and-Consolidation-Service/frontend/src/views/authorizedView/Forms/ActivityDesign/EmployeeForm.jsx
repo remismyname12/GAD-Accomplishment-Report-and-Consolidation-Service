@@ -8,7 +8,7 @@ export default function EmployeeForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total: ''}
+    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
   ])
 
   const handleFormChange = (index, event) => {
@@ -18,7 +18,7 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
+    let newfield = { type: 'Meals and Snacks', item: '', phpd: '', total:'' }
 
     setInputFields([...inputFields, newfield])
   }
