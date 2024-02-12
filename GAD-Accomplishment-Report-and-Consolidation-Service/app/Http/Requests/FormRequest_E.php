@@ -21,28 +21,27 @@ class FormRequest_E extends FormRequest
      */
     public function rules(): array
     {
-        /*return [ form_data
-            'title' => 'required|string',
-            'purpose' => 'required|string',
-            'legal_bases' => 'required|string',
-            'date_of_activity' => 'required|string',
-            'venue' => 'required|string',
-            'participants' => 'required|string',
-            'no_of_target_participants' => 'required|string',
-            'learning_service_providers' => 'required|string',
-            'expected_outputs' => 'required|string',
-            'fund_source' => 'required|string',
-        ];
-        return [ xp_data
-            'form_id' => 'required|string',
-            'type' => 'required|string',
-            'items' => 'required|string',
-            'per_head_per_day' => 'required|string',
-            'total' => 'required|string',
-        ];*/
         return [
             'xp_data' => 'required|array',
+            //-----
+            'xp_data.*.type' => 'required|string',
+            'xp_data.*.item' => 'required|string',
+            'xp_data.*.phpd' => 'required|string',
+            'xp_data.*.total' => 'required|string',
+            //-----
             'form_data' => 'required|array',
+            //-----
+            'form_data.title' => 'required|string',
+            'form_data.purpose' => 'required|string',
+            'form_data.legal_bases' => 'required|string',
+            'form_data.date_of_activity' => 'required|string',
+            'form_data.venue' => 'required|string',
+            'form_data.participants' => 'required|string',
+            'form_data.no_of_target_participants' => 'required|string',
+            'form_data.learning_service_providers' => 'required|string',
+            'form_data.expected_outputs' => 'required|string',
+            'form_data.fund_source' => 'required|string',
+            //-----
         ];
     }
 }

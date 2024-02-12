@@ -51,10 +51,7 @@ export default function EmployeeForm() {
     e.preventDefault();
     try{
       const response = await axiosClient.post('/form_employee', {form_data:formData, xp_data:inputFields});
-        //const response = await axiosClient.post('/form_employee', formData);
-        //console.log('Form data submitted: ', response.data);
-        //const response2 = await axiosClient.post('/xpenditure_e', { xp_data: inputFields });
-        //console.log('Form submitted successfully:', response2.data);
+      //make modal for error (unique constraint) and success confirmation
     } catch (error) {
         console.error('Error submitting form', error);
     }

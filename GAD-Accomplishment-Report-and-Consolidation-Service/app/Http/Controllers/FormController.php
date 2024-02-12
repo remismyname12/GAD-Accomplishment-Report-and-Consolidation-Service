@@ -50,6 +50,13 @@ class FormController extends Controller
         //if $form exists in table return, training design with the name X already exists
         //create pop-up in frontend to tell user
 
+        $existingRecord = formEmployee::where('title', $form )->exists();
+
+        if ($existingRecord) {
+            //return response()->json(['message' => 'Title must be unique']);
+            return response()->json(['error' => 'Title must be unique'], 422);
+        }
+
         $form = formEmployee::create([
             //'title' => $formData['title'],
             'title' => $form,
@@ -155,6 +162,13 @@ class FormController extends Controller
         $form = $formData['title'];
         $user = Auth::user();
         
+        $existingRecord = formInset::where('title', $form )->exists();
+
+        if ($existingRecord) {
+            //return response()->json(['message' => 'Title must be unique']);
+            return response()->json(['error' => 'Title must be unique'], 422);
+        }
+
         $form = formInset::create([
             'title' => $form,
             'user_id' => $user->id,
