@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expenditures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('form_id')->constrained('form_employee')->onDelete('cascade'); //form_employee_id
+            $table->foreignId('form_id')->constrained('forms')->onDelete('cascade'); //form_employee_id
             $table->string('type')->default('OTHERS');
             $table->string('items');
             $table->string('per_head_per_day')->nullable();

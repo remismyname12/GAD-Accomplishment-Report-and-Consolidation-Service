@@ -35,12 +35,13 @@ class FormRequest_I extends FormRequest
             'form_data.title' => 'required|string',
             'form_data.purpose' => 'required|string',
             'form_data.legal_bases' => 'required|string',
-            'form_data.date_of_LEAD_activity' => 'required|string',
+            'form_data.date_of_activity' => 'required|string',
             'form_data.venue' => 'required|string',
             'form_data.participants' => 'required|string',
             'form_data.learning_service_providers' => 'required|string',
             'form_data.expected_outputs' => 'required|string',
             'form_data.fund_source' => 'required|string',
+            //form_data.proponents_implementors' => 'required|string',
             //-----
         ];
     }

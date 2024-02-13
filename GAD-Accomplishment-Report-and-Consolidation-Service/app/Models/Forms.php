@@ -18,6 +18,7 @@ class Forms extends Model
     protected $fillable = [
         'title',
         'user_id',
+        'form_type',
         'purpose',
         'legal_bases',
         'date_of_activity',

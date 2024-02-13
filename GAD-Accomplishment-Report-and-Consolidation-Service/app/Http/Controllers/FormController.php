@@ -7,6 +7,8 @@ use App\Http\Requests\FormRequest_I;
 use App\Models\formEmployee;
 use App\Models\formInset;
 use App\Models\User;
+use App\Models\Forms;
+use App\Models\Expenditures;
 use App\Models\expenditureList;
 use App\Models\expenditureList_i;
 use Illuminate\Support\Facades\Auth;
@@ -45,13 +47,14 @@ class FormController extends Controller
     {
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
-        $form = $formData['title'];
+        $formtitle = $formData['title'];
+        $formtype = "EMPLOYEE";
         $user = Auth::user();
 
         //if $form exists in table return, training design with the name X already exists
         //create pop-up in frontend to tell user
 
-        $existingRecord = formEmployee::where('title', $form )->exists();
+        $existingRecord = Forms::where('title', $formtitle )->exists();
 
         if ($existingRecord) {
             return response([
@@ -61,10 +64,10 @@ class FormController extends Controller
             //return response()->json(['error' => 'Title must be unique'], 422);
         }
 
-        $form = formEmployee::create([
-            //'title' => $formData['title'],
-            'title' => $form,
+        $form = Forms::create([
+            'title' => $formtitle,
             'user_id' => $user->id,
+            'form_type' => $formtype,
             'purpose' => $formData['purpose'],
             'legal_bases' => $formData['legal_bases'],
             'date_of_activity' => $formData['date_of_activity'],
@@ -77,10 +80,10 @@ class FormController extends Controller
         ]);
 
         // Find the first item with the given title
-        $firstItem = formEmployee::where('title', $formData['title'])->first();
+        $firstItem = Forms::where('title', $formData['title'])->first();
  
         foreach ($inputFields as $data) {
-            expenditureList::create([
+            Expenditures::create([
                 'form_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
@@ -165,10 +168,11 @@ class FormController extends Controller
         
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
-        $form = $formData['title'];
+        $formtitle = $formData['title'];
+        $formtype = "INSET";
         $user = Auth::user();
         
-        $existingRecord = formInset::where('title', $form )->exists();
+        $existingRecord = Forms::where('title', $formtitle )->exists();
 
         if ($existingRecord) {
             return response([
@@ -178,12 +182,13 @@ class FormController extends Controller
             //return response()->json(['error' => 'Title must be unique'], 422);
         }
 
-        $form = formInset::create([
-            'title' => $form,
+        $form = Forms::create([
+            'title' => $formtitle,
             'user_id' => $user->id,
+            'form_type' => $formtype,
             'purpose' => $formData['purpose'],
             'legal_bases' => $formData['legal_bases'],
-            'date_of_LEAD_activity' => $formData['date_of_LEAD_activity'],
+            'date_of_activity' => $formData['date_of_activity'],
             'venue' => $formData['venue'],
             'participants' => $formData['participants'],
             'learning_service_providers' => $formData['learning_service_providers'],
@@ -192,10 +197,10 @@ class FormController extends Controller
         ]);
 
         // Find the first item with the given title
-        $firstItem = formInset::where('title', $formData['title'])->first();
+        $firstItem = Forms::where('title', $formData['title'])->first();
 
         foreach ($inputFields as $data) {
-            expenditureList_i::create([
+            Expenditures::create([
                 'form_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
