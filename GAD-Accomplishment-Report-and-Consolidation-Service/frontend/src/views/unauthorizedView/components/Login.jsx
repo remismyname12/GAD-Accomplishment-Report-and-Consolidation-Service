@@ -4,8 +4,6 @@ import axiosClient from '../../axios/axios';
 import { useStateContext } from '../../../context/ContextProvider';
 import Error from '../../components/feedbacks/Error';
 import Success from '../../components/feedbacks/Success'; // Import the Success component
-import Feedback from '../../components/feedbacks/Feedback';
-import ReactModal from 'react-modal';
 
 export default function Login() {
   const [error, setError] = useState('');
