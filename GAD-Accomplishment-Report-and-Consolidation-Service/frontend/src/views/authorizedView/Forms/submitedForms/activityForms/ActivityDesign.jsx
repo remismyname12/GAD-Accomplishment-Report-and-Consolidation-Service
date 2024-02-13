@@ -174,7 +174,7 @@ export default function ActivityDesign() {
         <ReactModal
             isOpen={isEditModalOpen}
             onRequestClose={() => setIsEditModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+            className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
         >
             <div>
                 <EditActivityModal

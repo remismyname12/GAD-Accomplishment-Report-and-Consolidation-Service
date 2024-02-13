@@ -123,6 +123,8 @@ return (
                   <option value="Transportation">Transportation</option>
                   <option value="Others">Others...</option>
                 </select>
+
+                {/**For expendature */}
                 <input
                   id="item"
                   name="item"
