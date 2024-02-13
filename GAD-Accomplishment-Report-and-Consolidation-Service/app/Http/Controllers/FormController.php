@@ -109,23 +109,6 @@ class FormController extends Controller
              //'Message' => 'Form Updated'
        ]);
     }
-
-    public function form_employee_delete($id)
-    {
-        // Find the form by ID
-        $form = Forms::withTrashed()
-        ->find($id);
-
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-
-        // Force delete the form
-        $form->forceDelete();
-
-        return response()->json(['message' => 'Form permanently deleted']);
-    }
     
     public function form_inset_store(FormRequest_I $request)
     {
@@ -225,7 +208,7 @@ class FormController extends Controller
         return response()->json(['message' => 'Form Restored successfully']);
     }
 
-    public function form_inset_delete($id)
+    public function form_delete($id)
     {
         // Find the form by ID
         $form = Forms::withTrashed()
