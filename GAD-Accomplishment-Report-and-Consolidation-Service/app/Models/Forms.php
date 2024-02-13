@@ -42,7 +42,7 @@ class Forms extends Model
     }
 
     //FOR ACCOMPLISHMENT REPORTS + EXPENDITURE
-        public function acc_report(): HasOne
+        public function accReport(): HasOne
         {
             return $this->hasOne(accReport::class);
         }

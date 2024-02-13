@@ -19,7 +19,7 @@ class gadActivities extends Model
  
      //ATTACH TO GAD ACTIVITIES
      
-         public function expenditure_gad(): HasOne
+         public function expenditureGad(): HasOne
          {
              return $this->hasOne(expenditureGad::class);
          }

@@ -18,10 +18,9 @@ class accReport extends Model
     ];
 
     //
-    public function employeeForm(): BelongsTo
+    public function forms(): BelongsTo
     {
-        return $this->belongsTo(Forms::class, 'forms_id');
-        //return $this->belongsTo(Forms::class);
+        return $this->belongsTo(Forms::class);
     }
 
     public function expenditures(): BelongsTo
