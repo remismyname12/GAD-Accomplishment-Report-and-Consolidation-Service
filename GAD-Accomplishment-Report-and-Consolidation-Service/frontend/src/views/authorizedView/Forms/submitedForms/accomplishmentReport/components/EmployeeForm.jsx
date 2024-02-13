@@ -3,9 +3,8 @@ import Submit from '../../../../../components/buttons/Submit';
 import axiosClient from '../../../../../axios/axios';
 import NeutralButton from '../../../../../components/buttons/NeutralButton';
 
-export default function EmployeeForm({selectedForm}) {
+export default function EmployeeForm({}) {
 //----------for exenditure
-console.log(selectedForm);
 const [inputFields, setInputFields] = useState([
   {type: '', item: '', phpd: '', total: ''}
 ])
