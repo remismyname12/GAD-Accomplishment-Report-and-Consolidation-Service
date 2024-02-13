@@ -38,6 +38,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/form_inset', [FormController::class, 'form_inset_store']);
     Route::put('/update_form_inset/{id}', [FormController::class, 'form_inset_update']);
     Route::get('/show_form_inset', [FormController::class, 'indexInsetForms']);
+
+    //Activity Forms EAD
+    Route::post('/form_ead', [FormController::class, 'form_ead_store']);
   
     //Crud Functions
     Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);
