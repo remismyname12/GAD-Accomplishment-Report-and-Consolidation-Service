@@ -16,7 +16,6 @@ class FormController extends Controller
     public function index_employee_forms()
     {
         $forms = Forms::where('form_type', 'EMPLOYEE')->get();
-        //$forms = Forms::all();
 
         return response()->json($forms);
     }
@@ -25,7 +24,6 @@ class FormController extends Controller
     public function indexInsetForms()
     {
         $forms = Forms::where('form_type', 'INSET')->get();
-        //$forms = Forms::all();
 
         return response()->json($forms);
     }
@@ -112,6 +110,7 @@ class FormController extends Controller
        ]);
     }
     
+    //for INSET training design==============================================================================================
     public function form_inset_store(FormRequest_I $request)
     {
         
