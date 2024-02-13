@@ -16,13 +16,4 @@ class accReport extends Model
         return $this->belongsTo(formEmployee::class);
     }
 
-    public function form_Inset(): BelongsTo
-    {
-        return $this->belongsTo(formInset::class);
-    }
-
-    public function form_Research(): BelongsTo
-    {
-        return $this->belongsTo(formResearch::class);
-    }
 }
