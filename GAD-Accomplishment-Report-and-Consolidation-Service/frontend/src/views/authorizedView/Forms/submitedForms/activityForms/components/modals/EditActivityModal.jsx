@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
+import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function EditActivityModal({ selectedForm }) {
   const [error, setError] = useState("");
+  const [inputFields, setInputFields] = useState([
+    {type: '', item: '', phpd: '', total: ''}
+  ])
+  
+  const handleFormChange = (index, event) => {
+    let data = [...inputFields];
+    data[index][event.target.name] = event.target.value;
+    setInputFields(data);
+  }
+  
+  const addFields = () => {
+    let newfield = { type: '', item: '', phpd: '', total:'' }
+  
+    setInputFields([...inputFields, newfield])
+  }
+  
+  const removeFields = (index) => {
+    let data = [...inputFields];
+    data.splice(index, 1)
+    setInputFields(data)
+  }
 
   const [formData, setFormData] = useState({
     title: selectedForm.title,
@@ -89,7 +111,7 @@ const renderInput = (name, label) => {
 
   console.log('This is the selected form', selectedForm);
   return (
-    <>
+    <div>
       {error.__html && (
         <div
           className="bg-red-500 rounded py-2 px-3 text-white"
@@ -97,22 +119,97 @@ const renderInput = (name, label) => {
         ></div>
       )}
 
-<form action="" className="flex flex-1 flex-col">
-  {renderInput("title", "Title: ")}
-  {renderInput("purpose", "Purpose: ")}
-  {renderInput("legal_bases", "Legal Bases: ")}
-  {renderInput(selectedForm.form_type === "INSET" ? "date_of_LEAD_activity" : "date_of_activity", "Date of Activity: ")}
-  {renderInput("venue", "Venue: ")}
-  {renderInput("participants", "Participants: ")}
-  {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Target Participants: ")} {/**Render this only when the form is inset */}
-  {renderInput("learning_service_providers", "Learning Service Providers: ")}
-  {renderInput("expected_outputs", "Expected Outputs: ")}
-  {renderInput("fund_source", "Fund Source: ")}
+    <form action="" className="flex flex-1 flex-col">
+      {renderInput("title", "Title: ")}
+      {renderInput("purpose", "Purpose: ")}
+      {renderInput("legal_bases", "Legal Bases: ")}
+      {renderInput(selectedForm.form_type === "INSET" ? "date_of_LEAD_activity" : "date_of_activity", "Date of Activity: ")}
+      {renderInput("venue", "Venue: ")}
+      {renderInput("participants", "Participants: ")}
+      {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Target Participants: ")} {/**Render this only when the form is inset */}
+      {renderInput("learning_service_providers", "Learning Service Providers: ")}
+      {renderInput("expected_outputs", "Expected Outputs: ")}
+      {renderInput("fund_source", "Fund Source: ")}
+      <h1 className='text-center m-3'>
+        Budgetary Requirements
+      </h1>
+      <div>
+          {inputFields.map((input, index) => {
+            return(
+              <div key={index} className="space-x-4 space-y-2">
+                <select
+                  id="type"
+                  name="type"
+                  autoComplete="type"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.type}
+                  onChange={event => handleFormChange(index, event)}
+                  //<option value="" disabled selected>Select Type</option>
+                >
+                  <option value="" disabled selected>Select Type</option>
+                  <option value="Meals and Snacks">Meals and Snacks</option>
+                  <option value="Function Room/Venue">Venue</option>
+                  <option value="Accomodation">Accomodation</option>
+                  <option value="Equipment Rental">Equipment Rental</option>
+                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                  <option value="Token/s">Token/s</option>
+                  <option value="Materials and Supplies">Materials and Supplies</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Others">Others...</option>
+                </select>
+
+                {/**For expendature */}
+                <input
+                  id="item"
+                  name="item"
+                  type="text"
+                  placeholder="Item"
+                  autoComplete="item"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.item}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="phpd"
+                  name="phpd"
+                  type="text"
+                  placeholder="Per Head/Per Day"
+                  autoComplete="phpd"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.phpd}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="total"
+                  name="total"
+                  type="text"
+                  placeholder="Total"
+                  autoComplete="total"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.total}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <button onClick={() => removeFields(index)}>Remove</button>
+              </div>
+              
+            )
+          })}
+          <div className="flex justify-center">
+
+          <NeutralButton label="Add more.." onClick={() => addFields()} />
+          {/* <button onClick={addFields} className='m-1'>Add More..</button> */}
+          </div>
+        
+      </div>
   <div className="mt-5">
     <Submit label="Submit" onClick={handleSubmit} />
   </div>
 </form>
 
-    </>
+    </div>
   );
 }
