@@ -3,7 +3,7 @@ import Submit from '../../components/buttons/Submit';
 import axiosClient from '../../axios/axios';
 import { useStateContext } from '../../../context/ContextProvider';
 import Error from '../../components/feedbacks/Error';
-import Success from '../../components/feedbacks/Success'; // Import the Success component
+import Feedback from '../../components/feedbacks/Feedback';
 
 export default function Login() {
   const [error, setError] = useState('');
@@ -48,7 +48,7 @@ export default function Login() {
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
       {/* Integrate the Success component */}
-      <Success isOpen={success !== ''} onClose={() => setSuccess('')} successMessage={success} />
+      <Feedback isOpen={success !== ''} onClose={() => setSuccess('')} successMessage={success} />
 
       <form action="" className="flex flex-1 flex-col">
         <label htmlFor="Email">Email: </label>
