@@ -38,7 +38,7 @@ class UserController extends Controller
     
         return response([
             'success' => true,
-            'user' => $user,
+            'message' => 'User created Successfully',
         ]);
     }
     

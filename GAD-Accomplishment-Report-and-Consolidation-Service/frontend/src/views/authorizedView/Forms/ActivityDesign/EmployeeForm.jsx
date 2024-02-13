@@ -10,7 +10,7 @@ import Error from '../../../components/feedbacks/Error';
 export default function EmployeeForm() {
   //For feedback
   const [error, setError] = useState('');
-  const [message, setAxiosMessage] = useState(''); // State for success message
+  const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
@@ -104,8 +104,6 @@ export default function EmployeeForm() {
     <div className='bg-gray-300 m-5 p-3'>
       {/**For Feedback */}
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
-      
-      {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
-use App\Models\User;
 use App\Models\Forms;
 use App\Models\Expenditures;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +14,6 @@ class FormController extends Controller
     public function index_employee_forms()
     {
         $forms = Forms::where('form_type', 'EMPLOYEE')->get();
-        //$forms = Forms::all();
 
         return response()->json($forms);
     }
@@ -24,7 +22,6 @@ class FormController extends Controller
     public function indexInsetForms()
     {
         $forms = Forms::where('form_type', 'INSET')->get();
-        //$forms = Forms::all();
 
         return response()->json($forms);
     }
@@ -111,6 +108,7 @@ class FormController extends Controller
        ]);
     }
     
+    //for INSET training design==============================================================================================
     public function form_inset_store(FormRequest_I $request)
     {
         
