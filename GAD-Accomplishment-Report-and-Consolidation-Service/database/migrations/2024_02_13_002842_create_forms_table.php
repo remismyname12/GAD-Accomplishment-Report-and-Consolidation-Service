@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('form_type')->default('FORM');
             $table->string('title')->unique();
-            $table->string('purpose');
-            $table->string('legal_bases');
+            $table->string('purpose')->nullable();
+            $table->string('legal_bases')->nullable();
             $table->string('date_of_activity');
             $table->string('venue');
             $table->string('participants')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('clientele_number')->nullable();
             $table->string('estimated_cost')->nullable();
             $table->string('cooperating_agencies_units')->nullable();
-            $table->string('proponents_implementors');
+            $table->string('proponents_implementors')->default('IMPLEMENTOR');;
 
             $table->timestamps();
             $table->softDeletes();

@@ -7,7 +7,7 @@ export default function InsetForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total:''}
+    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
   ])// <><><>
 
   const handleFormChange = (index, event) => {
@@ -17,7 +17,7 @@ export default function InsetForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
+    let newfield = {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
 
     setInputFields([...inputFields, newfield])
   }
@@ -32,7 +32,7 @@ export default function InsetForm() {
     title: '',
     purpose: '',
     legal_bases: '',
-    date_of_LEAD_activity: '',
+    date_of_activity: '',
     venue: '',
     participants: '',
     learning_service_providers: '',
@@ -105,14 +105,14 @@ export default function InsetForm() {
               onChange={handleChange}
             />
 
-          <label htmlFor="date_of_LEAD_activity">Date of lead Activity: </label>
+          <label htmlFor="date_of_activity">Date of lead Activity: </label>
             <input 
-              id="date_of_LEAD_activity"
-              name="date_of_LEAD_activity"
+              id="date_of_activity"
+              name="date_of_activity"
               type="text"
-              autoComplete="date_of_LEAD_activity"
+              autoComplete="date_of_activity"
               required
-              value={details.date_of_LEAD_activity}
+              value={details.date_of_activity}
               onChange={handleChange}
             />
 
