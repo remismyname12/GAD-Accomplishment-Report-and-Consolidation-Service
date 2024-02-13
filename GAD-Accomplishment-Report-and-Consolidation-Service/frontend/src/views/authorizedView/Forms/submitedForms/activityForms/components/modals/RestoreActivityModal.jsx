@@ -9,16 +9,8 @@ export default function RestoreActivityModal({selectedForm}) {
         ev.preventDefault();
         setError({ __html: "" });
     
-        let archiveEndpoint;
-
-        if (selectedForm.form_type === "EMPLOYEE") {
-          archiveEndpoint = `/restore_form_employee/${selectedForm.id}`;
-        } else {
-          archiveEndpoint = `/restore_form_inset/${selectedForm.id}`;
-        }
-    
         axiosClient
-          .put(archiveEndpoint)
+          .put(`/restore_form/${selectedForm.id}`)
           .catch((error) => {
             if (error.response) {
               const finalErrors = Object.values(error.response.data.errors).reduce(

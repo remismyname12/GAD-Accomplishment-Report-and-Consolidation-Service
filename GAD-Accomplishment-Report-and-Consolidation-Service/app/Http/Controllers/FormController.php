@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
-use App\Models\formEmployee;
-use App\Models\formInset;
 use App\Models\User;
 use App\Models\Forms;
 use App\Models\Expenditures;
-use App\Models\expenditureList;
-use App\Models\expenditureList_i;
 use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
@@ -18,7 +14,8 @@ class FormController extends Controller
     //for show all users
     public function index_employee_forms()
     {
-        $forms = formEmployee::all();
+        $forms = Forms::where('form_type', 'EMPLOYEE')->get();
+        //$forms = Forms::all();
 
         return response()->json($forms);
     }
@@ -26,18 +23,17 @@ class FormController extends Controller
     //for show all users
     public function indexInsetForms()
     {
-        $forms = formInset::all();
+        $forms = Forms::where('form_type', 'INSET')->get();
+        //$forms = Forms::all();
 
         return response()->json($forms);
     }
 
+
     public function index_all_archived_forms()
     {
-        $employeeForms = formEmployee::onlyTrashed()->get();
-        $insetForms = formInset::onlyTrashed()->get();
 
-        // Merge the collections of forms
-        $allForms = $employeeForms->merge($insetForms);
+        $allForms = Forms::onlyTrashed()->get();
 
         return response()->json($allForms);
     }
@@ -102,54 +98,22 @@ class FormController extends Controller
     public function form_employee_update(FormRequest_E $request, $id)
     {
         $validatedData = $request->validated();
-        $form = formEmployee::find($id);
-        $test = $validatedData['form_data'];
+        $form = Forms::find($id);
+        $formArray = $validatedData['form_data'];
 
-        $form->update($test);
+        $form->update($formArray);
 
             return response([
              'Success' => true,
-             'Message' => 'Form Updated',
+             'Message' => $formArray,
              //'Message' => 'Form Updated'
        ]);
-    }
-
-    public function form_employee_archive($id){
-        // Find the form by ID
-        $form = formEmployee::find($id);
-    
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-    
-        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
-        $form->delete();
-    
-        return response()->json(['message' => 'Form archived successfully']);
-    }
-
-    public function form_employee_restore($id)
-    {
-        // Find the form by ID
-        $form = formEmployee::withTrashed()
-        ->find($id);
-    
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-    
-        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
-        $form->restore();
-    
-        return response()->json(['message' => 'Form Restored successfully']);
     }
 
     public function form_employee_delete($id)
     {
         // Find the form by ID
-        $form = formEmployee::withTrashed()
+        $form = Forms::withTrashed()
         ->find($id);
 
         // Check if the form exists
@@ -218,10 +182,10 @@ class FormController extends Controller
     public function form_inset_update(FormRequest_I $request, $id)
     {
        $validatedData = $request->validated();
-       $form = formInset::find($id);
-       $test = $validatedData['form_data'];
+       $form = Forms::find($id);
+       $formArray = $validatedData['form_data'];
 
-       $form->update($test);
+       $form->update($formArray);
 
             return response([
              'Success' => true,
@@ -229,9 +193,9 @@ class FormController extends Controller
        ]);
     }
 
-    public function form_inset_archive($id){
+    public function form_archive($id){
         // Find the form by ID
-        $form = formInset::find($id);
+        $form = Forms::find($id);
     
         // Check if the form exists
         if (!$form) {
@@ -244,10 +208,10 @@ class FormController extends Controller
         return response()->json(['message' => 'Form archived successfully']);
     }
 
-    public function form_inset_restore($id)
+    public function form_restore($id)
     {
         // Find the form by ID
-        $form = formInset::withTrashed()
+        $form = Forms::withTrashed()
         ->find($id);
     
         // Check if the form exists
@@ -264,7 +228,7 @@ class FormController extends Controller
     public function form_inset_delete($id)
     {
         // Find the form by ID
-        $form = formInset::withTrashed()
+        $form = Forms::withTrashed()
         ->find($id);
 
         // Check if the form exists
