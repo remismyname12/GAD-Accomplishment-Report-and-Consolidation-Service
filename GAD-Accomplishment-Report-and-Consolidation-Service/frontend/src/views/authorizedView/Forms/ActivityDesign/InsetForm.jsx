@@ -2,7 +2,16 @@ import { React, useState } from 'react'
 import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
+
+//For Feedback
+import Feedback from '../../../components/feedbacks/Feedback';
+import Error from '../../../components/feedbacks/Error';
+
 export default function InsetForm() {
+  //For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState(''); // State for success message
+  const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
 
@@ -43,11 +52,16 @@ export default function InsetForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const response = await axiosClient.post('/form_inset', { form_data: details, xp_data: inputFields });
-        //const response = await axiosClient.post('/form_inset', details);
-        //console.log('Form submitted successfully:', response.data);
-        //const response2 = await axiosClient.post('/xpenditure_i', { xp_data: inputFields });
-        //console.log('Form submitted successfully:', response2.data);
+      const response = await axiosClient.post('/form_inset', { 
+        form_data: details, 
+        xp_data: inputFields 
+      });
+      setAxiosMessage(response.data.Message); // Set success message
+        setAxiosStatus(response.data.Success);
+        setTimeout(() => {
+            setAxiosMessage(''); // Clear success message
+            setAxiosStatus('');
+        }, 3000); // Timeout after 3 seconds
     } catch (error) {
       if (error.response) {
         const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -56,7 +70,7 @@ export default function InsetForm() {
         );
         setError({ __html: finalErrors.join("<br>") });
       }
-      console.error('Error submitting forms.', error);
+      console.error(error);
     }
   };
 
@@ -66,6 +80,12 @@ export default function InsetForm() {
 
   return (
     <div className='bg-gray-300 m-5 p-3'>
+    {/**For Feedback */}
+    <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
+    
+    {/* Integrate the Success component */}
+    <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
+
       
       <h1 className='text-center'>
         Inset New Lead

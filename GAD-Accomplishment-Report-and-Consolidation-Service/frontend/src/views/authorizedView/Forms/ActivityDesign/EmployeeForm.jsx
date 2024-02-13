@@ -8,9 +8,10 @@ import Feedback from '../../../components/feedbacks/Feedback';
 import Error from '../../../components/feedbacks/Error';
 
 export default function EmployeeForm() {
+  //For feedback
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
-  const [status, setAxiosStatus] = useState('')
+  const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
 
