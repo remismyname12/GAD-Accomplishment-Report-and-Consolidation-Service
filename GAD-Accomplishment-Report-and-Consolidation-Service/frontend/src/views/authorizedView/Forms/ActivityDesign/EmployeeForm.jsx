@@ -3,7 +3,14 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 
+//For Feedback
+import Feedback from '../../../components/feedbacks/Feedback';
+import Error from '../../../components/feedbacks/Error';
+
 export default function EmployeeForm() {
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState(''); // State for success message
+  const [status, setAxiosStatus] = useState('')
 
   //----------for exenditure
 
@@ -49,13 +56,29 @@ export default function EmployeeForm() {
   //----------axiosClient
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const response = await axiosClient.post('/form_employee', {form_data:formData, xp_data:inputFields});
-      //make modal for error (unique constraint) and success confirmation
+    try {
+        const response = await axiosClient.post('/form_employee', {
+            form_data: formData,
+            xp_data: inputFields
+        });
+        setAxiosMessage(response.data.Message); // Set success message
+        setAxiosStatus(response.data.Success);
+        setTimeout(() => {
+            setAxiosMessage(''); // Clear success message
+            setAxiosStatus('');
+        }, 3000); // Timeout after 3 seconds
     } catch (error) {
-        console.error('Error submitting form', error);
+        if (error.response) {
+            const finalErrors = Object.values(error.response.data.errors).reduce(
+                (accum, next) => [...accum, ...next],
+                []
+            );
+            setError(finalErrors.join('<br>'));
+        }
+        console.error(error);
     }
-  };
+};
+
   //----------
 
   //For Unified Inputs 
@@ -77,7 +100,12 @@ export default function EmployeeForm() {
 
   return (
     <div className='bg-gray-300 m-5 p-3'>
+      {/**For Feedback */}
+      <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
+      {/* Integrate the Success component */}
+      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
+
       <h1 className='text-center'>
         Employee Activity Form
       </h1>
