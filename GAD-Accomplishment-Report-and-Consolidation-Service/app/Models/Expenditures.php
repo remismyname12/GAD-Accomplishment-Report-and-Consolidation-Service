@@ -24,14 +24,14 @@ class Expenditures extends Model
         'total',
     ];
 
-    public function expenditure_form(): BelongsTo
+    public function forms(): BelongsTo
     {
         return $this->belongsTo(Forms::class);
         //return $this->belongsTo(formAll::class, 'form_id'); 
         //foreign key specified because it doesn't follow laravel convention
     }
 
-    public function acc_Report(): HasOne
+    public function accReport(): HasOne
     {
         return $this->HasOne(accReport::class);
     }

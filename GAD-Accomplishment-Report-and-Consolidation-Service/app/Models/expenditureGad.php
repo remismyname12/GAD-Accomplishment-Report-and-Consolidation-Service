@@ -11,7 +11,7 @@ class expenditureGad extends Model
     use HasFactory;
 
     //
-    public function gad_Activities(): BelongsTo
+    public function gadActivities(): BelongsTo
     {
         return $this->belongsTo(gadActivities::class);
     }

@@ -47,34 +47,17 @@ class User extends Authenticatable
     ];
 
     //FOR FORMS/TRAINING DESIGN
-        public function form_employee(): HasMany
-        {
-            return $this->hasMany(formEmployee::class);
-        }
+    public function forms(): HasMany
+    {
+        return $this->hasMany(formEmployee::class);
+    }
 
-        public function form_inset(): HasMany
-        {
-            return $this->hasMany(formInset::class);
-        }
-        
-        public function form_research(): HasMany
-        {
-            return $this->hasMany(formResearch::class);
-        }
 
     //FOR GAD ACTIVITES
-        public function gad_activities(): HasMany
-        {
-            return $this->hasMany(gadActivites::class); //used to be has one
-        }
-    
-    //ATTACH TO GAD ACTIVITIES
-    /*
-        public function expenditure_sum()
-        {
-            return $this->hasOne(expenditureSum::class);
-        }
-    */
+    public function gadActivities(): HasMany
+    {
+        return $this->hasMany(gadActivites::class); //used to be has one
+    }
 
     //LEARN COLLECTION FOR PER HEAD PER DAY
 
