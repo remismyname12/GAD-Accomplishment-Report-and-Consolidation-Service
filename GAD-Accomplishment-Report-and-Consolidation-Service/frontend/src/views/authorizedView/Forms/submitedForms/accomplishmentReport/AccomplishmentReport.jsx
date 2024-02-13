@@ -147,9 +147,6 @@ export default function AccomplishmentReport() {
                       <button onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
-                          <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
                     </ul>
                   </li>
                 ))}
