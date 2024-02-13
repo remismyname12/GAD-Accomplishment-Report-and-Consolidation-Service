@@ -41,7 +41,7 @@ class FormRequest_I extends FormRequest
             'form_data.learning_service_providers' => 'required|string',
             'form_data.expected_outputs' => 'required|string',
             'form_data.fund_source' => 'required|string',
-            //form_data.proponents_implementors' => 'required|string',
+            'form_data.proponents_implementors' => 'required|string',
             //-----
         ];
     }

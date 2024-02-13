@@ -48,6 +48,7 @@ export default function EmployeeForm() {
     learning_service_providers: '',
     expected_outputs: '',
     fund_source: '',
+    proponents_implementors: '',
   });
 
   const handleChange = async (e) => {
@@ -122,6 +123,7 @@ export default function EmployeeForm() {
         {renderInput("learning_service_providers", "Learning Service Providers: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
         {renderInput("fund_source", "Fund Source: ")}
+        {renderInput("proponents_implementors", "Proponents/Implementors: ")}
         <h1 className='text-center m-3'>
           Budgetary Requirements
         </h1>

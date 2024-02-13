@@ -39,6 +39,7 @@ export default function EditActivityModal({ selectedForm }) {
     learning_service_providers: selectedForm.learning_service_providers,
     expected_outputs: selectedForm.expected_outputs,
     fund_source: selectedForm.fund_source,
+    proponents_implementors: selectedForm.proponents_implementors,
     // Exclude no_of_target_participants if form type is INSET
     ...(selectedForm.form_type !== "INSET" && { no_of_target_participants: selectedForm.no_of_target_participants }),
   });
@@ -130,6 +131,7 @@ const renderInput = (name, label) => {
       {renderInput("learning_service_providers", "Learning Service Providers: ")}
       {renderInput("expected_outputs", "Expected Outputs: ")}
       {renderInput("fund_source", "Fund Source: ")}
+      {renderInput("proponents_implementors", "Proponents/Implementors ")}
       <h1 className='text-center m-3'>
         Budgetary Requirements
       </h1>

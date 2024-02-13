@@ -73,6 +73,7 @@ class FormController extends Controller
             'learning_service_providers' => $formData['learning_service_providers'],
             'expected_outputs' => $formData['expected_outputs'],
             'fund_source' => $formData['fund_source'],
+            'proponents_implementors' => $formData['proponents_implementors'],
         ]);
 
         // Find the first item with the given title
@@ -141,6 +142,7 @@ class FormController extends Controller
             'learning_service_providers' => $formData['learning_service_providers'],
             'expected_outputs' => $formData['expected_outputs'],
             'fund_source' => $formData['fund_source'],
+            'proponents_implementors' => $formData['proponents_implementors'],
         ]);
 
         // Find the first item with the given title

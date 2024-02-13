@@ -47,6 +47,7 @@ export default function InsetForm() {
     learning_service_providers: '',
     expected_outputs: '',
     fund_source: '',
+    proponents_implementors: '',
   });
   
   const handleSubmit = async (e) => {
@@ -188,6 +189,17 @@ export default function InsetForm() {
               autoComplete="fund_source"
               required
               value={details.fund_source}
+              onChange={handleChange}
+            />
+          
+          <label htmlFor="proponents_implementors">Proponents/Implementors: </label>
+            <input 
+              id="proponents_implementors"
+              name="proponents_implementors"
+              type="text"
+              autoComplete="proponents_implementors"
+              required
+              value={details.proponents_implementors}
               onChange={handleChange}
             />
             
