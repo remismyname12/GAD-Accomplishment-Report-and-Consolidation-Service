@@ -89,26 +89,6 @@ class FormController extends Controller
             ]);
         }
 
-        //test 1: find associated user
-        $form_id =  7;
-        $form = formEmployee::findOrFail($form_id);
-        $user2 = $form->user;
-
-        //test 2: find associated form
-        $xpn =  7;
-        $xxx = expenditureList::findOrFail($xpn);
-        $xlist = $xxx->employee_form;
-
-        //test 3: find associated form by user_id
-        $gg = $user->id;
-        $uuu = User::findOrFail($gg);
-        $forma = $uuu->form_employee;
-
-        /*return response([
-            'Success' => $xlist,
-            'Message' => 'Form Added'
-      ]);*/
-
         return response([
               'Success' => true,
               'Message' => 'Form Added'
