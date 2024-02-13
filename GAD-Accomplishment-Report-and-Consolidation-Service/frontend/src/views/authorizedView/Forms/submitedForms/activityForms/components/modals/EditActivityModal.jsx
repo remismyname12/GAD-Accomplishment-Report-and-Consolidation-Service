@@ -33,7 +33,7 @@ export default function EditActivityModal({ selectedForm }) {
     legal_bases: selectedForm.legal_bases,
     //Change date_of_activity to date_of_LEAD_activity depending of the form_type
     ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
-    ...(selectedForm.form_type === "INSET" && { date_of_LEAD_activity: selectedForm.date_of_LEAD_activity }),
+    ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     venue: selectedForm.venue,
     participants: selectedForm.participants,
     learning_service_providers: selectedForm.learning_service_providers,
@@ -123,7 +123,7 @@ const renderInput = (name, label) => {
       {renderInput("title", "Title: ")}
       {renderInput("purpose", "Purpose: ")}
       {renderInput("legal_bases", "Legal Bases: ")}
-      {renderInput(selectedForm.form_type === "INSET" ? "date_of_LEAD_activity" : "date_of_activity", "Date of Activity: ")}
+      {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
       {renderInput("participants", "Participants: ")}
       {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Target Participants: ")} {/**Render this only when the form is inset */}
