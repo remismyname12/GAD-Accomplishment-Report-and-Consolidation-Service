@@ -4,6 +4,7 @@ import { ChevronUpIcon } from '@heroicons/react/20/solid';
 
 import EmployeeForm from './ActivityDesign/EmployeeForm';
 import InsetForm from './ActivityDesign/InsetForm';
+import EADForm from './ActivityDesign/EADForm';
 
 export default function ActivityDesignForms() {
   const [selectedForm, setSelectedForm] = useState(null);
@@ -32,6 +33,9 @@ export default function ActivityDesignForms() {
                     <button onClick={() => setSelectedForm('inset')}>
                       Inset New Leads Form
                     </button>
+                    <button onClick={() => setSelectedForm('ead')}>
+                      Extension Activity Design Form
+                    </button>
                   </div>
                 </Disclosure.Panel>
               </>
@@ -44,6 +48,7 @@ export default function ActivityDesignForms() {
       <div>
         {selectedForm === 'employee' && <EmployeeForm />}
         {selectedForm === 'inset' && <InsetForm />}
+        {selectedForm === 'ead' && <EADForm />}
       </div>
     </div>
   );

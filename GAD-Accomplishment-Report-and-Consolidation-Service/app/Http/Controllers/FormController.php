@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormRequest_E;
 use App\Http\Requests\FormRequest_I;
+use App\Http\Requests\FormRequest_R;
 use App\Models\User;
 use App\Models\Forms;
 use App\Models\Expenditures;
@@ -225,6 +226,73 @@ class FormController extends Controller
         $form->forceDelete();
 
         return response()->json(['message' => 'Form permanently deleted']);
+    }
+
+    //for EAD training design==============================================================================================
+    public function form_ead_store(FormRequest_R $request)
+    {
+
+        $formData = $request->input('form_data');
+        $inputFields = $request->input('xp_data');
+        $formtitle = $formData['title'];
+        $formtype = "EAD";
+        $user = Auth::user();
+ 
+        $existingRecord = Forms::where('title', $formtitle )->exists();
+ 
+        if ($existingRecord) {
+            return response([
+                'Success' => false,
+                'Message' => 'Title must be unique',
+            ]);
+            //return response()->json(['error' => 'Title must be unique'], 422);
+        }
+ 
+        $form = Forms::create([
+            'title' => $formtitle,
+            'user_id' => $user->id,
+            'form_type' => $formtype,
+            'date_of_activity' => $formData['date_of_activity'],
+            'venue' => $formData['venue'],
+            'clientele_type' => $formData['clientele_type'],
+            'clientele_number' => $formData['clientele_number'],
+            'estimated_cost' => $formData['estimated_cost'],
+            'cooperating_agencies_units' => $formData['cooperating_agencies_units'],
+            'expected_outputs' => $formData['expected_outputs'],
+            'fund_source' => $formData['fund_source'],
+            'proponents_implementors' => $formData['proponents_implementors'],
+        ]);
+ 
+        // Find the first item with the given title
+        $firstItem = Forms::where('title', $formData['title'])->first();
+  
+        foreach ($inputFields as $data) {
+            Expenditures::create([
+                'form_id' => $firstItem->id,
+                'type' => $data['type'],
+                'items' => $data['item'],
+                'estimated_cost' => $data['estimated'], // Assuming 'phpd' corresponds to 'perhead'
+                'remarks' => $data['remarks'],
+                'source_of_funds' => $data['source_of_funds'],
+            ]);
+        }
+ 
+        return response([
+               'Success' => true,
+               'Message' => 'Form Added'
+        ]);
+ 
+    }
+
+    public function form_R_store(FormRequest_R $request)
+    {
+
+        $formData = $request->input('form_data');
+        $inputFields = $request->input('xp_data');
+
+        return response([
+            'Succes' => True,
+        ]);
     }
 
 }
