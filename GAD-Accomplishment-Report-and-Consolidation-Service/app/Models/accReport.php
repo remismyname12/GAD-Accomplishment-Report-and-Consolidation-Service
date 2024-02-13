@@ -10,10 +10,23 @@ class accReport extends Model
 {
     use HasFactory;
 
+    protected $table = 'acc_report';
+
+    protected $fillable = [
+        'forms_id',
+        'expenditures_id',
+    ];
+
     //
-    public function form_Employee(): BelongsTo
+    public function employeeForm(): BelongsTo
     {
-        return $this->belongsTo(formEmployee::class);
+        return $this->belongsTo(Forms::class, 'forms_id');
+        //return $this->belongsTo(Forms::class);
+    }
+
+    public function expenditures(): BelongsTo
+    {
+        return $this->belongsTo(Expenditures::class);
     }
 
 }

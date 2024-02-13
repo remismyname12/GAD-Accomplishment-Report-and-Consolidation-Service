@@ -8,6 +8,7 @@ use App\Http\Requests\FormRequest_R;
 use App\Models\User;
 use App\Models\Forms;
 use App\Models\Expenditures;
+use App\Models\accReport;
 use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
@@ -231,6 +232,21 @@ class FormController extends Controller
     //for EAD training design==============================================================================================
     public function form_ead_store(FormRequest_R $request)
     {
+        /* testing
+        $childId = 2;
+
+        // Retrieve the child record with the specified ID
+        $child = accReport::findOrFail($childId);
+
+        // Access the parent records using the defined relationship methods
+        $parent1 = $child->employeeForm;
+        $parent2 = $child->expenditures;
+
+        // Return the parent records
+        return response()->json([
+            'parent1' => $parent1,
+            'parent2' => $parent2
+        ]);*/
 
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');

@@ -14,7 +14,7 @@ class FormSeeder extends Seeder
     public function run(): void
     {
         //Acccomplishment Report
-        $acc_report = [
+        /*$acc_report = [
             [
                 'id' => '1',
                 'form_id' => '1',
@@ -56,6 +56,7 @@ class FormSeeder extends Seeder
         ];
 
         DB::table('acc_report')->insert($acc_report);
+        */
 
         $forms = [
             [
