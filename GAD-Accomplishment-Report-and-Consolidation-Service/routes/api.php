@@ -33,18 +33,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/form_employee', [FormController::class, 'form_employee_store']);
     Route::get('/show_form_employee', [FormController::class, 'index_employee_forms']);
     Route::put('/update_form_employee/{id}', [FormController::class, 'form_employee_update']);
-    Route::put('/delete_form_employee/{id}', [FormController::class, 'form_employee_delete']);
     
     //Activity Forms Inset
     Route::post('/form_inset', [FormController::class, 'form_inset_store']);
     Route::put('/update_form_inset/{id}', [FormController::class, 'form_inset_update']);
-    Route::put('/delete_form_inset/{id}', [FormController::class, 'form_inset_delete']);
     Route::get('/show_form_inset', [FormController::class, 'indexInsetForms']);
   
-    //Archive Function
+    //Crud Functions
     Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);
     Route::put('/archive_form/{id}', [FormController::class, 'form_archive']);
     Route::put('/restore_form/{id}', [FormController::class, 'form_restore']);
+    Route::put('/delete_form/{id}', [FormController::class, 'form_delete']);
   
     //expenditure list
     Route::post('/xpenditure_i', [FormController::class, 'xpenditure_i_store']);
