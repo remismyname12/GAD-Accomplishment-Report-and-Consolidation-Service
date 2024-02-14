@@ -14,49 +14,28 @@ class FormSeeder extends Seeder
     public function run(): void
     {
         //Acccomplishment Report
-        /*$acc_report = [
+        $acc_report = [
             [
                 'id' => '1',
-                'form_id' => '1',
-                'form_type' => 'INSET',
-                'title_of_activity' => 'Q',
-                'date_of_activity' => 'Q',
-                'venue' => 'Q',
-                'proponents' => 'Q',
-                'no_of_participants_male' => '10',
-                'no_of_participants_female' => '15',
-                'no_of_participants_total' => '25',
+                'form_id' => '3',
+                'expenditures_id' => '3',
             ],
 
             [
                 'id' => '2',
                 'form_id' => '2',
-                'form_type' => 'INSET',
-                'title_of_activity' => 'W',
-                'date_of_activity' => 'W',
-                'venue' => 'W',
-                'proponents' => 'W',
-                'no_of_participants_male' => '200',
-                'no_of_participants_female' => '200',
-                'no_of_participants_total' => '400',
+                'expenditures_id' => '3',
             ],
 
             [
                 'id' => '3',
-                'form_id' => '3',
-                'form_type' => 'EMPLOYEE',
-                'title_of_activity' => 'E',
-                'date_of_activity' => 'E',
-                'venue' => 'E',
-                'proponents' => 'E',
-                'no_of_participants_male' => '100',
-                'no_of_participants_female' => '150',
-                'no_of_participants_total' => '250',
+                'form_id' => '1',
+                'expenditures_id' => '1',
             ],
         ];
 
         DB::table('acc_report')->insert($acc_report);
-        */
+        
 
         $forms = [
             [

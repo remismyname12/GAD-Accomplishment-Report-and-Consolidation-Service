@@ -20,7 +20,7 @@ class FormController extends Controller
 
         return response()->json($forms);
     }
-
+  
     //for show all INSET forms
     public function indexInsetForms()
     {
@@ -241,6 +241,34 @@ class FormController extends Controller
  
     }
 
+
+    public function generate_accReport()
+    {
+        //testing
+        //$childId = 2;
+        //$child = accReport::with('forms', 'expenditures')->find($childId);
+
+        // Return the parent records
+        //return response()->json([
+           // 'child' => $child,
+            //'parent1' => $parent1,
+            //'parent2' => $parent2
+        //]);
+    }
+
+    public function fetch_accReport($reportID)
+    {
+        //testing
+        //$childId = $reportID;
+        //$child = accReport::with('forms', 'expenditures')->find($childId);
+
+        // Return the parent records
+        //return response()->json([
+           // 'child' => $child,
+            //'parent1' => $parent1,
+            //'parent2' => $parent2
+        //]);
+
     public function form_ead_update(FormRequest_I $request, $id)
     {
        $validatedData = $request->validated();
@@ -269,6 +297,7 @@ class FormController extends Controller
         $form->delete();
     
         return response()->json(['message' => 'Form archived successfully']);
+
     }
 
     public function form_restore($id)
