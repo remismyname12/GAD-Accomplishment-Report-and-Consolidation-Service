@@ -15,7 +15,7 @@ export default function EditActivityModal({ selectedForm }) {
   const numSets = expendituresArray.length;
 
   const inputSets = Array.from({ length: numSets }, (_, index) => index);
-
+  
   console.log('Array: ', expendituresArray.length); //array size
 
   const [error, setError] = useState("");
@@ -216,72 +216,6 @@ const renderInput = (name, label) => {
             <button onClick={() => removeFields(setIndex)}>Remove</button>
           </div>
         ))}
-
-
-
-
-          {/*{inputFields.map((input, index) => {
-            return(
-              <div key={index} className="space-x-4 space-y-2">
-                <select
-                  id="type"
-                  name="type"
-                  autoComplete="type"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.type}
-                  onChange={event => handleFormChange(index, event)}
-                >
-                  <option value="Meals and Snacks">Meals and Snacks</option>
-                  <option value="Function Room/Venue">Venue</option>
-                  <option value="Accomodation">Accomodation</option>
-                  <option value="Equipment Rental">Equipment Rental</option>
-                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                  <option value="Token/s">Token/s</option>
-                  <option value="Materials and Supplies">Materials and Supplies</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Others">Others...</option>
-                </select>
-
-                
-                <input
-                  id="item"
-                  name="item"
-                  type="text"
-                  placeholder="Item"
-                  autoComplete="item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="phpd"
-                  name="phpd"
-                  type="text"
-                  placeholder="Per Head/Per Day"
-                  autoComplete="phpd"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.phpd}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="total"
-                  name="total"
-                  type="text"
-                  placeholder="Total"
-                  autoComplete="total"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.total}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <button onClick={() => removeFields(index)}>Remove</button>
-              </div>
-              
-            )
-          })}*/}
           {/*------------------------------------------------------------------------------*/}
           <div className="flex justify-center">
 
