@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/show_form_ead', [FormController::class, 'index_ead_form']);
     Route::get('/update_form_ead', [FormController::class, 'form_ead_update']);
   
-    //Crud Functions
+    //Form Crud Functions
     Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);
     Route::put('/archive_form/{id}', [FormController::class, 'form_archive']);
     Route::put('/restore_form/{id}', [FormController::class, 'form_restore']);
@@ -55,6 +55,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report']);
 
+    //For accomplishment Report================================================
+
+    //Accomplishment Report
+    Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report_store']);
+    Route::get('/show_accomplishment_report', [AccomplishmentReportController::class, 'index_accomplishment_report']);
+    Route::get('/update_accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report_update']);
+
+    //Accomplishment Report Crud Functions
+    Route::get('/show_archived_accomplishment_report_all', [AccomplishmentReportController::class, 'index_all_archived_accomplishment_report']);
+    Route::put('/archive_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_archive']);
+    Route::put('/restore_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_restore']);
+    Route::put('/delete_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_delete']);
+    
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

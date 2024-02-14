@@ -22,7 +22,8 @@ class AccomplishmentReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'forms_id' => 'required|integer',
+            'expenditures_id' => 'required|integer'
         ];
     }
 }
