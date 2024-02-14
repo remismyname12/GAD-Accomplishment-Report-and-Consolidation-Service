@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
-    //for show all users
+    //for show all EMPLOYEE forms
     public function index_employee_forms()
     {
         $forms = Forms::where('form_type', 'EMPLOYEE')->get();
@@ -21,7 +21,7 @@ class FormController extends Controller
         return response()->json($forms);
     }
 
-    //for show all users
+    //for show all INSET forms
     public function indexInsetForms()
     {
         $forms = Forms::where('form_type', 'INSET')->get();
@@ -29,6 +29,13 @@ class FormController extends Controller
         return response()->json($forms);
     }
 
+    //for show all EAD forms
+    public function index_ead_form()
+    {
+        $forms = Forms::where('form_type', 'EAD')->get();
+
+        return response()->json($forms);
+    }
 
     public function index_all_archived_forms()
     {
@@ -179,77 +186,9 @@ class FormController extends Controller
        ]);
     }
 
-    public function form_archive($id){
-        // Find the form by ID
-        $form = Forms::find($id);
-    
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-    
-        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
-        $form->delete();
-    
-        return response()->json(['message' => 'Form archived successfully']);
-    }
-
-    public function form_restore($id)
-    {
-        // Find the form by ID
-        $form = Forms::withTrashed()
-        ->find($id);
-    
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-    
-        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
-        $form->restore();
-    
-        return response()->json(['message' => 'Form Restored successfully']);
-    }
-
-    public function form_delete($id)
-    {
-        // Find the form by ID
-        $form = Forms::withTrashed()
-        ->find($id);
-
-        // Check if the form exists
-        if (!$form) {
-            return response()->json(['message' => 'Form not found'], 404);
-        }
-
-        // Force delete the form
-        $form->forceDelete();
-
-        return response()->json(['message' => 'Form permanently deleted']);
-    }
-
     //for EAD training design==============================================================================================
     public function form_ead_store(FormRequest_R $request)
     {
-        //testing
-        //$childId = 2;
-
-        // Retrieve the child record with the specified ID
-        //$child = accReport::findOrFail($childId);
-
-        // Access the parent records using the defined relationship methods
-        //$parent1 = $child->employeeForm;
-        //$parent2 = $child->expenditures;
-
-        //$child = accReport::with('forms', 'expenditures')->find($childId);
-
-        // Return the parent records
-        //return response()->json([
-           // 'child' => $child,
-            //'parent1' => $parent1,
-            //'parent2' => $parent2
-        //]);
-
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
         $formtitle = $formData['title'];
@@ -302,15 +241,67 @@ class FormController extends Controller
  
     }
 
-    public function form_R_store(FormRequest_R $request)
+    public function form_ead_update(FormRequest_I $request, $id)
     {
+       $validatedData = $request->validated();
+       $form = Forms::find($id);
+       $formArray = $validatedData['form_data'];
 
-        $formData = $request->input('form_data');
-        $inputFields = $request->input('xp_data');
+       $form->update($formArray);
 
-        return response([
-            'Succes' => True,
-        ]);
+            return response([
+             'Success' => true,
+             'Message' => 'Form Updated'
+       ]);
+    }
+    
+    //For Form CRUD====================================================================================================================================
+    public function form_archive($id){
+        // Find the form by ID
+        $form = Forms::find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->delete();
+    
+        return response()->json(['message' => 'Form archived successfully']);
     }
 
+    public function form_restore($id)
+    {
+        // Find the form by ID
+        $form = Forms::withTrashed()
+        ->find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->restore();
+    
+        return response()->json(['message' => 'Form Restored successfully']);
+    }
+
+    public function form_delete($id)
+    {
+        // Find the form by ID
+        $form = Forms::withTrashed()
+        ->find($id);
+
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        // Force delete the form
+        $form->forceDelete();
+
+        return response()->json(['message' => 'Form permanently deleted']);
+    }
 }
