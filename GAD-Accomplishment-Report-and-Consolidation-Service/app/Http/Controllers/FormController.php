@@ -98,7 +98,7 @@ class FormController extends Controller
  
         foreach ($inputFields as $data) {
             Expenditures::create([
-                'form_id' => $firstItem->id,
+                'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
@@ -168,7 +168,7 @@ class FormController extends Controller
 
         foreach ($inputFields as $data) {
             Expenditures::create([
-                'form_id' => $firstItem->id,
+                'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
                 'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
@@ -235,7 +235,7 @@ class FormController extends Controller
   
         foreach ($inputFields as $data) {
             Expenditures::create([
-                'form_id' => $firstItem->id,
+                'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
                 'estimated_cost' => $data['estimated'], // Assuming 'phpd' corresponds to 'perhead'
