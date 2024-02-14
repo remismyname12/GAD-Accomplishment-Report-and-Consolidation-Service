@@ -14,7 +14,7 @@ class Expenditures extends Model
     protected $table = 'expenditures';
 
     protected $fillable = [
-        'form_id',
+        'forms_id',
         'type',
         'items',
         'per_head_per_day',
