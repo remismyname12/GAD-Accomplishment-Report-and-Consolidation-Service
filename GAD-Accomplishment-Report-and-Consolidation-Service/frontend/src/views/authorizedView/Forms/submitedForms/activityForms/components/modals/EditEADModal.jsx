@@ -7,16 +7,16 @@ import NeutralButton from '../../../components/buttons/NeutralButton';
 import Feedback from '../../../components/feedbacks/Feedback';
 import Error from '../../../components/feedbacks/Error';
 
-export default function EmployeeForm() {
+export default function EditEADModal() {
   //For feedback
   const [error, setError] = useState('');
-  const [message, setAxiosMessage] = useState('');
+  const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
+    {type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: ''}
   ])
 
   const handleFormChange = (index, event) => {
@@ -26,7 +26,7 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: 'Meals and Snacks', item: '', phpd: '', total:'' }
+    let newfield = { type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: '' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -39,13 +39,12 @@ export default function EmployeeForm() {
 
   const [formData, setFormData] = useState({
     title: '',
-    purpose: '',
-    legal_bases: '',
     date_of_activity: '',
     venue: '',
-    participants: '',
-    no_of_target_participants: '',
-    learning_service_providers: '',
+    clientele_type: '',
+    clientele_number: '',
+    estimated_cost: '',
+    cooperating_agencies_units: '',
     expected_outputs: '',
     fund_source: '',
     proponents_implementors: '',
@@ -59,7 +58,7 @@ export default function EmployeeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axiosClient.post('/form_employee', {
+        const response = await axiosClient.put('/form_ead_update', {
             form_data: formData,
             xp_data: inputFields
         });
@@ -104,21 +103,22 @@ export default function EmployeeForm() {
     <div className='bg-gray-300 m-5 p-3'>
       {/**For Feedback */}
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
+      
+      {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>
-        Employee Activity Form
+        Extension Activity Design Form
       </h1>
 
       <form action="" >
         {renderInput("title", "Title: ")}
-        {renderInput("purpose", "Purpose: ")}
-        {renderInput("legal_bases", "Legal Bases: ")}
         {renderInput("date_of_activity", "Date of Activity: ")}
         {renderInput("venue", "Venue: ")}
-        {renderInput("participants", "Participants: ")}
-        {renderInput("no_of_target_participants", "Number of Target Participants: ")}
-        {renderInput("learning_service_providers", "Learning Service Providers: ")}
+        {renderInput("clientele_type", "Clientele Type: ")}
+        {renderInput("clientele_number", "Clientele Number: ")}
+        {renderInput("estimated_cost", "Estimated Cost: ")}
+        {renderInput("cooperating_agencies_units", "Cooperating Agencies/Units: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
         {renderInput("fund_source", "Fund Source: ")}
         {renderInput("proponents_implementors", "Proponents/Implementors: ")}
@@ -162,25 +162,36 @@ export default function EmployeeForm() {
                     onChange={event => handleFormChange(index, event)}
                   />
                   <input
-                    id="phpd"
-                    name="phpd"
+                    id="estimated"
+                    name="estimated"
                     type="text"
-                    placeholder="Per Head/Per Day"
-                    autoComplete="phpd"
+                    placeholder="Estimated Cost"
+                    autoComplete="estimated"
                     required
                     className="flex-1 px-2 py-1"
-                    value={input.phpd}
+                    value={input.estimated}
                     onChange={event => handleFormChange(index, event)}
                   />
                   <input
-                    id="total"
-                    name="total"
+                    id="remarks"
+                    name="remarks"
                     type="text"
-                    placeholder="Total"
-                    autoComplete="total"
+                    placeholder="Remarks"
+                    autoComplete="remarks"
                     required
                     className="flex-1 px-2 py-1"
-                    value={input.total}
+                    value={input.remarks}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="source_of_funds"
+                    name="source_of_funds"
+                    type="text"
+                    placeholder="Source of Funds"
+                    autoComplete="source_of_funds"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={input.source_of_funds}
                     onChange={event => handleFormChange(index, event)}
                   />
                   <button onClick={() => removeFields(index)}>Remove</button>

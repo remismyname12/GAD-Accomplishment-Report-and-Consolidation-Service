@@ -2,50 +2,58 @@ import { React, useState} from 'react'
 import { Menu } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import Submit from '../../../../../components/buttons/Submit'
-import getAxios from '../../../../../axios/axiosMethods/postAxios';
+import postAxios from '../../../../../axios/axiosMethods/postAxios';
+
+//For Feedback
+import Feedback from '../../../../../components/feedbacks/Feedback';
+import Error from '../../../../../components/feedbacks/Error';
 
 export default function AddUserModal() {
-    const [error, setError] = useState("");
     const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
+      //For feedback
+    const [error, setError] = useState('');
+    const [message, setAxiosMessage] = useState('');
+    const [status, setAxiosStatus] = useState('');
+
     const onSubmit = async (ev) => {
       ev.preventDefault();
-      setError({__html: ""});
+      setError({ __html: "" });
+  
+          // Call getAxios to make the POST request
+          const response = await postAxios({
+              endPoint: "adduser",
+              data: { email, username: userName, password, role: role },
+          })
+          if (response.status === true) { // Check status for success
+              setAxiosMessage(response.response.data.message); // Set success message
+              setAxiosStatus(response.response.data.status);
+              setTimeout(() => {
+                  setAxiosMessage(''); // Clear success message
+                  setAxiosStatus('');
+              }, 3000); // Timeout after 3 seconds
+          } else { // Handle failure
+              setError(response.error); // Set error message
+              
+          console.log('This is the ERROR',error);
+          }
+      }
+  
     
-      try {
-        // Call getAxios to make the POST request
-        const response = await postAxios({
-            endPoint: "adduser",
-            data: { email, username: userName, password, role: role },
-            
-            
-        }).then((error,response) => {
-          console.log(error);  // Assuming res.data is an array
-          console.log(response)
-        });
-        // Handle response if needed
-        console.log(response);
-    } catch (error) {
-        // Handle error
-        console.error(error);
-    }
-
-    };
-    
-    console.log(role);
   return (
     <div className='bg-gray-400 p-5'>
 
     {/**For ERROR handling */}
-    {error.__html && (
-        <div
-          className="bg-red-500 rounded py-2 px-3 text-white"
-          dangerouslySetInnerHTML={error}
-        ></div>
-      )}
+    <div>
+        {error && error.__html && (
+            <div className="bg-red-500 rounded py-2 px-3 text-white" dangerouslySetInnerHTML={error} />
+        )}
+    </div>
+    
+      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
     
       <form onSubmit={onSubmit} className='flex flex-1 flex-col'>
         

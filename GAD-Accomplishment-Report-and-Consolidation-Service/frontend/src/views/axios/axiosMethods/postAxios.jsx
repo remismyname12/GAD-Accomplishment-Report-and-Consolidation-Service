@@ -17,7 +17,7 @@ export default async function postAxios({ endPoint, data }) {
                 }
             }
             // Construct the error object with HTML format
-            return { error: { __html: `${message} (${finalErrors.length} errors)<br>${finalErrors.join("<br>")}` } };
+            return { error: { __html: `${message}` } };
         } else {
             return { error: { __html: "An unexpected error occurred." } };
         }
