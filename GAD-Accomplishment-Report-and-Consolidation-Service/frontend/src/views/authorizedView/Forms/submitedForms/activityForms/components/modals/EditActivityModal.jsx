@@ -4,6 +4,20 @@ import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function EditActivityModal({ selectedForm }) {
+
+  console.log('All: ', selectedForm);
+  console.log('EXP: ', selectedForm.expenditures);
+  console.log('Type: ', selectedForm.expenditures[0]);
+
+  const expendituresArray = selectedForm.expenditures;
+
+  //const numSets = 3;
+  const numSets = expendituresArray.length;
+
+  const inputSets = Array.from({ length: numSets }, (_, index) => index);
+
+  console.log('Array: ', expendituresArray.length); //array size
+
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
@@ -136,7 +150,77 @@ const renderInput = (name, label) => {
         Budgetary Requirements
       </h1>
       <div>
-          {inputFields.map((input, index) => {
+        
+          {/*------------------------------------------------------------------------------*/}
+
+        {/*now how to map?*/}
+        
+        {inputSets.map(setIndex => (
+          <div key={setIndex} className="space-x-4 space-y-2">
+            {/* Select field */}
+            <select
+              id={`type${setIndex}`}
+              name={`type${setIndex}`}
+              autoComplete={`type${setIndex}`}
+              required
+              className="flex-1 px-2 py-1"
+              value={inputFields[setIndex] ? inputFields[setIndex].type : ''}
+              onChange={event => handleFormChange(setIndex, event)}
+            >
+              <option value="Meals and Snacks">Meals and Snacks</option>
+              <option value="Function Room/Venue">Venue</option>
+              <option value="Accomodation">Accomodation</option>
+              <option value="Equipment Rental">Equipment Rental</option>
+              <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+              <option value="Token/s">Token/s</option>
+              <option value="Materials and Supplies">Materials and Supplies</option>
+              <option value="Transportation">Transportation</option>
+              <option value="Others">Others...</option>
+              {/* Other options */}
+            </select>
+            
+            {/* Input fields for expenditure */}
+            <input
+              id={`item${setIndex}`}
+              name={`item${setIndex}`}
+              type="text"
+              placeholder="Item"
+              autoComplete={`item${setIndex}`}
+              required
+              className="flex-1 px-2 py-1"
+              value={inputFields[setIndex] ? inputFields[setIndex].item : ''}
+              onChange={event => handleFormChange(setIndex, event)}
+            />
+            <input
+              id={`phpd${setIndex}`}
+              name={`phpd${setIndex}`}
+              type="text"
+              placeholder="Per Head/Per Day"
+              autoComplete={`phpd${setIndex}`}
+              required
+              className="flex-1 px-2 py-1"
+              value={inputFields[setIndex] ? inputFields[setIndex].phpd : ''}
+              onChange={event => handleFormChange(setIndex, event)}
+            />
+            <input
+              id={`total${setIndex}`}
+              name={`total${setIndex}`}
+              type="text"
+              placeholder="Total"
+              autoComplete={`total${setIndex}`}
+              required
+              className="flex-1 px-2 py-1"
+              value={inputFields[setIndex] ? inputFields[setIndex].total : ''}
+              onChange={event => handleFormChange(setIndex, event)}
+            />
+            <button onClick={() => removeFields(setIndex)}>Remove</button>
+          </div>
+        ))}
+
+
+
+
+          {/*{inputFields.map((input, index) => {
             return(
               <div key={index} className="space-x-4 space-y-2">
                 <select
@@ -159,7 +243,7 @@ const renderInput = (name, label) => {
                   <option value="Others">Others...</option>
                 </select>
 
-                {/**For expendature */}
+                
                 <input
                   id="item"
                   name="item"
@@ -197,7 +281,8 @@ const renderInput = (name, label) => {
               </div>
               
             )
-          })}
+          })}*/}
+          {/*------------------------------------------------------------------------------*/}
           <div className="flex justify-center">
 
           <NeutralButton label="Add more.." onClick={() => addFields()} />
