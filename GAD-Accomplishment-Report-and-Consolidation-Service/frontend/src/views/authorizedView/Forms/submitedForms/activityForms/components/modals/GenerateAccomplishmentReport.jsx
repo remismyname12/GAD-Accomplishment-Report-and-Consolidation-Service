@@ -49,39 +49,31 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-    setError({ __html: "" });
-
-    if(selectedForm.form_type === "EMPLOYEE"){
-      //For EMPLOYEE UPDATE
-      axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData})
-      .catch((error) => {
+  //----------axiosClient
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+        const response = await axiosClient.post('/accomplishment_report', {
+            forms_id: selectedForm.id,
+            expenditures_id: 1
+        });
+        setAxiosMessage(response.data.Message); // Set success message
+        setAxiosStatus(response.data.Success);
+        setTimeout(() => {
+            setAxiosMessage(''); // Clear success message
+            setAxiosStatus('');
+        }, 3000); // Timeout after 3 seconds
+    } catch (error) {
         if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
+            const finalErrors = Object.values(error.response.data.errors).reduce(
+                (accum, next) => [...accum, ...next],
+                []
+            );
+            setError(finalErrors.join('<br>'));
         }
         console.error(error);
-      });
-    } else {
-      //For INSET UPDATE
-      axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData})
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
-      });
     }
+    
   };
 
 // For Unified Inputs 
