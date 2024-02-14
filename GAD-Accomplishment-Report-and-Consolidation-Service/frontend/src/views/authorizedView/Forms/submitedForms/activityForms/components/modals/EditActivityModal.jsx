@@ -4,6 +4,15 @@ import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function EditActivityModal({ selectedForm }) {
+
+  console.log('All: ', selectedForm);
+  console.log('EXP: ', selectedForm.expenditures);
+  console.log('Type: ', selectedForm.expenditures[0]);
+
+  const expendituresArray = selectedForm.expenditures;
+
+  console.log('Array: ', expendituresArray.length); //array size
+
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
@@ -136,6 +145,7 @@ const renderInput = (name, label) => {
         Budgetary Requirements
       </h1>
       <div>
+          {/*------------------------------------------------------------------------------*/}
           {inputFields.map((input, index) => {
             return(
               <div key={index} className="space-x-4 space-y-2">
@@ -198,6 +208,7 @@ const renderInput = (name, label) => {
               
             )
           })}
+          {/*------------------------------------------------------------------------------*/}
           <div className="flex justify-center">
 
           <NeutralButton label="Add more.." onClick={() => addFields()} />
