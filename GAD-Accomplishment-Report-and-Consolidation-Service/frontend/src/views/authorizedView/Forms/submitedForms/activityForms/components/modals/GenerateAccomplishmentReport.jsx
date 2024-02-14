@@ -33,7 +33,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     if(selectedForm.form_type === "EMPLOYEE"){
       //For EMPLOYEE UPDATE
       axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, formData)
+      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -47,7 +47,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     } else {
       //For INSET UPDATE
       axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, formData)
+      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(

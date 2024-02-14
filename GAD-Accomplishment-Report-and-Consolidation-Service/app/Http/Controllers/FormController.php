@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Auth;
 
 class FormController extends Controller
 {
-    //for show all users
+    
+    //for show all employee forms
     public function index_employee_forms()
     {
         $forms = Forms::where('form_type', 'EMPLOYEE')->get();
@@ -22,7 +23,7 @@ class FormController extends Controller
         return response()->json($forms);
     }
 
-    //for show all users
+    //for show all inset forms
     public function indexInsetForms()
     {
         $forms = Forms::where('form_type', 'INSET')->get();
@@ -232,25 +233,6 @@ class FormController extends Controller
     //for EAD training design==============================================================================================
     public function form_ead_store(FormRequest_R $request)
     {
-        //testing
-        //$childId = 2;
-
-        // Retrieve the child record with the specified ID
-        //$child = accReport::findOrFail($childId);
-
-        // Access the parent records using the defined relationship methods
-        //$parent1 = $child->employeeForm;
-        //$parent2 = $child->expenditures;
-
-        //$child = accReport::with('forms', 'expenditures')->find($childId);
-
-        // Return the parent records
-        //return response()->json([
-           // 'child' => $child,
-            //'parent1' => $parent1,
-            //'parent2' => $parent2
-        //]);
-
         $formData = $request->input('form_data');
         $inputFields = $request->input('xp_data');
         $formtitle = $formData['title'];
@@ -303,15 +285,32 @@ class FormController extends Controller
  
     }
 
-    public function form_R_store(FormRequest_R $request)
+    public function generate_accReport()
     {
+        //testing
+        //$childId = 2;
+        //$child = accReport::with('forms', 'expenditures')->find($childId);
 
-        $formData = $request->input('form_data');
-        $inputFields = $request->input('xp_data');
+        // Return the parent records
+        //return response()->json([
+           // 'child' => $child,
+            //'parent1' => $parent1,
+            //'parent2' => $parent2
+        //]);
+    }
 
-        return response([
-            'Succes' => True,
-        ]);
+    public function fetch_accReport($reportID)
+    {
+        //testing
+        //$childId = $reportID;
+        //$child = accReport::with('forms', 'expenditures')->find($childId);
+
+        // Return the parent records
+        //return response()->json([
+           // 'child' => $child,
+            //'parent1' => $parent1,
+            //'parent2' => $parent2
+        //]);
     }
 
 }
