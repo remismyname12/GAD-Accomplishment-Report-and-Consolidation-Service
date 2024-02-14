@@ -16,7 +16,17 @@ class FormController extends Controller
     //for show all EMPLOYEE forms
     public function index_employee_forms()
     {
-        $forms = Forms::where('form_type', 'EMPLOYEE')->get();
+        //using, parent-child relationship
+        
+        $forms = Forms::where('form_type', 'EMPLOYEE')
+                    ->with('expenditures') // load expenditures relationship in Forms model
+                    ->get();
+
+        // Extract expenditures data
+        $expenditures = [];
+        foreach ($forms as $form) {
+            $expenditures[$form->id] = $form->expenditures;
+        }
 
         return response()->json($forms);
     }
