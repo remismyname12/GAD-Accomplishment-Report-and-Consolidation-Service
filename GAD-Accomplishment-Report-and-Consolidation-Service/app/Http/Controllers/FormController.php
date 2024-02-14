@@ -267,8 +267,9 @@ class FormController extends Controller
            // 'child' => $child,
             //'parent1' => $parent1,
             //'parent2' => $parent2
-        //]);
-
+        //]);    
+    }
+    
     public function form_ead_update(FormRequest_I $request, $id)
     {
        $validatedData = $request->validated();

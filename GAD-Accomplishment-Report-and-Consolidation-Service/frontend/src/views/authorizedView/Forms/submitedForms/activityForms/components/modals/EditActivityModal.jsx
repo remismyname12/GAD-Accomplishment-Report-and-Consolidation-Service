@@ -6,7 +6,7 @@ import axiosClient from '../../../../../../axios/axios';
 export default function EditActivityModal({ selectedForm }) {
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total: ''}
+    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
   ])
   
   const handleFormChange = (index, event) => {
@@ -16,7 +16,7 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
+    let newfield = { type: 'Meals and Snacks', item: '', phpd: '', total:'' }
   
     setInputFields([...inputFields, newfield])
   }
@@ -147,9 +147,7 @@ const renderInput = (name, label) => {
                   className="flex-1 px-2 py-1"
                   value={input.type}
                   onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
                 >
-                  <option value="" disabled selected>Select Type</option>
                   <option value="Meals and Snacks">Meals and Snacks</option>
                   <option value="Function Room/Venue">Venue</option>
                   <option value="Accomodation">Accomodation</option>
