@@ -3,7 +3,7 @@ import { Tab } from '@headlessui/react'
 import axiosClient from '../../../../axios/axios';
 import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 import ReactModal from 'react-modal';
-import EditActivityModal from '../activityForms/components/modals/EditActivityModal';
+import EmployeeAccomplishmentReportEditModal from './components/modals/EmployeeAccomplishmentReportEditModal';
 import ArchiveActivityModal from '../activityForms/components/modals/ArchiveActivityModal';
 
 function classNames(...classes) {
@@ -37,6 +37,7 @@ export default function AccomplishmentReport() {
   const handleEditClick = (selected_form) => {
     setIsEditModalOpen(true)
     setSelectedForm(selected_form)
+    console.log('this is the selected form: ', selected_form);
   }
 
   // For Form Archive
@@ -44,6 +45,8 @@ export default function AccomplishmentReport() {
     setIsArchiveModalOpen(true)
     setSelectedForm(selected_form)
   }
+
+  console.log(accomplishmentReport);
   return (
     <div className='flex justify-center'>
       <div className="w-full max-w-md px-2 py-5 sm:px-0">
@@ -73,9 +76,9 @@ export default function AccomplishmentReport() {
               )}
             >
               <ul>
-                {accomplishmentReport.map((form) => (
+                {accomplishmentReport.map((formEntry) => (
                   <li
-                  key={form.id}
+                  key={(formEntry).id}
                   className="relative rounded-md p-3 hover:bg-gray-100"
                 >
                   <h3 className="text-sm font-medium leading-5">
@@ -83,15 +86,14 @@ export default function AccomplishmentReport() {
                   </h3>
 
                   <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                    <li>{form.title}</li>
-                    {console.log(form && form.forms)}
+                    <li>{formEntry.forms.title}</li>
                   </ul>
 
                   <ul>
-                      <button onClick={() => handleEditClick(form)}>
+                      <button onClick={() => handleEditClick((formEntry))}>
                           <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleArchiveClick(form)}>
+                      <button onClick={() => handleArchiveClick((formEntry))}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                     </ul>
@@ -110,7 +112,7 @@ export default function AccomplishmentReport() {
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
-                <EditActivityModal
+                <EmployeeAccomplishmentReportEditModal
                  closeModal={() => setIsEditModalOpen(false)}
                  selectedForm={selectedForm}
                  />
