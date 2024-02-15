@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import axiosClient from '../../../../../../axios/axios';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
@@ -8,7 +8,9 @@ import Feedback from '../../../../../../components/feedbacks/Feedback';
 import Error from '../../../../../../components/feedbacks/Error';
 
 export default function EditEADModal({selectedForm}) {
-  //For feedback
+
+  const expendituresArray = selectedForm.expenditures;
+
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
@@ -16,8 +18,28 @@ export default function EditEADModal({selectedForm}) {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: ''}
+    {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
   ])
+
+
+    //------------------------------
+    useEffect(() => {
+      // Function to generate multiple sets of input fields
+      const generateInputFields = () => {
+        const newInputFields = expendituresArray.map(expenditure => ({
+          id: expenditure.id,
+          type: expenditure.type,
+          item: expenditure.items,
+          estimated: expenditure.estimated_cost,
+          remarks: expenditure.remarks,
+          source_of_funds: expenditure.source_of_funds
+        }));
+        setInputFields(newInputFields);
+      };
+    
+      generateInputFields();
+  }, []);
+    //------------------------------
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -26,7 +48,7 @@ export default function EditEADModal({selectedForm}) {
   }
 
   const addFields = () => {
-    let newfield = { type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: '' }
+    let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -111,7 +133,7 @@ export default function EditEADModal({selectedForm}) {
         Extension Activity Design Form
       </h1>
 
-      <form action="" >
+      <form onSubmit={handleSubmit} >
         {renderInput("title", "Title: ")}
         {renderInput("date_of_activity", "Date of Activity: ")}
         {renderInput("venue", "Venue: ")}
@@ -135,11 +157,9 @@ export default function EditEADModal({selectedForm}) {
                     autoComplete="type"
                     required
                     className="flex-1 px-2 py-1"
-                    value={input.type}
                     onChange={event => handleFormChange(index, event)}
-                    //<option value="" disabled selected>Select Type</option>
                   >
-                    
+                    <option value={input.type}>{input.type}</option>
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>
@@ -205,10 +225,8 @@ export default function EditEADModal({selectedForm}) {
           
         </div>
         
-      
-        
         <div className='mt-5'>
-          <Submit label="Submit" onClick={handleSubmit}/>
+          <Submit label="Submit"/>
         </div>
       </form>
     </div>
