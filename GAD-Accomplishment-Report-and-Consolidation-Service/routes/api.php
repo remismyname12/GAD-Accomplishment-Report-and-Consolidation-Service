@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Activity Forms EAD
     Route::post('/form_ead', [FormController::class, 'form_ead_store']);
     Route::get('/show_form_ead', [FormController::class, 'index_ead_form']);
-    Route::get('/update_form_ead', [FormController::class, 'form_ead_update']);
+    Route::put('/update_form_ead/{id}', [FormController::class, 'form_ead_update']);
   
     //Form Crud Functions
     Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);

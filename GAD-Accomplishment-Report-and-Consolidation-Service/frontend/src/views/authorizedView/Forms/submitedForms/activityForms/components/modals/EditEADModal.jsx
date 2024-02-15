@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import Submit from '../../../components/buttons/Submit';
-import axiosClient from '../../../axios/axios';
-import NeutralButton from '../../../components/buttons/NeutralButton';
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
+import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 
 //For Feedback
-import Feedback from '../../../components/feedbacks/Feedback';
-import Error from '../../../components/feedbacks/Error';
+import Feedback from '../../../../../../components/feedbacks/Feedback';
+import Error from '../../../../../../components/feedbacks/Error';
 
-export default function EditEADModal() {
+export default function EditEADModal({selectedForm}) {
   //For feedback
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
@@ -38,16 +38,16 @@ export default function EditEADModal() {
 }
 
   const [formData, setFormData] = useState({
-    title: '',
-    date_of_activity: '',
-    venue: '',
-    clientele_type: '',
-    clientele_number: '',
-    estimated_cost: '',
-    cooperating_agencies_units: '',
-    expected_outputs: '',
-    fund_source: '',
-    proponents_implementors: '',
+    title: selectedForm.title,
+    date_of_activity: selectedForm.date_of_activity,
+    venue: selectedForm.venue,
+    clientele_type: selectedForm.clientele_type,
+    clientele_number: selectedForm.clientele_number,
+    estimated_cost: selectedForm.estimated_cost,
+    cooperating_agencies_units: selectedForm.cooperating_agencies_units,
+    expected_outputs: selectedForm.expected_outputs,
+    fund_source: selectedForm.fund_source,
+    proponents_implementors: selectedForm.proponents_implementors,
   });
 
   const handleChange = async (e) => {
@@ -58,7 +58,7 @@ export default function EditEADModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axiosClient.put('/form_ead_update', {
+        const response = await axiosClient.put(`/update_form_ead/${selectedForm.id}`, {
             form_data: formData,
             xp_data: inputFields
         });
