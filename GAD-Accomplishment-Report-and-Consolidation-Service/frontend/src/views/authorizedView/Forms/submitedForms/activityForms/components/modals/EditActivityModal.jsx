@@ -17,6 +17,7 @@ export default function EditActivityModal({ selectedForm }) {
     // Function to generate multiple sets of input fields
     const generateInputFields = () => {
       const newInputFields = expendituresArray.map(expenditure => ({
+        id: expenditure.id,
         type: expenditure.type,
         item: expenditure.items,
         phpd: expenditure.per_head_per_day,
@@ -36,15 +37,16 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: 'Meals and Snacks', item: '', phpd: '', total:'' }
-  
+    let newfield = { type: '', item: '', phpd: '', total:'' }
     setInputFields([...inputFields, newfield])
+    //will also add to DB
   }
   
   const removeFields = (index) => {
     let data = [...inputFields];
     data.splice(index, 1)
     setInputFields(data)
+    //will also remove from DB
   }
 
   const [formData, setFormData] = useState({
@@ -77,7 +79,7 @@ export default function EditActivityModal({ selectedForm }) {
     if(selectedForm.form_type === "EMPLOYEE"){
       //For EMPLOYEE UPDATE
       axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData})
+      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -91,7 +93,7 @@ export default function EditActivityModal({ selectedForm }) {
     } else {
       //For INSET UPDATE
       axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData})
+      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -137,7 +139,7 @@ const renderInput = (name, label) => {
         ></div>
       )}
 
-    <form action="" className="flex flex-1 flex-col">
+    <form onSubmit={handleSubmit} className="flex flex-1 flex-col">
       {renderInput("title", "Title: ")}
       {renderInput("purpose", "Purpose: ")}
       {renderInput("legal_bases", "Legal Bases: ")}
@@ -158,63 +160,59 @@ const renderInput = (name, label) => {
 
         {inputFields.map((input, index) => (
         <div key={index} className="space-x-4 space-y-2">
-          <input
-            id={`type${index}`}
-            name={`type${index}`}
-            type="text" 
-            list="cars"
-            placeholder="Type"
-            autoComplete={`item${index}`}
-            required
-            className="flex-1 px-2 py-1"
-            value={input.type}
-            onChange={event => handleFormChange(index, event)} 
-          />
-            <datalist id="cars">
-                <option value="Meals and Snacks">Meals and Snacks</option>
-                <option value="Function Room/Venue">Venue</option>
-                <option value="Accomodation">Accomodation</option>
-                <option value="Equipment Rental">Equipment Rental</option>
-                <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                <option value="Token/s">Token/s</option>
-                <option value="Materials and Supplies">Materials and Supplies</option>
-                <option value="Transportation">Transportation</option>
-                <option value="Others">Others</option>
-            </datalist>
-        {/* Input fields for expenditure */}
-        <input
-          id={`item${index}`}
-          name={`item${index}`}
-          type="text"
-          placeholder="Item"
-          autoComplete={`item${index}`}
-          required
-          className="flex-1 px-2 py-1"
-          value={input.item}
-          onChange={event => handleFormChange(index, event)}
-        />
-        <input
-          id={`phpd${index}`}
-          name={`phpd${index}`}
-          type="text"
-          placeholder="Per Head/Per Day"
-          autoComplete={`phpd${index}`}
-          required
-          className="flex-1 px-2 py-1"
-          value={input.phpd}
-          onChange={event => handleFormChange(index, event)}
-        />
-        <input
-          id={`total${index}`}
-          name={`total${index}`}
-          type="text"
-          placeholder="Total"
-          autoComplete={`total${index}`}
-          required
-          className="flex-1 px-2 py-1"
-          value={input.total}
-          onChange={event => handleFormChange(index, event)}
-        />
+          <select
+                  id="type"
+                  name="type"
+                  autoComplete="type"
+                  required
+                  className="flex-1 px-2 py-1"
+                  onChange={event => handleFormChange(index, event)}
+                  //<option value="" disabled selected>Select Type</option>
+                >
+                  <option value = {input.type} selected>{input.type}</option>
+                  <option value="Meals and Snacks">Meals and Snacks</option>
+                  <option value="Function Room/Venue">Venue</option>
+                  <option value="Accomodation">Accomodation</option>
+                  <option value="Equipment Rental">Equipment Rental</option>
+                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                  <option value="Token/s">Token/s</option>
+                  <option value="Materials and Supplies">Materials and Supplies</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Others">Others...</option>
+                </select>
+            <input
+                  id="item"
+                  name="item"
+                  type="text"
+                  placeholder="Item"
+                  autoComplete="item"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.item}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="phpd"
+                  name="phpd"
+                  type="text"
+                  placeholder="Per Head/Per Day"
+                  autoComplete="phpd"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.phpd}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="total"
+                  name="total"
+                  type="text"
+                  placeholder="Total"
+                  autoComplete="total"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.total}
+                  onChange={event => handleFormChange(index, event)}
+                />
         <button onClick={() => removeFields(index)}>Remove</button>
       </div>
     ))}
@@ -230,7 +228,7 @@ const renderInput = (name, label) => {
         
       </div>
   <div className="mt-5">
-    <Submit label="Submit" onClick={handleSubmit} />
+    <Submit label="Submit"/>
   </div>
 </form>
 

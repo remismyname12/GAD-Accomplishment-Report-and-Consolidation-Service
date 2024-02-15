@@ -22,15 +22,14 @@ class FormRequest_R extends FormRequest
     public function rules(): array
     {
         return [
-            /*'xp_data' => 'required|array',
+            'xp_data' => 'required|array',
             //-----
             'xp_data.*.type' => 'required|string',
             'xp_data.*.item' => 'required|string',
             'xp_data.*.estimated' => 'required|string',
             'xp_data.*.remarks' => 'required|string',
             'xp_data.*.source_of_funds' => 'required|string',
-            //-----*/
-            //uncomment after expenditure is added to update 
+            //-----
             //differen for EAD
             'form_data' => 'required|array',
             //-----

@@ -16,7 +16,7 @@ export default function EmployeeForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
+    {type: '', item: '', phpd: '', total: ''}
   ])
 
   const handleFormChange = (index, event) => {
@@ -26,7 +26,7 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: 'Meals and Snacks', item: '', phpd: '', total:'' }
+    let newfield = { type: '', item: '', phpd: '', total:'' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -110,7 +110,7 @@ export default function EmployeeForm() {
         Employee Activity Form
       </h1>
 
-      <form action="" >
+      <form onSubmit={handleSubmit} >
         {renderInput("title", "Title: ")}
         {renderInput("purpose", "Purpose: ")}
         {renderInput("legal_bases", "Legal Bases: ")}
@@ -137,9 +137,8 @@ export default function EmployeeForm() {
                     className="flex-1 px-2 py-1"
                     value={input.type}
                     onChange={event => handleFormChange(index, event)}
-                    //<option value="" disabled selected>Select Type</option>
                   >
-                    
+                    <option value="" disabled selected>Select Type</option>
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>
@@ -197,7 +196,7 @@ export default function EmployeeForm() {
       
         
         <div className='mt-5'>
-          <Submit label="Submit" onClick={handleSubmit}/>
+          <Submit label="Submit"/>
         </div>
       </form>
     </div>

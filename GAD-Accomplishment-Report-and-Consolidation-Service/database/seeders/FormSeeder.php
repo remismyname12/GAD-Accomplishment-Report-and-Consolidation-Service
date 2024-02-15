@@ -41,7 +41,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '1',
                 'user_id' => '1',
-                'form_type' => 'inset',
+                'form_type' => 'INSET',
                 'title' => 'Training 1',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
@@ -63,7 +63,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '2',
                 'user_id' => '2',
-                'form_type' => 'employee',
+                'form_type' => 'EMPLOYEE',
                 'title' => 'Training 2',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
@@ -85,7 +85,7 @@ class FormSeeder extends Seeder
             [
                 'id' => '3',
                 'user_id' => '3',
-                'form_type' => 'ead',
+                'form_type' => 'EAD',
                 'title' => 'Training 3',
                 'purpose' => 'For World Peace',
                 'legal_bases' => 'LEGALITY',
