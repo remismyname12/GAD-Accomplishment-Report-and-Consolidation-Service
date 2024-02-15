@@ -34,7 +34,11 @@ class FormController extends Controller
     //for show all INSET forms
     public function indexInsetForms()
     {
-        $forms = Forms::where('form_type', 'INSET')->get();
+
+        $forms = Forms::where('form_type', 'INSET')
+                    ->with('expenditures') // load expenditures relationship in Forms model
+                    ->get();
+        //$forms = Forms::where('form_type', 'INSET')->get();
 
         return response()->json($forms);
     }
@@ -42,7 +46,11 @@ class FormController extends Controller
     //for show all EAD forms
     public function index_ead_form()
     {
-        $forms = Forms::where('form_type', 'EAD')->get();
+
+        $forms = Forms::where('form_type', 'EAD')
+                    ->with('expenditures') // load expenditures relationship in Forms model
+                    ->get();
+        //$forms = Forms::where('form_type', 'EAD')->get();
 
         return response()->json($forms);
     }
@@ -280,7 +288,7 @@ class FormController extends Controller
         //]);    
     }
     
-    public function form_ead_update(FormRequest_I $request, $id)
+    public function form_ead_update(FormRequest_R $request, $id)
     {
        $validatedData = $request->validated();
        $form = Forms::find($id);
