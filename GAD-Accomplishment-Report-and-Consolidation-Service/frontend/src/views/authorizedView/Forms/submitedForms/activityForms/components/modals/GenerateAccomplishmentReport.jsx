@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function GenerateAccomplishmentReport({ selectedForm }) {
+
+  const expendituresArray = selectedForm.expenditures;
+
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', phpd: '', total: ''}
   ])
-  
-  const handleFormChange = (index, event) => {
-    let data = [...inputFields];
-    data[index][event.target.name] = event.target.value;
-    setInputFields(data);
-  }
-  
-  const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
-  
-    setInputFields([...inputFields, newfield])
-  }
-  
-  const removeFields = (index) => {
-    let data = [...inputFields];
-    data.splice(index, 1)
-    setInputFields(data)
-  }
 
+   //------------------------------
+  useEffect(() => {
+    // Function to generate multiple sets of input fields
+    const generateInputFields = () => {
+      const newInputFields = expendituresArray.map(expenditure => ({
+        type: expenditure.type,
+        item: expenditure.items,
+        phpd: expenditure.per_head_per_day,
+        total: expenditure.total
+      }));
+      setInputFields(newInputFields);
+    };
+  
+  generateInputFields();
+  }, []);
+  //------------------------------
+  
   const [formData, setFormData] = useState({
     title: selectedForm.title,
     purpose: selectedForm.purpose,
@@ -96,6 +98,7 @@ const renderInput = (name, label) => {
         id={name}
         name={name}
         type="text"
+        disabled
         autoComplete={name}
         // Include "required" attribute only if it's not INSET and not no_of_target_participants
         {...(isRequired ? { required: true } : {})}
@@ -139,27 +142,17 @@ const renderInput = (name, label) => {
           {inputFields.map((input, index) => {
             return(
               <div key={index} className="space-x-4 space-y-2">
-                <select
+                <input
                   id="type"
                   name="type"
-                  autoComplete="type"
+                  type="text"
+                  placeholder="Type"
+                  autoComplete="Type"
                   required
+                  disabled
                   className="flex-1 px-2 py-1"
                   value={input.type}
-                  onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
-                >
-                  <option value="" disabled selected>Select Type</option>
-                  <option value="Meals and Snacks">Meals and Snacks</option>
-                  <option value="Function Room/Venue">Venue</option>
-                  <option value="Accomodation">Accomodation</option>
-                  <option value="Equipment Rental">Equipment Rental</option>
-                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                  <option value="Token/s">Token/s</option>
-                  <option value="Materials and Supplies">Materials and Supplies</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Others">Others...</option>
-                </select>
+                />
 
                 {/**For expendature */}
                 <input
@@ -169,9 +162,9 @@ const renderInput = (name, label) => {
                   placeholder="Item"
                   autoComplete="item"
                   required
+                  disabled
                   className="flex-1 px-2 py-1"
                   value={input.item}
-                  onChange={event => handleFormChange(index, event)}
                 />
                 <input
                   id="phpd"
@@ -180,9 +173,9 @@ const renderInput = (name, label) => {
                   placeholder="Per Head/Per Day"
                   autoComplete="phpd"
                   required
+                  disabled
                   className="flex-1 px-2 py-1"
                   value={input.phpd}
-                  onChange={event => handleFormChange(index, event)}
                 />
                 <input
                   id="total"
@@ -191,20 +184,13 @@ const renderInput = (name, label) => {
                   placeholder="Total"
                   autoComplete="total"
                   required
+                  disabled
                   className="flex-1 px-2 py-1"
                   value={input.total}
-                  onChange={event => handleFormChange(index, event)}
                 />
-                <button onClick={() => removeFields(index)}>Remove</button>
               </div>
-              
             )
           })}
-          <div className="flex justify-center">
-
-          <NeutralButton label="Add more.." onClick={() => addFields()} />
-          {/* <button onClick={addFields} className='m-1'>Add More..</button> */}
-          </div>
         
       </div>
   <div className="mt-5">
