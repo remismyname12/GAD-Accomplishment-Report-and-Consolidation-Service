@@ -289,43 +289,30 @@ class FormController extends Controller
         ]);
  
     }
-
-
-    public function generate_accReport()
-    {
-        //testing
-        //$childId = 2;
-        //$child = accReport::with('forms', 'expenditures')->find($childId);
-
-        // Return the parent records
-        //return response()->json([
-           // 'child' => $child,
-            //'parent1' => $parent1,
-            //'parent2' => $parent2
-        //]);
-    }
-
-    public function fetch_accReport($reportID)
-    {
-        //testing
-        //$childId = $reportID;
-        //$child = accReport::with('forms', 'expenditures')->find($childId);
-
-        // Return the parent records
-        //return response()->json([
-           // 'child' => $child,
-            //'parent1' => $parent1,
-            //'parent2' => $parent2
-        //]);    
-    }
     
     public function form_ead_update(FormRequest_R $request, $id)
     {
-       $validatedData = $request->validated();
-       $form = Forms::find($id);
-       $formArray = $validatedData['form_data'];
+        $validatedData = $request->validated();
+        $xpArray = $request->input('xp_data');
+        $form = Forms::find($id);
+        $xp_forms = Expenditures::where('forms_id', $id)->get();
+        $formArray = $validatedData['form_data'];
 
-       $form->update($formArray);
+        $form->update($formArray);
+
+        foreach ($xp_forms as $index => $xp_form) {
+            if (isset($xpArray[$index])) {
+                $xp_form->type = $xpArray[$index]['type'];
+                $xp_form->items = $xpArray[$index]['item'];
+                $xp_form->estimated_cost = $xpArray[$index]['estimated'];
+                $xp_form->remarks = $xpArray[$index]['remarks'];
+                $xp_form->source_of_funds = $xpArray[$index]['source_of_funds'];
+               
+                $xp_form->save();
+
+                //try catch, then delete
+            }
+        }
 
             return response([
              'Success' => true,
