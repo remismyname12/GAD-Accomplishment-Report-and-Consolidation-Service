@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function EditActivityModal({ selectedForm }) {
 
-  console.log('All: ', selectedForm);
-  console.log('EXP: ', selectedForm.expenditures);
-  console.log('Type: ', selectedForm.expenditures[0]);
-
   const expendituresArray = selectedForm.expenditures;
-
-  //const numSets = 3;
-  const numSets = expendituresArray.length;
-
-  const inputSets = Array.from({ length: numSets }, (_, index) => index);
-  
-  console.log('Array: ', expendituresArray.length); //array size
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
+    {type: '', item: '', phpd: '', total: ''}
   ])
+
+  //------------------------------
+  useEffect(() => {
+    // Function to generate multiple sets of input fields
+    const generateInputFields = () => {
+      const newInputFields = expendituresArray.map(expenditure => ({
+        type: expenditure.type,
+        item: expenditure.items,
+        phpd: expenditure.per_head_per_day,
+        total: expenditure.total
+      }));
+      setInputFields(newInputFields);
+    };
   
+    generateInputFields();
+}, []);
+  //------------------------------
+
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
     data[index][event.target.name] = event.target.value;
@@ -62,6 +68,7 @@ export default function EditActivityModal({ selectedForm }) {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
@@ -121,10 +128,6 @@ const renderInput = (name, label) => {
   );
 };
 
-
-
-
-  console.log('This is the selected form', selectedForm);
   return (
     <div>
       {error.__html && (
@@ -151,72 +154,74 @@ const renderInput = (name, label) => {
       </h1>
       <div>
         
-          {/*------------------------------------------------------------------------------*/}
+        {/*------------------------------------------------------------------------------*/}
 
-        {/*now how to map?*/}
+        {inputFields.map((input, index) => (
+        <div key={index} className="space-x-4 space-y-2">
+          <input
+            id={`type${index}`}
+            name={`type${index}`}
+            type="text" 
+            list="cars"
+            placeholder="Type"
+            autoComplete={`item${index}`}
+            required
+            className="flex-1 px-2 py-1"
+            value={input.type}
+            onChange={event => handleFormChange(index, event)} 
+          />
+            <datalist id="cars">
+                <option value="Meals and Snacks">Meals and Snacks</option>
+                <option value="Function Room/Venue">Venue</option>
+                <option value="Accomodation">Accomodation</option>
+                <option value="Equipment Rental">Equipment Rental</option>
+                <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                <option value="Token/s">Token/s</option>
+                <option value="Materials and Supplies">Materials and Supplies</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Others">Others</option>
+            </datalist>
+        {/* Input fields for expenditure */}
+        <input
+          id={`item${index}`}
+          name={`item${index}`}
+          type="text"
+          placeholder="Item"
+          autoComplete={`item${index}`}
+          required
+          className="flex-1 px-2 py-1"
+          value={input.item}
+          onChange={event => handleFormChange(index, event)}
+        />
+        <input
+          id={`phpd${index}`}
+          name={`phpd${index}`}
+          type="text"
+          placeholder="Per Head/Per Day"
+          autoComplete={`phpd${index}`}
+          required
+          className="flex-1 px-2 py-1"
+          value={input.phpd}
+          onChange={event => handleFormChange(index, event)}
+        />
+        <input
+          id={`total${index}`}
+          name={`total${index}`}
+          type="text"
+          placeholder="Total"
+          autoComplete={`total${index}`}
+          required
+          className="flex-1 px-2 py-1"
+          value={input.total}
+          onChange={event => handleFormChange(index, event)}
+        />
+        <button onClick={() => removeFields(index)}>Remove</button>
+      </div>
+    ))}
         
-        {inputSets.map(setIndex => (
-          <div key={setIndex} className="space-x-4 space-y-2">
-            {/* Select field */}
-            <select
-              id={`type${setIndex}`}
-              name={`type${setIndex}`}
-              autoComplete={`type${setIndex}`}
-              required
-              className="flex-1 px-2 py-1"
-              value={inputFields[setIndex] ? inputFields[setIndex].type : ''}
-              onChange={event => handleFormChange(setIndex, event)}
-            >
-              <option value="Meals and Snacks">Meals and Snacks</option>
-              <option value="Function Room/Venue">Venue</option>
-              <option value="Accomodation">Accomodation</option>
-              <option value="Equipment Rental">Equipment Rental</option>
-              <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-              <option value="Token/s">Token/s</option>
-              <option value="Materials and Supplies">Materials and Supplies</option>
-              <option value="Transportation">Transportation</option>
-              <option value="Others">Others...</option>
-              {/* Other options */}
-            </select>
-            
-            {/* Input fields for expenditure */}
-            <input
-              id={`item${setIndex}`}
-              name={`item${setIndex}`}
-              type="text"
-              placeholder="Item"
-              autoComplete={`item${setIndex}`}
-              required
-              className="flex-1 px-2 py-1"
-              value={inputFields[setIndex] ? inputFields[setIndex].item : ''}
-              onChange={event => handleFormChange(setIndex, event)}
-            />
-            <input
-              id={`phpd${setIndex}`}
-              name={`phpd${setIndex}`}
-              type="text"
-              placeholder="Per Head/Per Day"
-              autoComplete={`phpd${setIndex}`}
-              required
-              className="flex-1 px-2 py-1"
-              value={inputFields[setIndex] ? inputFields[setIndex].phpd : ''}
-              onChange={event => handleFormChange(setIndex, event)}
-            />
-            <input
-              id={`total${setIndex}`}
-              name={`total${setIndex}`}
-              type="text"
-              placeholder="Total"
-              autoComplete={`total${setIndex}`}
-              required
-              className="flex-1 px-2 py-1"
-              value={inputFields[setIndex] ? inputFields[setIndex].total : ''}
-              onChange={event => handleFormChange(setIndex, event)}
-            />
-            <button onClick={() => removeFields(setIndex)}>Remove</button>
-          </div>
-        ))}
-          {/*------------------------------------------------------------------------------*/}
+        
+
+        {/*------------------------------------------------------------------------------*/}
           <div className="flex justify-center">
 
           <NeutralButton label="Add more.." onClick={() => addFields()} />
