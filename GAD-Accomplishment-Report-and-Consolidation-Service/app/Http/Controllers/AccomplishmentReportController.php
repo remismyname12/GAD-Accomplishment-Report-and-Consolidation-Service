@@ -13,7 +13,7 @@ class AccomplishmentReportController extends Controller
     public function index_accomplishment_report() {
         $accomplishmentReport = accReport::with('forms')->get();
 
-        return response([$accomplishmentReport]);
+        return response($accomplishmentReport);
     }
 
     public function accomplishment_report_store(AccomplishmentReportRequest $request) {
