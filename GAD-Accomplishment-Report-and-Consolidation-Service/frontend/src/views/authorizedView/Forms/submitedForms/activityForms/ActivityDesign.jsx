@@ -6,6 +6,7 @@ import ReactModal from 'react-modal';
 import EditActivityModal from './components/modals/EditActivityModal';
 import ArchiveActivityModal from './components/modals/ArchiveActivityModal';
 import GenerateAccomplishmentReport from '../activityForms/components/modals/GenerateAccomplishmentReport';
+import EditEADModal from './components/modals/EditEADModal';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -21,6 +22,7 @@ export default function ActivityDesign() {
   //For Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
+  const [isEditEADModalOpen, setIsEditEADModalOpen] = useState(false);
 
   useEffect(() => {
     fetchForms();
@@ -39,22 +41,28 @@ export default function ActivityDesign() {
         setInsetForms(insetFormData.data);
       } 
       if (eadFormData.data) {
-        setEadForm(insetFormData.data);
+        setEadForm(eadFormData.data);
       } 
     } catch (error) {
       console.error(error);
     }
   };
 
-  // For User EDIT
+  // For Form EDIT
   const handleEditClick = (selected_form) => {
     setIsEditModalOpen(true)
     setSelectedForm(selected_form)
   }
 
-  // For User Archive
+  // For Form Archive
   const handleArchiveClick = (selected_form) => {
     setIsArchiveModalOpen(true)
+    setSelectedForm(selected_form)
+  }
+
+  // For Form EDIT
+  const handleEditEADClick = (selected_form) => {
+    setIsEditEADModalOpen(true)
     setSelectedForm(selected_form)
   }
 
@@ -207,7 +215,7 @@ export default function ActivityDesign() {
                   </ul>
 
                   <ul>
-                      <button onClick={() => handleEditClick(form)}>
+                      <button onClick={() => handleEditEADClick(form)}>
                           <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                       <button onClick={() => handleArchiveClick(form)}>
@@ -253,7 +261,21 @@ export default function ActivityDesign() {
             </div>
         </ReactModal>
         
-        {/** Modal For Generate Accomplishment Report */}                
+        {/** Modal For Generate Accomplishment Report */}    
+        {/** Modal For User EDIT */}
+        <ReactModal
+            isOpen={isEditEADModalOpen}
+            onRequestClose={() => setIsEditEADModalOpen(false)}
+            className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
+        >
+            <div>
+                <EditEADModal
+                 closeModal={() => setIsEditEADModalOpen(false)}
+                 selectedForm={selectedForm}
+                 />
+            </div>
+        </ReactModal>
+
         <ReactModal
             isOpen={isGenerateAccomplishmentReportOpen}
             onRequestClose={() => setIsGenerateAccomplishmentReportOpen(false)}

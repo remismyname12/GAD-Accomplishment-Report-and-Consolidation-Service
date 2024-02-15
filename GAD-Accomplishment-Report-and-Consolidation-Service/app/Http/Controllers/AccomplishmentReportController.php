@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class AccomplishmentReportController extends Controller
 {
+    
+    public function index_accomplishment_report() {
+        $accomplishmentReport = accReport::with('forms')->get();
+
+        return response([$accomplishmentReport]);
+    }
+
     public function accomplishment_report_store(AccomplishmentReportRequest $request) {
         $validatedData = $request->validated();
         
@@ -21,10 +28,6 @@ class AccomplishmentReportController extends Controller
             'success' => true,
             'data' => $validatedData
     ]);
-    }
-
-    public function index_accomplishment_report() {
-
     }
 
     public function accomplishment_report_update() {

@@ -11,8 +11,7 @@ function classNames(...classes) {
 }
 
 export default function AccomplishmentReport() {
-  const [employeeForms, setEmployeeForms] = useState([]);
-  const [insetForms, setInsetForms] = useState([]);
+  const [accomplishmentReport, setAccomplishmentreport] = useState([]);
   const [selectedForm, setSelectedForm] = useState('')
 
   //For Modals
@@ -25,15 +24,10 @@ export default function AccomplishmentReport() {
   
   const fetchForms = async () => {
     try {
-      const employeeFormData = await axiosClient.get('/show_form_employee');
-      const insetFormData = await axiosClient.get('/show_form_inset');
+      const accomplishmentReport = await axiosClient.get('/show_accomplishment_report');
 
-      if (employeeFormData.data) {
-        setEmployeeForms(employeeFormData.data);
-      }
-      if (insetFormData.data) {
-        setInsetForms(insetFormData.data);
-      } 
+        setAccomplishmentreport(accomplishmentReport.data);
+
     } catch (error) {
       console.error(error);
     }
@@ -50,14 +44,13 @@ export default function AccomplishmentReport() {
     setIsArchiveModalOpen(true)
     setSelectedForm(selected_form)
   }
-
   return (
     <div className='flex justify-center'>
       <div className="w-full max-w-md px-2 py-5 sm:px-0">
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
             <Tab
-              key="Employee"
+              key="AccomplishmentReport"
               className={({ selected }) =>
                 classNames(
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
@@ -70,31 +63,17 @@ export default function AccomplishmentReport() {
             >
               Employee
             </Tab>
-            <Tab
-              key="Inset"
-              className={({ selected }) =>
-                classNames(
-                  'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
-                  'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                  selected
-                    ? 'bg-white text-blue-700 shadow'
-                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
-                )
-              }
-            >
-              Inset
-            </Tab>
           </Tab.List>
           <Tab.Panels className="mt-2">
             <Tab.Panel
-              key="Employee"
+              key="AccomplishmentReport"
               className={classNames(
                 'rounded-xl bg-white p-3',
                 'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
               )}
             >
               <ul>
-                {employeeForms.map((form) => (
+                {accomplishmentReport.map((form) => (
                   <li
                   key={form.id}
                   className="relative rounded-md p-3 hover:bg-gray-100"
@@ -105,42 +84,10 @@ export default function AccomplishmentReport() {
 
                   <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
                     <li>{form.title}</li>
+                    {console.log(form && form.forms)}
                   </ul>
 
                   <ul>
-                      <button onClick={() => handleEditClick(form)}>
-                          <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
-                      <button onClick={() => handleArchiveClick(form)}>
-                          <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            </Tab.Panel>
-            <Tab.Panel
-              key="Inset"
-              className={classNames(
-                'rounded-xl bg-white p-3',
-                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
-              )}
-            >
-              <ul>
-                {insetForms.map((form) => (
-                  <li
-                    key={form.id}
-                    className="relative rounded-md p-3 hover:bg-gray-100"
-                  >
-                    <h3 className="text-sm font-medium leading-5">
-                      Title
-                    </h3>
-
-                    <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                      <li>{form.title}</li>
-                    </ul>
-
-                    <ul>
                       <button onClick={() => handleEditClick(form)}>
                           <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
