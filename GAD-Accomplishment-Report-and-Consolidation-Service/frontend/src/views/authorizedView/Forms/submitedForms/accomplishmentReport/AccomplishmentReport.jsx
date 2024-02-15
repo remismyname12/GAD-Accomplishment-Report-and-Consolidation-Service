@@ -3,7 +3,7 @@ import { Tab } from '@headlessui/react'
 import axiosClient from '../../../../axios/axios';
 import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 import ReactModal from 'react-modal';
-import EmployeeAccomplishmentReportEditModal from './components/modals/EmployeeAccomplishmentReportEditModal';
+import EmployeeReportEditModal from './components/modals/EmployeeReportEditModal';
 import ArchiveActivityModal from '../activityForms/components/modals/ArchiveActivityModal';
 
 function classNames(...classes) {
@@ -112,7 +112,7 @@ export default function AccomplishmentReport() {
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
-                <EmployeeAccomplishmentReportEditModal
+                <EmployeeReportEditModal
                  closeModal={() => setIsEditModalOpen(false)}
                  selectedForm={selectedForm}
                  />
