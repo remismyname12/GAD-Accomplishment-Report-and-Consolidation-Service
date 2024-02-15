@@ -3,7 +3,7 @@ import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
-export default function EmployeeAccomplishmentReportEditModal({ selectedForm }) {
+export default function EmployeeReportEditModal({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
 
