@@ -124,14 +124,30 @@ class FormController extends Controller
     public function form_employee_update(FormRequest_E $request, $id)
     {
         $validatedData = $request->validated();
+        $xpArray = $request->input('xp_data');
         $form = Forms::find($id);
+        $xp_forms = Expenditures::where('forms_id', $id)->get();
         $formArray = $validatedData['form_data'];
 
         $form->update($formArray);
 
+        foreach ($xp_forms as $index => $xp_form) {
+            if (isset($xpArray[$index])) {
+                $xp_form->type = $xpArray[$index]['type'];
+                $xp_form->items = $xpArray[$index]['item'];
+                $xp_form->per_head_per_day = $xpArray[$index]['phpd'];
+                $xp_form->total = $xpArray[$index]['total'];
+                // Update other fields as needed
+                
+                // Save the changes to the database
+                $xp_form->save();
+            }
+        }
+
+
             return response([
              'Success' => true,
-             'Message' => $formArray,
+             'Message' => $xpArray,
              //'Message' => 'Form Updated'
        ]);
     }
@@ -192,11 +208,26 @@ class FormController extends Controller
 
     public function form_inset_update(FormRequest_I $request, $id)
     {
-       $validatedData = $request->validated();
-       $form = Forms::find($id);
-       $formArray = $validatedData['form_data'];
+        $validatedData = $request->validated();
+        $xpArray = $request->input('xp_data');
+        $form = Forms::find($id);
+        $xp_forms = Expenditures::where('forms_id', $id)->get();
+        $formArray = $validatedData['form_data'];
 
-       $form->update($formArray);
+        $form->update($formArray);
+
+        foreach ($xp_forms as $index => $xp_form) {
+            if (isset($xpArray[$index])) {
+                $xp_form->type = $xpArray[$index]['type'];
+                $xp_form->items = $xpArray[$index]['item'];
+                $xp_form->per_head_per_day = $xpArray[$index]['phpd'];
+                $xp_form->total = $xpArray[$index]['total'];
+                // Update other fields as needed
+                
+                // Save the changes to the database
+                $xp_form->save();
+            }
+        }
 
             return response([
              'Success' => true,
