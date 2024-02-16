@@ -10,6 +10,7 @@ const navigation = [
   { name: 'Manage Users', to: '/admin/manageusers'},
   { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
+  { name: 'Annual Report', to: '/admin/annualreport'},
   { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
 
@@ -39,7 +40,7 @@ export default function AdminLayout() {
         <Disclosure as="nav" className="bg-gray-800">
           {({ open }) => (
             <>
-              <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
 
                 <div className="relative flex h-16 items-center justify-between">
 
@@ -189,7 +190,7 @@ export default function AdminLayout() {
         </Disclosure>
 
         <main>
-          <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-8xl py-6 sm:px-6 lg:px-8">
             <Outlet />
           </div>
         </main>
