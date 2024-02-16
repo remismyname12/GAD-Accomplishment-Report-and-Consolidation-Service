@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('acc_report', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('forms_id')->unique()->constrained('forms')->onDelete('cascade');
+            $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade');
             $table->foreignId('expenditures_id')->constrained('expenditures')->onDelete('cascade');
             $table->timestamps();
+            
+            // Create a unique index on 'forms_id' and 'expenditures_id' combination
+            $table->unique(['forms_id', 'expenditures_id']);
         });
     }
 
