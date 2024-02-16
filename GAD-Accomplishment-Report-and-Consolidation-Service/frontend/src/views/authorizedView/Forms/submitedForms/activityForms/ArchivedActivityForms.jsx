@@ -11,7 +11,7 @@ export default function ArchivedActivityForms() {
     const [forms, setForms] = useState([]); 
     const [selectedForm, setSelectedForm] = useState('')
     const [isRestoreUserModalOpen, setIsRestoreUserModalOpen] = useState(false);
-    const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
+    const [isDeleteReportModalOpen, setIsDeleteReportModalOpen] = useState(false);
 
     useEffect(() => {
         fetchCurriculum();
@@ -71,7 +71,7 @@ export default function ArchivedActivityForms() {
                                 <button onClick={() => handleRestoreUserClick(forms)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
-                                <button onClick={() => handleDeleteUserClick(forms)}>
+                                <button onClick={() => setIsDeleteReportModalOpen(forms)}>
                                     <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
                               </td>
@@ -97,13 +97,13 @@ export default function ArchivedActivityForms() {
 
         {/** Modal For User ARCHIVE */}                
         <ReactModal
-            isOpen={isDeleteUserModalOpen}
-            onRequestClose={() => setIsDeleteUserModalOpen(false)}
+            isOpen={isDeleteReportModalOpen}
+            onRequestClose={() => setIsDeleteReportModalOpen(false)}
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
                 <DeleteActivityModal
-                 closeModal={() => setIsDeleteUserModalOpen(false)}
+                 closeModal={() => setIsDeleteReportModalOpen(false)}
                  selectedForm={selectedForm}
                  />
             </div>
