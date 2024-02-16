@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../../../axios/axios';
+import * as XLSX from 'xlsx';
 
 export default function AnnualReport() {
     const [report, setReport] = useState([]);
@@ -29,9 +30,18 @@ export default function AnnualReport() {
         backgroundColor: 'lightgray',
     };
 
+    const exportToExcel = () => {
+        const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Report');
+        XLSX.writeFile(wb, 'report.xlsx');
+    };
+
+
     return (
         <div>
-            <table>
+            <button onClick={exportToExcel}>Export to Excel</button>
+            <table id="report-table">
                 <thead>
                     <tr>
                         <th style={{ ...thStyles, width: 'fit' }}>GENDER ISSUE / GAD MANDATE</th>
