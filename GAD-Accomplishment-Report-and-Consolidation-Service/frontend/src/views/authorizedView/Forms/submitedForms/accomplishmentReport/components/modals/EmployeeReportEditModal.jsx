@@ -4,14 +4,9 @@ import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
 export default function EmployeeReportEditModal({ selectedForm }) {
-
-  //const expendituresArray = selectedForm.expenditures;
-
-  const formObject = selectedForm;
-
-  const expendituresArray = formObject.expenditures;
-
-  console.log('DATA: ', expendituresArray);
+  
+  const expendituresArray = selectedForm.expenditures;
+  console.log('DATA: ', selectedForm.expenditures);
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
@@ -19,21 +14,20 @@ export default function EmployeeReportEditModal({ selectedForm }) {
   ])
 
   //------------------------------USE THIS FOR EXPENSES
-  /* useEffect(() => {
-     // Function to generate multiple sets of input fields
-     const generateInputFields = () => {
-       const newInputFields = expendituresArray.map(expenditure => ({
-         id: expenditure.id,
-         type: expenditure.type,
-         item: expenditure.items,
-         phpd: expenditure.per_head_per_day,
-         total: expenditure.total
-       }));
-       setInputFields(newInputFields);
-     };
+  useEffect(() => {
+      const generateInputFields = () => {
+        const newInputFields = expendituresArray.map(expenditure => ({
+          id: expenditure.id,
+          type: expenditure.type,
+          item: expenditure.items,
+          phpd: expenditure.per_head_per_day,
+          total: expenditure.total
+        }));
+        setInputFields(newInputFields);
+      };
   
-     generateInputFields();
-  }, []);*/
+      generateInputFields();
+  }, []);
   //------------------------------
 
   const handleFormChange = (index, event) => {
