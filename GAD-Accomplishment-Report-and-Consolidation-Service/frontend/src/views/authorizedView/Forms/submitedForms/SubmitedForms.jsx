@@ -6,19 +6,23 @@ import AccomplishmentReport from './accomplishmentReport/AccomplishmentReport';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import ArchivedActivityForms from './activityForms/ArchivedActivityForms';
 import ReactModal from 'react-modal';
+import ArchivedReports from './accomplishmentReport/components/ArchivedReports';
 
 export default function SubmitedForms() {
   const [selectedForm, setSelectedForm] = useState(null);
 
   //For Modals
-  const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
-
+  const [isArchivedFormModalOpen, setIsArchivedFormModalOpen] = useState(false);
+  const [isArchivedReportsModalOpen, setIsArchivedReportsModalOpen] = useState(false);
     
 
   return (
     <div>
           <div>
-              <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
+              <NeutralButton label="Archived Forms List" onClick={() => {setIsArchivedFormModalOpen(true)}} />
+              <div className='mt-3'>
+              <NeutralButton label="Archived Accomplishment Report List" onClick={() => {setIsArchivedReportsModalOpen(true)}} />
+              </div>
           </div>
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
@@ -58,13 +62,26 @@ export default function SubmitedForms() {
 
       {/** Modal For Archived Forms List */}
       <ReactModal
-            isOpen={isArchivedUserModalOpen}
-            onRequestClose={() => setIsArchivedUserModalOpen(false)}
+            isOpen={isArchivedFormModalOpen}
+            onRequestClose={() => setIsArchivedFormModalOpen(false)}
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
                 <ArchivedActivityForms
-                 closeModal={() => setIsArchivedUserModalOpen(false)}
+                 closeModal={() => setIsArchivedFormModalOpen(false)}
+                 />
+            </div>
+        </ReactModal>
+        
+      {/** Modal For Archived Forms List */}
+      <ReactModal
+            isOpen={isArchivedReportsModalOpen}
+            onRequestClose={() => setIsArchivedReportsModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <ArchivedReports
+                 closeModal={() => setIsArchivedReportsModalOpen(false)}
                  />
             </div>
         </ReactModal>

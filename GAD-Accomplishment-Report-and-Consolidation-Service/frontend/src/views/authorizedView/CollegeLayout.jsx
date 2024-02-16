@@ -7,32 +7,32 @@ import axiosClient from '../axios/axios';
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
-  { name: 'Manage Users', to: '/admin/manageusers'},
-  { name: 'Activity Design Forms', to: '/admin/forms'},
-  { name: 'Submitted Forms', to: '/admin/submitedforms'},
-  { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
+  { name: 'Activity Design Forms', to: '/college/forms'},
+  { name: 'Submitted Forms', to: '/college/submitedforms'},
+  { name: 'Employee Activity Form', to: '/college/printemployeeactivityform'}
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function AdminLayout() {
-    const { userToken, setCurrentUser, setUserToken } = useStateContext();
+export default function CollegeLayout() {
+    const { userToken } = useStateContext();
 
     const logout = (ev) => {
-      ev.preventDefault();
-      axiosClient.post('/logout')
-        .then(res => {
-          setCurrentUser({})
-          setUserToken(null)
-        })
-    };
+        ev.preventDefault();
+        axiosClient.post('/logout')
+          .then(res => {
+            setCurrentUser({})
+            setUserToken(null)
+          })
+      };
 
     if(!userToken){
         return <Navigate to='/' />
     }
 
+    console.log('User Token', userToken)
     return (
       <>
         {/*NavBar*/}

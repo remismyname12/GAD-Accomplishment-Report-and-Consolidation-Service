@@ -5,6 +5,7 @@ import ManageUsers from "./views/authorizedView/admin/ManageUsers";
 import Forms from "./views/authorizedView/Forms/ActivityDesignForms";
 import SubmitedForms from "./views/authorizedView/Forms/submitedForms/SubmitedForms";
 import AccomplishmentReport from "./views/authorizedView/Forms/AccomplishmentReport";
+import CollegeLayout from "./views/authorizedView/CollegeLayout";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,25 @@ const router = createBrowserRouter([
                 path: 'manageusers',
                 element: <ManageUsers />
             },
+            {
+                path: 'forms',
+                element: <Forms />
+            },
+            {
+                path: 'submitedforms',
+                element: <SubmitedForms />
+            },
+            {
+                path: 'accomplishmentreport',
+                element: <AccomplishmentReport />
+            }
+        ]
+    },
+
+    {
+        path: '/college',
+        element: <CollegeLayout />,
+        children:[
             {
                 path: 'forms',
                 element: <Forms />
