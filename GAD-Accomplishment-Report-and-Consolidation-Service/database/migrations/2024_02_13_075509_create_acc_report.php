@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('forms_id')->unique()->constrained('forms')->onDelete('cascade');
             $table->foreignId('expenditures_id')->constrained('expenditures')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

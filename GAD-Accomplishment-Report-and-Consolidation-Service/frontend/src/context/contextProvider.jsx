@@ -4,7 +4,7 @@ const StateContext = createContext({
     currentUser: {},
     userToken: null,
     setCurrentUser: () => {},
-    setUserToken: () => {}
+    setUserToken: () => {},
 })
 
 export const ContextProvider = ({ children }) => {
@@ -26,7 +26,7 @@ export const ContextProvider = ({ children }) => {
             currentUser,
             setCurrentUser,
             userToken,
-            setUserToken
+            setUserToken,
         }}>
             {children}
         </StateContext.Provider>

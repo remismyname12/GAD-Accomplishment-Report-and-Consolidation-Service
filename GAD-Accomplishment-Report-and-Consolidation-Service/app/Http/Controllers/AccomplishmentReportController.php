@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccomplishmentReportRequest;
 use App\Models\accReport;
-use App\Models\Expenditures;
-use Illuminate\Http\Request;
 
 class AccomplishmentReportController extends Controller
 {
@@ -35,15 +33,42 @@ class AccomplishmentReportController extends Controller
     }
 
     public function index_all_archived_accomplishment_report() {
+        
+        $allForms = accReport::with('forms')->onlyTrashed()->get();
 
+        return response()->json($allForms);
     }
 
-    public function accomplishment_report_archive() {
-
+    public function accomplishment_report_archive($id) {
+        // Find the form by ID
+        $form = accReport::find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->delete();
+    
+        return response()->json(['message' => 'Form archived successfully']);
     }
 
-    public function accomplishment_report_restore() {
-
+    public function accomplishment_report_restore($id)
+    {
+        // Find the form by ID
+        $form = accReport::withTrashed()
+        ->find($id);
+    
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Report not found'], 404);
+        }
+    
+        // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
+        $form->restore();
+    
+        return response()->json(['message' => 'Report Restored successfully']);
     }
 
     public function accomplishment_report_delete() {
