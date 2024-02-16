@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccomplishmentReportRequest;
 use App\Models\accReport;
+use App\Models\Expenditures;
+use App\Models\Forms;
 
 class AccomplishmentReportController extends Controller
 {
@@ -11,8 +13,39 @@ class AccomplishmentReportController extends Controller
     public function index_accomplishment_report() {
         $accomplishmentReport = accReport::with('forms')->get();
 
-        return response()->json($accomplishmentReport);
+        $formsParent = Forms::with('expenditures')->get();
 
+        $groupedReports = $accomplishmentReport->groupBy('forms_id');
+
+        // Initialize an empty array to store the unique instances
+        $uniqueInstances = [];
+
+        // Iterate through the grouped reports
+        foreach ($groupedReports as $formsId => $reports) {
+            // Take only the first instance for each 'forms_id'
+        $uniqueInstance = $reports->first();
+        
+        // Append expenditures if forms_id matches
+        $uniqueInstance['expenditures'] = $formsParent
+            ->where('id', $formsId) // Filter formsParent to match forms_id
+            ->first() // Retrieve the first matching record
+            ->expenditures; // Access expenditures relationship
+        
+        // Add the unique instance to the array
+        $uniqueInstances[] = $uniqueInstance;
+        }
+
+        return response($uniqueInstances);
+        //return response($formsParent);
+    }
+
+    public function index_expenditures($id)
+    {
+        $forms_id = $id;
+        //$form = Expenditures::find($forms_id);
+        $xps = Expenditures::where('forms_id', $forms_id)->get();
+
+        return response($forms_id);
     }
 
     public function accomplishment_report_store(AccomplishmentReportRequest $request) {
