@@ -17,6 +17,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     // Function to generate multiple sets of input fields
     const generateInputFields = () => {
       const newInputFields = expendituresArray.map(expenditure => ({
+        id: expenditure.id,
         type: expenditure.type,
         item: expenditure.items,
         phpd: expenditure.per_head_per_day,
@@ -57,7 +58,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     try {
         const response = await axiosClient.post('/accomplishment_report', {
             forms_id: selectedForm.id,
-            expenditures_id: 1
+            expenditures: inputFields,
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);

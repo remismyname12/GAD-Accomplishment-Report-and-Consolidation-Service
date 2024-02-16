@@ -12,19 +12,24 @@ class AccomplishmentReportController extends Controller
         $accomplishmentReport = accReport::with('forms')->get();
 
         return response($accomplishmentReport);
+
     }
 
     public function accomplishment_report_store(AccomplishmentReportRequest $request) {
-        $validatedData = $request->validated();
+        $forms_id = $request->input('forms_id');
+        $expenditures = $request->input('expenditures');
+
+        foreach ($expenditures as $expenditure) {
+            accReport::create([
+                'forms_id' => $forms_id,
+                'expenditures_id' => $expenditure['id']
+            ]);
+        }
         
-        accReport::create([
-            'forms_id' => $validatedData['forms_id'],
-            'expenditures_id' => $validatedData['expenditures_id']
-        ]);
 
         return response([
             'success' => true,
-            'data' => $validatedData
+            'data' => $expenditures
     ]);
     }
 

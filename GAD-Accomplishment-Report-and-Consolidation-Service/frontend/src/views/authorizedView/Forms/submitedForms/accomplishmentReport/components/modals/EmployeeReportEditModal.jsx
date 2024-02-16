@@ -5,29 +5,35 @@ import axiosClient from '../../../../../../axios/axios';
 
 export default function EmployeeReportEditModal({ selectedForm }) {
 
-  const expendituresArray = selectedForm.expenditures;
+  //const expendituresArray = selectedForm.expenditures;
+
+  const formObject = selectedForm;
+
+  const expendituresArray = formObject.expenditures;
+
+  console.log('DATA: ', expendituresArray);
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', phpd: '', total: ''}
   ])
 
-  //------------------------------USE THIS FOR EXPENCES
-//   useEffect(() => {
-//     // Function to generate multiple sets of input fields
-//     const generateInputFields = () => {
-//       const newInputFields = expendituresArray.map(expenditure => ({
-//         id: expenditure.id,
-//         type: expenditure.type,
-//         item: expenditure.items,
-//         phpd: expenditure.per_head_per_day,
-//         total: expenditure.total
-//       }));
-//       setInputFields(newInputFields);
-//     };
+  //------------------------------USE THIS FOR EXPENSES
+  /* useEffect(() => {
+     // Function to generate multiple sets of input fields
+     const generateInputFields = () => {
+       const newInputFields = expendituresArray.map(expenditure => ({
+         id: expenditure.id,
+         type: expenditure.type,
+         item: expenditure.items,
+         phpd: expenditure.per_head_per_day,
+         total: expenditure.total
+       }));
+       setInputFields(newInputFields);
+     };
   
-//     generateInputFields();
-// }, []);
+     generateInputFields();
+  }, []);*/
   //------------------------------
 
   const handleFormChange = (index, event) => {
@@ -39,14 +45,12 @@ export default function EmployeeReportEditModal({ selectedForm }) {
   const addFields = () => {
     let newfield = { type: '', item: '', phpd: '', total:'' }
     setInputFields([...inputFields, newfield])
-    //will also add to DB
   }
   
   const removeFields = (index) => {
     let data = [...inputFields];
     data.splice(index, 1)
     setInputFields(data)
-    //will also remove from DB
   }
 
   const [formData, setFormData] = useState({
@@ -167,7 +171,6 @@ const renderInput = (name, label) => {
                   required
                   className="flex-1 px-2 py-1"
                   onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
                 >
                   <option value = {input.type} selected>{input.type}</option>
                   <option value="Meals and Snacks">Meals and Snacks</option>
