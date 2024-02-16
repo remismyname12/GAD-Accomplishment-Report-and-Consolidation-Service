@@ -6,6 +6,7 @@ import Forms from "./views/authorizedView/Forms/ActivityDesignForms";
 import SubmitedForms from "./views/authorizedView/Forms/submitedForms/SubmitedForms";
 import AccomplishmentReport from "./views/authorizedView/Forms/AccomplishmentReport";
 import CollegeLayout from "./views/authorizedView/CollegeLayout";
+import AnnualReport from "./views/authorizedView/admin/components/annualReport/AnnualReport";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: 'accomplishmentreport',
                 element: <AccomplishmentReport />
+            },
+            {
+                path: 'annualReport',
+                element: <AnnualReport />
             }
         ]
     },
