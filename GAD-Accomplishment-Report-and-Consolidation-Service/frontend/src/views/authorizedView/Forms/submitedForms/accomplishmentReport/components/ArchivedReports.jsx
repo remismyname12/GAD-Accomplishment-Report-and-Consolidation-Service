@@ -3,6 +3,7 @@ import axiosClient from '../../../../../axios/axios';
 import { ArrowLeftStartOnRectangleIcon, TrashIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import RestoreReportModal from './modals/RestoreReportModal';
+import DeleteReportModal from './modals/DeleteReportModal';
 
 export default function ArchivedReports() {
     const [filterText, setFilterText] = useState('');
@@ -76,6 +77,20 @@ export default function ArchivedReports() {
                 <div>
                     <RestoreReportModal
                      closeModal={() => setIsRestoreUserModalOpen(false)}
+                     selectedForm={selectedForm}
+                     />
+                </div>
+            </ReactModal>
+
+            {/** Modal For Report ARCHIVE */}                
+            <ReactModal
+                isOpen={isDeleteUserModalOpen}
+                onRequestClose={() => setIsDeleteUserModalOpen(false)}
+                className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+            >
+                <div>
+                    <DeleteReportModal
+                     closeModal={() => setIsDeleteUserModalOpen(false)}
                      selectedForm={selectedForm}
                      />
                 </div>

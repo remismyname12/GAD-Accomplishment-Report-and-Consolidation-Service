@@ -29,7 +29,7 @@ class AccomplishmentReportController extends Controller
     }
 
     public function accomplishment_report_update() {
-
+        //Update on the parent (Forms)
     }
 
     public function index_all_archived_accomplishment_report() {
@@ -71,7 +71,19 @@ class AccomplishmentReportController extends Controller
         return response()->json(['message' => 'Report Restored successfully']);
     }
 
-    public function accomplishment_report_delete() {
+    public function accomplishment_report_delete($id) {
+        // Find the form by ID
+        $form = accReport::withTrashed()
+        ->find($id);
 
+        // Check if the form exists
+        if (!$form) {
+            return response()->json(['message' => 'Form not found'], 404);
+        }
+
+        // Force delete the form
+        $form->forceDelete();
+
+        return response()->json(['message' => 'Form permanently deleted']);
     }
 }
