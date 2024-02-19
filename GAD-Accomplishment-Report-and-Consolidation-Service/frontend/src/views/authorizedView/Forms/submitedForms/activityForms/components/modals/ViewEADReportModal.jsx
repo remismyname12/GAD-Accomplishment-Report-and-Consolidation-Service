@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
-import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
+import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 
-//For feedback
+//For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
+import Error from '../../../../../../components/feedbacks/Error';
 
-export default function GenerateAccomplishmentReport({ selectedForm }) {
-  // For feedback
-  const [error, setError] = useState('');
-  const [message, setAxiosMessage] = useState('');
-  const [status, setAxiosStatus] = useState('');
-
+export default function ViewEADReportModal({selectedForm}) {
+  const selectedForms = selectedForm.forms;
+  console.log('this is the selected form:', selectedForm);
   const expendituresArray = selectedForm.expenditures;
 
   const [error, setError] = useState('');
@@ -19,6 +17,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
+
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
   ])
@@ -62,16 +61,16 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
 }
 
   const [formData, setFormData] = useState({
-    title: selectedForm.title,
-    date_of_activity: selectedForm.date_of_activity,
-    venue: selectedForm.venue,
-    clientele_type: selectedForm.clientele_type,
-    clientele_number: selectedForm.clientele_number,
-    estimated_cost: selectedForm.estimated_cost,
-    cooperating_agencies_units: selectedForm.cooperating_agencies_units,
-    expected_outputs: selectedForm.expected_outputs,
-    fund_source: selectedForm.fund_source,
-    proponents_implementors: selectedForm.proponents_implementors,
+    title: selectedForms.title,
+    date_of_activity: selectedForms.date_of_activity,
+    venue: selectedForms.venue,
+    clientele_type: selectedForms.clientele_type,
+    clientele_number: selectedForms.clientele_number,
+    estimated_cost: selectedForms.estimated_cost,
+    cooperating_agencies_units: selectedForms.cooperating_agencies_units,
+    expected_outputs: selectedForms.expected_outputs,
+    fund_source: selectedForms.fund_source,
+    proponents_implementors: selectedForms.proponents_implementors,
   });
 
   const handleChange = async (e) => {
@@ -82,9 +81,9 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const response = await axiosClient.post('/accomplishment_report', {
-            forms_id: selectedForm.id,
-            expenditures: inputFields,
+        const response = await axiosClient.put(`/update_form_ead/${selectedForm.id}`, {
+            form_data: formData,
+            xp_data: inputFields
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
@@ -92,11 +91,19 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
-      } catch (error) {
-        setAxiosMessage(error.response.data.message); // Set success message
-      }
-    
-  };
+    } catch (error) {
+        if (error.response) {
+            const finalErrors = Object.values(error.response.data.errors).reduce(
+                (accum, next) => [...accum, ...next],
+                []
+            );
+            setError(finalErrors.join('<br>'));
+        }
+        console.error(error);
+    }
+};
+
+  //----------
 
   //For Unified Inputs 
   const renderInput = (name, label) => (
@@ -118,6 +125,8 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   return (
     <div className='bg-gray-300 m-5 p-3'>
       {/**For Feedback */}
+      <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
+      
       {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
@@ -215,10 +224,6 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
               <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>
           
-        </div>
-        
-        <div className='mt-5'>
-          <Submit label="Submit"/>
         </div>
       </form>
     </div>

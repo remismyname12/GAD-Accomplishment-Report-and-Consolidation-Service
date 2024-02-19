@@ -8,7 +8,8 @@ import Feedback from '../../../../../../components/feedbacks/Feedback';
 import Error from '../../../../../../components/feedbacks/Error';
 
 export default function EditEADModal({selectedForm}) {
-
+  const selectedForms = selectedForm.Forms;
+  console.log('this is the selected form:', selectedForm);
   const expendituresArray = selectedForm.expenditures;
 
   const [error, setError] = useState('');
