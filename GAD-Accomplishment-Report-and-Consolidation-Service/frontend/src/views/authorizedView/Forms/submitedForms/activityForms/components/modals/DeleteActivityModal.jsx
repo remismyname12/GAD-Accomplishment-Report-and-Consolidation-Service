@@ -6,6 +6,7 @@ import WarningButton from '../../../../../../components/buttons/WarningButton'
 import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function DeleteActivityModal({selectedForm}) {
+  console.log("this is the selected Form: ", selectedForm);
   // For feedback
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState('');

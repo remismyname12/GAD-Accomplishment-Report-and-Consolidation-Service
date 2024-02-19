@@ -10,7 +10,7 @@ export default function ArchivedActivityForms() {
 
     const [forms, setForms] = useState([]); 
     const [selectedForm, setSelectedForm] = useState('')
-    const [isRestoreUserModalOpen, setIsRestoreUserModalOpen] = useState(false);
+    const [isRestoreFormModalOpen, setIsRestoreFormModalOpen] = useState(false);
     const [isDeleteReportModalOpen, setIsDeleteReportModalOpen] = useState(false);
 
     useEffect(() => {
@@ -36,16 +36,16 @@ export default function ArchivedActivityForms() {
         forms.title && forms.title.toString().includes(filterText) 
       );
 
-    // For User RESTOREUSER
-    const handleRestoreUserClick = (selected_form) => {
-        setIsRestoreUserModalOpen(true)
+    // For User RESTOREFORM
+    const handleRestoreFormClick = (selected_form) => {
+        setIsRestoreFormModalOpen(true)
         setSelectedForm(selected_form)
         console.log('This is the selected form',selectedForm);
     }
 
-    // For User RESTOREUSER
-    const handleDeleteUserClick = (selected_form) => {
-        setIsDeleteUserModalOpen(true)
+    // For User DELETEFORM
+    const handleDeleteFormClick = (selected_form) => {
+      setIsDeleteReportModalOpen(true)
         setSelectedForm(selected_form)
     }
     
@@ -68,10 +68,10 @@ export default function ArchivedActivityForms() {
                           >
                               <td className="text-center p-2">{forms.title}</td>
                               <td className= "flex items-center p-3">
-                                <button onClick={() => handleRestoreUserClick(forms)}>
+                                <button onClick={() => handleRestoreFormClick(forms)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
-                                <button onClick={() => setIsDeleteReportModalOpen(forms)}>
+                                <button onClick={() => handleDeleteFormClick(forms)}>
                                     <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
                               </td>
@@ -81,21 +81,21 @@ export default function ArchivedActivityForms() {
             </table>
         </div>
 
-        {/** Modal For User ARCHIVE */}                
+        {/** Modal For Form ARCHIVE */}                
         <ReactModal
-            isOpen={isRestoreUserModalOpen}
-            onRequestClose={() => setIsRestoreUserModalOpen(false)}
+            isOpen={isRestoreFormModalOpen}
+            onRequestClose={() => setIsRestoreFormModalOpen(false)}
             className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
         >
             <div>
                 <RestoreActivityModal
-                 closeModal={() => setIsRestoreUserModalOpen(false)}
+                 closeModal={() => setIsRestoreFormModalOpen(false)}
                  selectedForm={selectedForm}
                  />
             </div>
         </ReactModal>
 
-        {/** Modal For User ARCHIVE */}                
+        {/** Modal For Form ARCHIVE */}                
         <ReactModal
             isOpen={isDeleteReportModalOpen}
             onRequestClose={() => setIsDeleteReportModalOpen(false)}
