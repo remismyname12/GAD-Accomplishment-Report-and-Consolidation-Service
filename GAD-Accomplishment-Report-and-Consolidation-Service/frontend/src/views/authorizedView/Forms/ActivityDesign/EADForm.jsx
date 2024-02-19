@@ -16,7 +16,7 @@ export default function EADForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: ''}
+    {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
   ])
 
   const handleFormChange = (index, event) => {
@@ -26,7 +26,7 @@ export default function EADForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: 'Meals and Snacks', item: '', estimated: '', remarks: '', source_of_funds: '' }
+    let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -139,7 +139,7 @@ export default function EADForm() {
                     onChange={event => handleFormChange(index, event)}
                     //<option value="" disabled selected>Select Type</option>
                   >
-                    
+                    <option value="" disabled selected>Select Type</option>
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>

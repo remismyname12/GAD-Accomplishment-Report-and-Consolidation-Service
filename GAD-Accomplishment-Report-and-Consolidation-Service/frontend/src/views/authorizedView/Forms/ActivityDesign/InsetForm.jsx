@@ -16,7 +16,7 @@ export default function InsetForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
+    {type: '', item: '', phpd: '', total: ''}
   ])// <><><>
 
   const handleFormChange = (index, event) => {
@@ -26,7 +26,7 @@ export default function InsetForm() {
   }
 
   const addFields = () => {
-    let newfield = {type: 'Meals and Snacks', item: '', phpd: '', total: ''}
+    let newfield = {type: '', item: '', phpd: '', total: ''}
 
     setInputFields([...inputFields, newfield])
   }
@@ -219,7 +219,7 @@ export default function InsetForm() {
                     value={input.type}
                     onChange={event => handleFormChange(index, event)}
                   >
-
+                    <option value="" disabled selected>Select Type</option>
                     <option value="Meals and Snacks">Meals and Snacks</option>
                     <option value="Function Room/Venue">Venue</option>
                     <option value="Accomodation">Accomodation</option>
