@@ -14,10 +14,6 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
 
-  const [error, setError] = useState('');
-  const [message, setAxiosMessage] = useState(''); // State for success message
-  const [status, setAxiosStatus] = useState('');
-
   //----------for exenditure
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
