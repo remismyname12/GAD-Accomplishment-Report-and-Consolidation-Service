@@ -7,6 +7,10 @@ import axiosClient from '../../../../../../axios/axios';
 import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function GenerateAccomplishmentReport({ selectedForm }) {
+  // For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState('');
+  const [status, setAxiosStatus] = useState('');
 
   const expendituresArray = selectedForm.expenditures;
 
@@ -15,7 +19,6 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   const [status, setAxiosStatus] = useState('');
 
   //----------for exenditure
-
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
   ])
@@ -89,16 +92,9 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
-    } catch (error) {
-        if (error.response) {
-            const finalErrors = Object.values(error.response.data.errors).reduce(
-                (accum, next) => [...accum, ...next],
-                []
-            );
-            setError(finalErrors.join('<br>'));
-        }
-        console.error(error);
-    }
+      } catch (error) {
+        setAxiosMessage(error.response.data.message); // Set success message
+      }
     
   };
 

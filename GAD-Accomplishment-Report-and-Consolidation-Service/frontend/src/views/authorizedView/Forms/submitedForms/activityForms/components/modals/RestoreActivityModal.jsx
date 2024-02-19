@@ -2,30 +2,38 @@ import { React, useState } from 'react'
 import Submit from '../../../../../../components/buttons/Submit';
 import axiosClient from '../../../../../../axios/axios';
 
-export default function RestoreActivityModal({selectedForm}) {
-    const [error, setError] = useState("");
+//For Feedback
+import Feedback from '../../../../../../components/feedbacks/Feedback';
+import Error from '../../../../../../components/feedbacks/Error';
 
-    const onSubmit = (ev) => {
+export default function RestoreActivityModal({selectedForm}) {
+  //For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState('');
+  const [status, setAxiosStatus] = useState('');  
+
+    const onSubmit = async (ev) => {
         ev.preventDefault();
         setError({ __html: "" });
     
-        axiosClient
-          .put(`/restore_form/${selectedForm.id}`)
-          .catch((error) => {
-            if (error.response) {
-              const finalErrors = Object.values(error.response.data.errors).reduce(
-                (accum, next) => [...accum, ...next],
-                []
-              );
-              setError({ __html: finalErrors.join("<br>") });
-            }
-            console.error(error);
-          });
-        };
+        try {
+          const response = await axiosClient.put(`/restore_form/${selectedForm.id}`, {});
+            setAxiosMessage(response.data.message); // Set success message
+            setAxiosStatus(response.data.Success);
+            setTimeout(() => {
+                setAxiosMessage(''); // Clear success message
+                setAxiosStatus('');
+            }, 3000); // Timeout after 3 seconds
+          } catch (error) {
+            setAxiosMessage(error.response.data.message); // Set success message
+          }
+    };
 
-        console.log(selectedForm);
   return (
     <div>
+      {/**For Feedback */}
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
+
       <h1>
         Are you sure you want to Restore <b>{}</b>
       </h1>

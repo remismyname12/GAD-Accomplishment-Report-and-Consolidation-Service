@@ -1,37 +1,45 @@
-import { React, useState } from 'react'
+import React, { useState } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import axiosClient from '../../../../../../axios/axios';
 
-export default function ArchiveActivityModal({selectedForm}) {
-  const [error, setError] = useState("");
+// For Feedback
+import Feedback from '../../../../../../components/feedbacks/Feedback';
 
-  const onSubmit = (ev) => {
+export default function ArchiveActivityModal({ selectedForm }) {
+  // For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState('');
+  const [status, setAxiosStatus] = useState('');
+
+  const onSubmit = async (ev) => {
     ev.preventDefault();
     setError({ __html: "" });
 
-    axiosClient
-      .put(`/archive_form/${selectedForm.id}`)
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
-      });
-    };
+    try {
+      const response = await axiosClient.put(`/archive_form/${selectedForm.id}`, {});
+      setAxiosMessage(response.data.message); // Set success message
+      setAxiosStatus(response.data.Success);
+      setTimeout(() => {
+        setAxiosMessage(''); // Clear success message
+        setAxiosStatus('');
+      }, 3000); // Timeout after 3 seconds
+    } catch (error) {
+      setAxiosMessage(error.response.data.message); // Set success message
+    }
+  };
 
   return (
     <div>
+      {/** For Feedback */}
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message} status={status} />
+
       <h1>
         Are you sure you want to delete <b>{selectedForm.title}</b>
       </h1>
-      {/**BUTTONS */}
+      {/** BUTTONS */}
       <div className='mt-5'>
-          <Submit label="Archive Activity Design" onClick={onSubmit}/*disabled={ your condition }*/ />
-        </div>
+        <Submit label="Archive Activity Design" onClick={onSubmit} /* disabled={your condition} */ />
+      </div>
     </div>
-  )
+  );
 }
