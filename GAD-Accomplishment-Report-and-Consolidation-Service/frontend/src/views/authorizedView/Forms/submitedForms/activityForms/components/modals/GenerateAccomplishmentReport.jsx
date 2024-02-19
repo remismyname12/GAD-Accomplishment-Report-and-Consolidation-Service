@@ -3,11 +3,17 @@ import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
+//For feedback
+import Feedback from '../../../../../../components/feedbacks/Feedback';
+
 export default function GenerateAccomplishmentReport({ selectedForm }) {
+  // For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState('');
+  const [status, setAxiosStatus] = useState('');
 
   const expendituresArray = selectedForm.expenditures;
-
-  const [error, setError] = useState("");
+  
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', phpd: '', total: ''}
   ])
@@ -66,16 +72,9 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
-    } catch (error) {
-        if (error.response) {
-            const finalErrors = Object.values(error.response.data.errors).reduce(
-                (accum, next) => [...accum, ...next],
-                []
-            );
-            setError(finalErrors.join('<br>'));
-        }
-        console.error(error);
-    }
+      } catch (error) {
+        setAxiosMessage(error.response.data.message); // Set success message
+      }
     
   };
 
@@ -86,6 +85,9 @@ const renderInput = (name, label) => {
 
   return (
     <div className='flex flex-1 flex-col'>
+    {/** For Feedback */}
+    <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message} status={status} />
+
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
@@ -118,13 +120,12 @@ const renderInput = (name, label) => {
 
     <form action="" className="flex flex-1 flex-col">
       {renderInput("title", "Title: ")}
-      {renderInput("purpose", "Purpose: ")}
-      {renderInput("legal_bases", "Legal Bases: ")}
-      {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
+      {renderInput("date_of_activity", "Date of Activity")}
       {renderInput("venue", "Venue: ")}
-      {renderInput("participants", "Participants: ")}
-      {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Target Participants: ")} {/**Render this only when the form is inset */}
-      {renderInput("learning_service_providers", "Learning Service Providers: ")}
+      {renderInput("clientele_type", "Clientele Type: ")}
+      {renderInput("clientele_number", "Clientele Number: ")}
+      {renderInput("estimated_cost", "Estimated Cost: ")}
+      {renderInput("cooperating_agencies_units", "Cooperating Agencies Units: ")}
       {renderInput("expected_outputs", "Expected Outputs: ")}
       {renderInput("fund_source", "Fund Source: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}

@@ -333,7 +333,9 @@ class FormController extends Controller
         // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
         $form->delete();
     
-        return response()->json(['message' => 'Form archived successfully']);
+        return response([
+            'Success' => true,
+            'message' => 'Form archived successfully']);
 
     }
 
@@ -351,7 +353,9 @@ class FormController extends Controller
         // Eloquent automatically handles soft deletes if the model uses the SoftDeletes trait, if SoftDeletes is used
         $form->restore();
     
-        return response()->json(['message' => 'Form Restored successfully']);
+        return response([
+            'Success' => true,
+            'message' => 'Form Restored successfully']);
     }
 
     public function form_delete($id)
