@@ -4,7 +4,7 @@ import WarningButton from '../../../../../../components/buttons/WarningButton'
 
 export default function DeleteReportModal({selectedForm}) {
   const [error, setError] = useState("");
-
+console.log('The Selected Form: ',selectedForm);
   const onSubmit = (ev) => {
     ev.preventDefault();
     setError({ __html: "" });
