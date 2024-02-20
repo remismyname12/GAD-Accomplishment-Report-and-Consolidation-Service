@@ -59,6 +59,8 @@ export default function GenerateFormReport({ selectedForm }) {
     ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     venue: selectedForm.venue,
     participants: selectedForm.participants,
+    participants_male: selectedForm.participants_male,
+    participants_female: selectedForm.participants_female,
     learning_service_providers: selectedForm.learning_service_providers,
     expected_outputs: selectedForm.expected_outputs,
     fund_source: selectedForm.fund_source,
@@ -106,6 +108,7 @@ const renderInput = (name, label) => {
         name={name}
         type="text"
         autoComplete={name}
+        placeholder="I am empty..."
         // Include "required" attribute only if it's not INSET and not no_of_target_participants
         {...(isRequired ? { required: true } : {})}
         value={formData[name]}
@@ -132,7 +135,9 @@ const renderInput = (name, label) => {
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
       {renderInput("participants", "Participants: ")}
-      {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Target Participants: ")} {/**Render this only when the form is inset */}
+      {renderInput("participants_male", "Male Participants: ")}
+      {renderInput("participants_female", "Female Participants: ")}
+      {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Participants: ")} {/**Render this only when the form is inset */}
       {renderInput("learning_service_providers", "Learning Service Providers: ")}
       {renderInput("expected_outputs", "Expected Outputs: ")}
       {renderInput("fund_source", "Fund Source: ")}

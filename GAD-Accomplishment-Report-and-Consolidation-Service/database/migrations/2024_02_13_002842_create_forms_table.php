@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('date_of_activity');
             $table->string('venue');
             $table->string('participants')->nullable();
+            $table->string('participants_male')->nullable();
+            $table->string('participants_female')->nullable();
             $table->string('no_of_target_participants')->nullable();
             $table->string('learning_service_providers')->nullable();
             $table->string('expected_outputs');
