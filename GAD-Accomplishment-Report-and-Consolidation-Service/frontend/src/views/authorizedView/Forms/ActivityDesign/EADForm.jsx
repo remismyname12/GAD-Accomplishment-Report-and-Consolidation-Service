@@ -179,7 +179,7 @@ export default function EADForm() {
                     type="text"
                     placeholder="Remarks"
                     autoComplete="remarks"
-                    required
+                    //required
                     className="flex-1 px-2 py-1"
                     value={input.remarks}
                     onChange={event => handleFormChange(index, event)}

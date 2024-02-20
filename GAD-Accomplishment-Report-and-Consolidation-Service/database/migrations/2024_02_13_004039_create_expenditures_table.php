@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('items');
             $table->string('per_item')->nullable();
             $table->string('no_item')->nullable();
+            $table->string('times')->nullable();
             $table->string('per_head_per_day')->nullable();
             $table->string('estimated_cost')->nullable();
             $table->string('remarks')->nullable();

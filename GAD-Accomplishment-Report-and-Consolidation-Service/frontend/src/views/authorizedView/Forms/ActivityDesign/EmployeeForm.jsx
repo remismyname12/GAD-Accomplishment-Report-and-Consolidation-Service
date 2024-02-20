@@ -16,13 +16,14 @@ export default function EmployeeForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', total: '0'}
+    {type: '', item: '', per_item: '', no_item: '', times: 1, total: '0'}
   ])
 
   const handleChangeNumbers = (index, event) => {
     const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
     const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
-    const total_cost = C_per_item * t_no_item;
+    const n_times = parseInt(inputFields[index].times || 0, 10);
+    const total_cost = (C_per_item * t_no_item) * n_times;
 
     const updatedInputFields = [...inputFields];
 
@@ -41,7 +42,7 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = {type: '', item: '', per_item: '', no_item: '', total: '0'}
+    let newfield = {type: '', item: '', per_item: '', no_item: '', times: 1, total: '0'}
 
     setInputFields([...inputFields, newfield])
   }
@@ -208,19 +209,23 @@ export default function EmployeeForm() {
                       handleChangeNumbers(index, event.target.value);
                     }}
                   />
-                  {/*<input
-                    id="total"
-                    name="total"
-                    type="text"
-                    placeholder="Total"
-                    autoComplete="total"
-                    //required
-                    disabled
-                    className="flex-1 px-2 py-1"
-                    //value={input.total}
-                    value = {Etotal}
-                    onChange={event => handleFormChange(index, event)}
-                  />*/}
+                  <input
+                    id="times"
+                    name="times"
+                    type="number"
+                    //pattern="[0-9]*"
+                    placeholder="Number of Times"
+                    autoComplete="times"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    min={1}
+                    value={input.times}
+                    //onChange={event => handleFormChange(index, event)}
+                    //number of items
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
+                  />
                   <span className="flex-1 px-2 py-1" id="total">
                     Total: <b>Php {input.total}</b>
                   </span>

@@ -19,6 +19,7 @@ class Expenditures extends Model
         'items',
         'per_item',
         'no_item',
+        'times',
         'per_head_per_day',
         'estimated_cost',
         'remarks',
