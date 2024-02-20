@@ -10,7 +10,6 @@ export default function ArchiveActivityModal({ selectedForm }) {
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
-
   const onSubmit = async (ev) => {
     ev.preventDefault();
     setError({ __html: "" });

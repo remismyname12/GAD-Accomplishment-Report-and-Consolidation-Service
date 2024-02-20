@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class accReport extends Model
@@ -29,4 +30,8 @@ class accReport extends Model
         return $this->belongsTo(Expenditures::class);
     }
 
+    public function actualExpenditure(): HasMany
+    {
+        return $this->hasMany(ActualExpendature::class);
+    }
 }

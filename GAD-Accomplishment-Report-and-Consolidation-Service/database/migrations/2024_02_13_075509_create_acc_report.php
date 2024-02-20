@@ -15,6 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade');
             $table->foreignId('expenditures_id')->constrained('expenditures')->onDelete('cascade');
+            $table->string('title');
+            $table->string('date_of_activity');
+            $table->string('venue');
+            $table->string('no_of_participants');
+            $table->string('male_participants');
+            $table->string('female_participants');
+            $table->string('fund_source');
+            $table->string('clientele_type');
+            $table->string('clientele_number');
+            $table->string('actual_cost');
+            $table->string('cooperating_agencies_u  nits');
             $table->softDeletes();
             $table->timestamps();
             

@@ -3,11 +3,46 @@ import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import axiosClient from '../../../../../../axios/axios';
 
-export default function GenerateFormReport({ selectedForm }) {
+//For Feedback
+import Feedback from '../../../../../../components/feedbacks/Feedback';
 
+export default function GenerateFormReport({ selectedForm }) {
+  const [actualExpendatures, setActualExpendatures] = useState({
+    type: '',
+    items: '',
+    remarks: '',
+    source_of_funds: '',
+    actual_cost: '',
+    total: '',
+  });
+
+  //For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState(''); // State for success message
+  const [status, setAxiosStatus] = useState('');
+  
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
+    setError({ __html: "" });
+
+    try {
+      const response = await axiosClient.post('/accomplishment_report', {
+          forms_id: selectedForm.id,
+          expenditures: inputFields,
+      });
+      setAxiosMessage(response.data.message); // Set success message
+      setAxiosStatus(response.data.success);
+      console.log('status =',response.data.success);
+      setTimeout(() => {
+          setAxiosMessage(''); // Clear success message
+          setAxiosStatus('');
+      }, 3000); // Timeout after 3 seconds
+    } catch (error) {
+      setAxiosMessage(error.response.data.message); // Set success message
+    }
+  };
   const expendituresArray = selectedForm.expenditures;
 
-  const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', per_item: '', no_item: '', total: '0'}
   ])
@@ -73,40 +108,7 @@ export default function GenerateFormReport({ selectedForm }) {
   };
 
 
-  const handleSubmit = (ev) => {
-    ev.preventDefault();
-    setError({ __html: "" });
 
-    if(selectedForm.form_type === "EMPLOYEE"){
-      //For EMPLOYEE UPDATE
-      axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
-      });
-    } else {
-      //For INSET UPDATE
-      axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
-      });
-    }
-  };
 
 // For Unified Inputs 
 const renderInput = (name, label) => {
@@ -115,6 +117,10 @@ const renderInput = (name, label) => {
 
   return (
     <div className='flex flex-1 flex-col'>
+
+    {/* Integrate the Success component */}
+    <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
+
       <label htmlFor={name}>{label}</label>
       <input
         id={name}
@@ -189,40 +195,40 @@ const renderInput = (name, label) => {
                   autoComplete="item"
                   required
                   className="flex-1 px-2 py-1"
-                  value={input.item}
+                  value={actualExpendatures.item}
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
-                  id="per_item"
-                  name="per_item"
+                  id="actual_cost"
+                  name="actual_cost"
                   type="text"
-                  placeholder="Cost Per Item"
-                  autoComplete="per_item"
+                  placeholder="Actual Cost"
+                  autoComplete="actual_cost"
                   required
                   className="flex-1 px-2 py-1"
-                  value={input.per_item}
+                  value={actualExpendatures.actual_cost}
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
-                  id="no_item"
-                  name="no_item"
+                  id="remarks"
+                  name="remarks"
                   type="text"
-                  placeholder="Number of Items"
-                  autoComplete="no_item"
+                  placeholder="Remarks"
+                  autoComplete="remarks"
                   required
                   className="flex-1 px-2 py-1"
-                  value={input.no_item}
+                  value={actualExpendatures.remarks}
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
-                  id="total"
-                  name="total"
+                  id="source_of_funds"
+                  name="source_of_funds"
                   type="text"
-                  placeholder="Total"
-                  autoComplete="total"
+                  placeholder="Source of Funds"
+                  autoComplete="source_of_funds"
                   required
                   className="flex-1 px-2 py-1"
-                  value={input.total}
+                  value={actualExpendatures.source_of_funds}
                   onChange={event => handleFormChange(index, event)}
                 />
         {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
