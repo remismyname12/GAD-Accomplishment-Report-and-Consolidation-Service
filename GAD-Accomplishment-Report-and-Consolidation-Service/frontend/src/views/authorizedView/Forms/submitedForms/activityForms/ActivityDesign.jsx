@@ -6,6 +6,7 @@ import ReactModal from 'react-modal';
 import EditActivityModal from './components/modals/EditActivityModal';
 import ArchiveActivityModal from './components/modals/ArchiveActivityModal';
 import GenerateAccomplishmentReport from '../activityForms/components/modals/GenerateAccomplishmentReport';
+import GenerateFormReport from './components/modals/GenerateFormReport';
 import EditEADModal from './components/modals/EditEADModal';
 
 function classNames(...classes) {
@@ -237,7 +238,7 @@ export default function ActivityDesign() {
         <ReactModal
             isOpen={isEditModalOpen}
             onRequestClose={() => setIsEditModalOpen(false)}
-            className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
+            className="w-full md:w-[30%] lg:w-[90%] h-[95%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[1%] mx-auto p-5 overflow-auto"
         >
             <div>
                 <EditActivityModal
@@ -261,8 +262,8 @@ export default function ActivityDesign() {
             </div>
         </ReactModal>
         
-        {/** Modal For Generate Accomplishment Report */}    
-        {/** Modal For User EDIT */}
+        
+        {/** Modal For EADForm EDIT */}
         <ReactModal
             isOpen={isEditEADModalOpen}
             onRequestClose={() => setIsEditEADModalOpen(false)}
@@ -276,17 +277,25 @@ export default function ActivityDesign() {
             </div>
         </ReactModal>
 
+        {/** Modal For Generate Accomplishment Report */}    
         <ReactModal
             isOpen={isGenerateAccomplishmentReportOpen}
             onRequestClose={() => setIsGenerateAccomplishmentReportOpen(false)}
-            className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
+            className="w-full md:w-[60%] lg:w-[90%] h-[90%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[1%] mx-auto p-5 overflow-auto"
         >
-            <div>
-                <GenerateAccomplishmentReport
-                 closeModal={() => setIsGenerateAccomplishmentReportOpen(false)}
-                 selectedForm={selectedForm}
-                 />
-            </div>
+          <div>
+              {selectedForm.form_type === 'EAD' ? (
+                  <GenerateAccomplishmentReport
+                      closeModal={() => setIsGenerateAccomplishmentReportOpen(false)}
+                      selectedForm={selectedForm}
+                  />
+              ) : (
+                  <GenerateFormReport
+                      closeModal={() => setIsGenerateAccomplishmentReportOpen(false)}
+                      selectedForm={selectedForm}
+                  />
+              )}
+          </div>
         </ReactModal>
     </div>
   )
