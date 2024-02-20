@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('estimated_cost')->nullable();
             $table->string('remarks')->nullable();
             $table->string('source_of_funds')->nullable();
+            $table->string('actual_cost')->nullable();
             $table->string('total')->nullable();
             $table->softDeletes();
             $table->timestamps();

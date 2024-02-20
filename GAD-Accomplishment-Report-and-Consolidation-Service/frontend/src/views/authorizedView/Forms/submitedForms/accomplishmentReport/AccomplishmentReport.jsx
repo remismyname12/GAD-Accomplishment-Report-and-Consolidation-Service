@@ -38,16 +38,15 @@ export default function AccomplishmentReport() {
   const handleEditClick = (selected_form) => {
     setIsEditModalOpen(true)
     setSelectedForm(selected_form)
-    console.log('this is the selected form: ', selected_form);
   }
 
   // For Form Archive
   const handleArchiveClick = (selected_form) => {
-    setIsArchiveModalOpen(true)
-    setSelectedForm(selected_form)
-  }
+    setIsArchiveModalOpen(true);
+    setSelectedForm(selected_form);
+  };
+  
 
-  console.log(accomplishmentReport);
   return (
     <div className='flex justify-center'>
       <div className="w-full max-w-md px-2 py-5 sm:px-0">

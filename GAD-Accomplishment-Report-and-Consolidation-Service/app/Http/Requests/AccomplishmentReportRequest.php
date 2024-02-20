@@ -23,7 +23,14 @@ class AccomplishmentReportRequest extends FormRequest
     {
         return [
             'forms_id' => 'required|integer',
-            'expenditures' => 'required|array'
+            'expenditures' => 'required|array',
+
+            'type' => 'required|string',
+            'items' => 'required|string',
+            'remarks' => 'required|string',
+            'source_of_funds' => 'required|string',
+            'actual_cost' => 'required|string',
+            'total' => 'required|string',
         ];
     }
 }

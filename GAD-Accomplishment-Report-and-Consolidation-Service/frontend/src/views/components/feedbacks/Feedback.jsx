@@ -19,7 +19,7 @@ export default function Feedback({ isOpen, onClose, successMessage, status }) {
 
     // Determine background color based on status
     const modalBgColor = status === true ? 'bg-green-400' : 'bg-red-400'; // Green for success, Red for failure
-    console.log('status =',status);
+ 
     return (
         <ReactModal
             isOpen={isOpen}

@@ -63,7 +63,7 @@ class AccomplishmentReportController extends Controller
 
         return response([
             'success' => true,
-            'data' => $expenditures
+            'message' => 'Accomplishment Report Generated'
     ]);
     }
 

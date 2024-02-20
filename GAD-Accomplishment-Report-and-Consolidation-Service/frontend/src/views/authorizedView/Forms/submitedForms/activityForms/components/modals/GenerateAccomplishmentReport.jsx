@@ -8,7 +8,6 @@ import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function GenerateAccomplishmentReport({ selectedForm }) {
   // For feedback
-  const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
 
@@ -118,7 +117,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     <div className='bg-gray-300 m-5 p-3'>
       {/**For Feedback */}
       {/* Integrate the Success component */}
-      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosStatus('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>
         Extension Activity Design Form

@@ -9,8 +9,9 @@ export default function ArchiveReportModal({selectedForm}) {
     ev.preventDefault();
     setError({ __html: "" });
 
+    console.log('this is the selected foasdfdasfrm: ', selectedForm.id);
     axiosClient
-      .put(`/archive_accomplishment_report/${selectedForm.forms.id}`)
+      .put(`/archive_accomplishment_report/${selectedForm.id}`)
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
