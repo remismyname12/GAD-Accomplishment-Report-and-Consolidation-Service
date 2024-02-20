@@ -193,7 +193,7 @@ export default function AdminLayout() {
       <div className="sidebar bg-purple-400 h-screen w-fit px-[1%]"> {/* Add sidebar styling */}
         <SideBar />
       </div>
-      <div className="mx-auto max-w-8xl py-6 sm:px-6 lg:px-8"> {/* Maintain the content container */}
+      <div className="mx-auto max-w-8xl sm:px-6 lg:px-8"> {/* Maintain the content container */}
         <div>
           <Outlet />
         </div>
