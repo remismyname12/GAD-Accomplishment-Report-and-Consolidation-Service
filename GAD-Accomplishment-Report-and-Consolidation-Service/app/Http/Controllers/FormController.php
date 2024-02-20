@@ -110,7 +110,7 @@ class FormController extends Controller
                 'items' => $data['item'],
                 'per_item' => $data['per_item'],
                 'no_item' => $data['no_item'],
-                //'per_head_per_day' =>$data['no_item'],
+                'times' => $data['times'],
                 'total' => $data['total'],
             ]);
         }
@@ -139,6 +139,7 @@ class FormController extends Controller
                 $xp_form->items = $xpArray[$index]['item'];
                 $xp_form->per_item = $xpArray[$index]['per_item'];
                 $xp_form->no_item = $xpArray[$index]['no_item'];
+                $xp_form->times = $xpArray[$index]['times'];
                 $xp_form->total = $xpArray[$index]['total'];
                 // Update other fields as needed
                 
@@ -201,6 +202,7 @@ class FormController extends Controller
                 'items' => $data['item'],
                 'per_item' => $data['per_item'],
                 'no_item' => $data['no_item'],
+                'times' => $data['times'],
                 'total' => $data['total'],
             ]);
         }
@@ -227,6 +229,7 @@ class FormController extends Controller
                 $xp_form->items = $xpArray[$index]['item'];
                 $xp_form->per_item = $xpArray[$index]['per_item'];
                 $xp_form->no_item = $xpArray[$index]['no_item'];
+                $xp_form->times = $xpArray[$index]['times'];
                 $xp_form->total = $xpArray[$index]['total'];
                 // Update other fields as needed
                 
