@@ -6,7 +6,6 @@ import InsetForm from './ActivityDesign/InsetForm';
 import EADForm from './ActivityDesign/EADForm';
 
 export default function ActivityDesignForms() {
-  const [selectedForm, setSelectedForm] = useState(null);
 
   return (
     <div>

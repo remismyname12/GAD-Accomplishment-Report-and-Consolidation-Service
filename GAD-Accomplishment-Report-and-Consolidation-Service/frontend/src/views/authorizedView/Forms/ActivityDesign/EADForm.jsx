@@ -94,13 +94,13 @@ export default function EADForm() {
         required
         value={formData[name]}
         onChange={handleChange}
-        className="bg-gray-100"
+        className="bg-white"
       />
     </div>
   );
 
   return (
-    <div className='bg-gray-300 m-5 p-3'>
+    <div className='bg-gray-100 m-5 p-3'>
       {/**For Feedback */}
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
@@ -125,6 +125,7 @@ export default function EADForm() {
         <h1 className='text-center m-3'>
           Budgetary Requirements
         </h1>
+        
         <div>
             {inputFields.map((input, index) => {
               return(
