@@ -24,6 +24,8 @@ class Forms extends Model
         'date_of_activity',
         'venue',
         'participants',
+        'participants_male',
+        'participants_female',
         'no_of_target_participants',
         'learning_service_providers',
         'expected_outputs',

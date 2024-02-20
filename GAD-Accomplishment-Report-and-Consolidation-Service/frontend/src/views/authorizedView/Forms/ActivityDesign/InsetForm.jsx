@@ -12,7 +12,6 @@ export default function InsetForm() {
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
-  const [Etotal, setEtotal] = useState('');
 
   //----------for exenditure
 
@@ -24,8 +23,15 @@ export default function InsetForm() {
     const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
     const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
     const total_cost = C_per_item * t_no_item;
-    //console.log('TOTAL: ', inputFields);
-    setEtotal(total_cost);
+
+    const updatedInputFields = [...inputFields];
+
+    // Update the total_cost for the current index
+    updatedInputFields[index] = {
+      ...updatedInputFields[index],
+      total: total_cost
+  };
+  setInputFields(updatedInputFields);
   }
 
   const handleFormChange = (index, event) => {
@@ -211,7 +217,7 @@ export default function InsetForm() {
                     onChange={event => handleFormChange(index, event)}
                   />*/}
                   <span className="flex-1 px-2 py-1" id="total">
-                    Total: <b>Php {Etotal}</b>
+                    Total: <b>Php {input.total}</b>
                   </span>
                   <button onClick={() => removeFields(index)}>Remove</button>
                 </div>
