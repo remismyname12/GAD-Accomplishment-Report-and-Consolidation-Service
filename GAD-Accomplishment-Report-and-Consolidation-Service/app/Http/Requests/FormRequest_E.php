@@ -28,7 +28,7 @@ class FormRequest_E extends FormRequest
             'xp_data.*.item' => 'required|string',
             'xp_data.*.per_item' => 'required|string',
             'xp_data.*.no_item' => 'required|string',
-            'xp_data.*.total' => 'required|string',
+            'xp_data.*.total' => 'required|integer',
             //-----
             
             'form_data' => 'required|array',
