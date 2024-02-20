@@ -72,9 +72,6 @@ class FormController extends Controller
         $formtype = "EMPLOYEE";
         $user = Auth::user();
 
-        //if $form exists in table return, training design with the name X already exists
-        //create pop-up in frontend to tell user
-
         $existingRecord = Forms::where('title', $formtitle )->exists();
 
         if ($existingRecord) {
@@ -82,7 +79,7 @@ class FormController extends Controller
                 'Success' => false,
                 'Message' => 'Title must be unique',
             ]);
-            //return response()->json(['error' => 'Title must be unique'], 422);
+    
         }
 
         $form = Forms::create([
@@ -103,20 +100,25 @@ class FormController extends Controller
 
         // Find the first item with the given title
         $firstItem = Forms::where('title', $formData['title'])->first();
+
+        //calculate total later
  
         foreach ($inputFields as $data) {
             Expenditures::create([
                 'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
-                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'per_item' => $data['per_item'],
+                'no_item' => $data['no_item'],
+                //'per_head_per_day' =>$data['no_item'],
                 'total' => $data['total'],
             ]);
         }
 
         return response([
               'Success' => true,
-              'Message' => 'Form Added'
+              'Message' => 'Form Added',
+              'Message 2' => $inputFields
         ]);
 
     }
@@ -148,7 +150,6 @@ class FormController extends Controller
             return response([
              'Success' => true,
              'Message' => $xpArray,
-             //'Message' => 'Form Updated'
        ]);
     }
     
@@ -190,12 +191,16 @@ class FormController extends Controller
         // Find the first item with the given title
         $firstItem = Forms::where('title', $formData['title'])->first();
 
+        //calculate total later
+
         foreach ($inputFields as $data) {
             Expenditures::create([
                 'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
-                'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
+                'per_item' => $data['per_item'],
+                'no_item' => $data['no_item'],
+                //'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
             ]);
         }

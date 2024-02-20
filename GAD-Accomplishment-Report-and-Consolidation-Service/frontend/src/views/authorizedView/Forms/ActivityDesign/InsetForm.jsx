@@ -12,12 +12,21 @@ export default function InsetForm() {
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
+  const [Etotal, setEtotal] = useState('');
 
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total: ''}
+    {type: '', item: '', per_item: '', no_item: '', total: '0'}
   ])// <><><>
+
+  const handleChangeNumbers = (index, event) => {
+    const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
+    const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
+    const total_cost = C_per_item * t_no_item;
+    //console.log('TOTAL: ', inputFields);
+    setEtotal(total_cost);
+  }
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -26,7 +35,7 @@ export default function InsetForm() {
   }
 
   const addFields = () => {
-    let newfield = {type: '', item: '', phpd: '', total: ''}
+    let newfield = {type: '', item: '', per_item: '', no_item: '', total: '0'}
 
     setInputFields([...inputFields, newfield])
   }
@@ -159,17 +168,38 @@ export default function InsetForm() {
                     onChange={event => handleFormChange(index, event)}
                   />
                   <input
-                    id="phpd"
-                    name="phpd"
+                    id="per_item"
+                    name="per_item"
                     type="text"
-                    placeholder="Per Head/Per Day"
-                    autoComplete="phpd"
+                    pattern="[0-9]*"
+                    placeholder="Cost Per Item"
+                    autoComplete="per_item"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.phpd}
-                    onChange={event => handleFormChange(index, event)}
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.per_item}
+                    //onChange={event => handleFormChange(index, event)}
+                    //cost per item
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
                   />
                   <input
+                    id="no_item"
+                    name="no_item"
+                    type="text"
+                    pattern="[0-9]*"
+                    placeholder="Number of Items"
+                    autoComplete="no_item"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.no_item}
+                    //onChange={event => handleFormChange(index, event)}
+                    //number of items
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
+                  />
+                  {/*<input
                     id="total"
                     name="total"
                     type="text"
@@ -179,7 +209,10 @@ export default function InsetForm() {
                     className="flex-1 px-2 py-1"
                     value={input.total}
                     onChange={event => handleFormChange(index, event)}
-                  />
+                  />*/}
+                  <span className="flex-1 px-2 py-1" id="total">
+                    Total: <b>Php {Etotal}</b>
+                  </span>
                   <button onClick={() => removeFields(index)}>Remove</button>
                 </div>
                 
