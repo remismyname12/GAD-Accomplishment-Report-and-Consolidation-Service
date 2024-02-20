@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade'); //form_employee_id
             $table->string('type')->default('OTHERS');
             $table->string('items');
+            $table->string('per_item')->nullable();
+            $table->string('no_item')->nullable();
             $table->string('per_head_per_day')->nullable();
             $table->string('estimated_cost')->nullable();
             $table->string('remarks')->nullable();

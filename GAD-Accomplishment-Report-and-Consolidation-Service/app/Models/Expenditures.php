@@ -17,6 +17,8 @@ class Expenditures extends Model
         'forms_id',
         'type',
         'items',
+        'per_item',
+        'no_item',
         'per_head_per_day',
         'estimated_cost',
         'remarks',
