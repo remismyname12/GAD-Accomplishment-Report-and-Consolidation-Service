@@ -61,16 +61,6 @@ export default function ManageUsers() {
     <>
         <div className="table-container overflow-y-auto">
 
-          <div>
-            <div className='m-3'>
-              <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
-            </div>
-            <div className='m-3'>
-              <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
-            </div>
-              
-          </div>
-
             <table className='border-solid border-2 border-sky-500'>
                 <thead className='border-solid border-2 border-sky-500'>
                     <tr>
