@@ -4,9 +4,6 @@ import { PencilIcon, ArchiveBoxArrowDownIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import EditUserModal from '../admin/components/ManageUser/Modals/EditUserModal';
 import ArchiveUserModal from './components/ManageUser/Modals/ArchiveUserModal';
-import AddUserModal from './components/ManageUser/Modals/AddUserModal';
-import ArchivedUser from './components/ManageUser/ArchivedUser';
-import NeutralButton from '../../components/buttons/NeutralButton';
 
 export default function ManageUsers() {
 
@@ -18,8 +15,6 @@ export default function ManageUsers() {
     //For Modals
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isArchiveModalOpen, setIsArchiveModalOpen] = useState(false);
-    const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
-    const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
 
         useEffect(() => {
             fetchCurriculum();
@@ -91,32 +86,6 @@ export default function ManageUsers() {
                 </tbody>
             </table>
         </div>
-
-        {/** Modal For Archived User List */}
-        <ReactModal
-            isOpen={isArchivedUserModalOpen}
-            onRequestClose={() => setIsArchivedUserModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-        >
-            <div>
-                <ArchivedUser
-                 closeModal={() => setIsArchivedUserModalOpen(false)}
-                 />
-            </div>
-        </ReactModal>
-
-        {/** Modal For Add User */}
-        <ReactModal
-            isOpen={isAddUserModalOpen}
-            onRequestClose={() => setIsAddUserModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-        >
-            <div>
-                <AddUserModal
-                 closeModal={() => setIsAddUserModalOpen(false)}
-                 />
-            </div>
-        </ReactModal>
         
         {/** Modal For User EDIT */}
         <ReactModal

@@ -10,12 +10,7 @@ import ArchivedReports from './accomplishmentReport/components/ArchivedReports';
 
 export default function SubmitedForms() {
   const [selectedForm, setSelectedForm] = useState(null);
-
-  //For Modals
-  const [isArchivedFormModalOpen, setIsArchivedFormModalOpen] = useState(false);
-  const [isArchivedReportsModalOpen, setIsArchivedReportsModalOpen] = useState(false);
     
-
   return (
     <div>
       <div className="w-full px-4 pt-16">
@@ -53,32 +48,6 @@ export default function SubmitedForms() {
         {selectedForm === 'activityDesign' && <ActivityDesign />}
         {selectedForm === 'accomplishmentreport' && <AccomplishmentReport />}
       </div>
-
-      {/** Modal For Archived Forms List */}
-      <ReactModal
-            isOpen={isArchivedFormModalOpen}
-            onRequestClose={() => setIsArchivedFormModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-        >
-            <div>
-                <ArchivedActivityForms
-                 closeModal={() => setIsArchivedFormModalOpen(false)}
-                 />
-            </div>
-        </ReactModal>
-        
-      {/** Modal For Archived Forms List */}
-      <ReactModal
-            isOpen={isArchivedReportsModalOpen}
-            onRequestClose={() => setIsArchivedReportsModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-        >
-            <div>
-                <ArchivedReports
-                 closeModal={() => setIsArchivedReportsModalOpen(false)}
-                 />
-            </div>
-        </ReactModal>
     </div>
   )
 }
