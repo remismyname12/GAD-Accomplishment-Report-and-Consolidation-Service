@@ -9,7 +9,7 @@ export default function EditActivityModal({ selectedForm }) {
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', total: ''}
+    {type: '', item: '', per_item: '', no_item: '', total: '0'}
   ])
 
   //------------------------------
@@ -38,7 +38,7 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'' }
+    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'0' }
     setInputFields([...inputFields, newfield])
     //will also add to DB
   }
