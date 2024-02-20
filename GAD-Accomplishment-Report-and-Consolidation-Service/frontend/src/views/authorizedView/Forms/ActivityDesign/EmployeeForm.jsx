@@ -16,7 +16,7 @@ export default function EmployeeForm() {
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total: ''}
+    {type: '', item: '', per_item: '', no_item: '', total: ''}
   ])
 
   const handleFormChange = (index, event) => {
@@ -26,7 +26,7 @@ export default function EmployeeForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
+    let newfield = {type: '', item: '', per_item: '', no_item: '', total: ''}
 
     setInputFields([...inputFields, newfield])
   }
@@ -128,6 +128,7 @@ export default function EmployeeForm() {
         <div>
             {inputFields.map((input, index) => {
               return(
+                
                 <div key={index} className="space-x-4 space-y-2">
                   <select
                     id="type"
@@ -161,14 +162,27 @@ export default function EmployeeForm() {
                     onChange={event => handleFormChange(index, event)}
                   />
                   <input
-                    id="phpd"
-                    name="phpd"
+                    id="per_item"
+                    name="per_item"
                     type="text"
-                    placeholder="Per Head/Per Day"
-                    autoComplete="phpd"
+                    variant="filled"
+                    placeholder="Cost Per Item"
+                    autoComplete="per_item"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.phpd}
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.per_item}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="no_item"
+                    name="no_item"
+                    type="text"
+                    variant="filled"
+                    placeholder="Number of Items"
+                    autoComplete="no_item"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.no_item}
                     onChange={event => handleFormChange(index, event)}
                   />
                   <input
@@ -177,7 +191,8 @@ export default function EmployeeForm() {
                     type="text"
                     placeholder="Total"
                     autoComplete="total"
-                    required
+                    //required
+                    disabled
                     className="flex-1 px-2 py-1"
                     value={input.total}
                     onChange={event => handleFormChange(index, event)}
