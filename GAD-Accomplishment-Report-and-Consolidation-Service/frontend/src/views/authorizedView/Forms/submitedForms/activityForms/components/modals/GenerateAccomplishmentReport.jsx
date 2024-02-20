@@ -8,35 +8,48 @@ import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function GenerateAccomplishmentReport({ selectedForm }) {
   // For feedback
+
+  const [actualExpendatures, setActualExpendatures] = useState({
+    type: 'Others',
+    item: 'placeholder',
+    remarks: 'placeholder',
+    source_of_funds: 'placeholder',
+    actual_cost: 'placeholder',
+    total: 'placeholder',
+  });
+
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
 
   const expendituresArray = selectedForm.expenditures;
 
-  //----------for exenditure
+  const [proposedExpenditures, setProposedExpenditures] = useState([
+    {type: '', item: '', estimated: '', remarks: '', source_of_funds: '', total: ''}
+  ]);
+
+  //------------------------------
+  useEffect(() => {
+    // Function to generate multiple sets of input fields
+    const generateInputFields = () => {
+      const newInputFields = expendituresArray.map(expenditure => ({
+        id: expenditure.id,
+        type: expenditure.type,
+        item: expenditure.items,
+        estimated: expenditure.estimated_cost,
+        remarks: expenditure.remarks,
+        source_of_funds: expenditure.source_of_funds,
+        total: expenditure.total
+      }));
+      setProposedExpenditures(newInputFields);
+    };
+  
+    generateInputFields();
+}, []);
+  //------------------------------
+
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
+    {type: '', item: '', estimated: '', remarks: '', source_of_funds: '', total: ''}
   ])
-
-
-    //------------------------------
-    useEffect(() => {
-      // Function to generate multiple sets of input fields
-      const generateInputFields = () => {
-        const newInputFields = expendituresArray.map(expenditure => ({
-          id: expenditure.id,
-          type: expenditure.type,
-          item: expenditure.items,
-          estimated: expenditure.estimated_cost,
-          remarks: expenditure.remarks,
-          source_of_funds: expenditure.source_of_funds
-        }));
-        setInputFields(newInputFields);
-      };
-    
-      generateInputFields();
-  }, []);
-    //------------------------------
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -45,7 +58,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   }
 
   const addFields = () => {
-    let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '' }
+    let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '', total: '' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -136,76 +149,120 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
         {renderInput("expected_outputs", "Expected Outputs: ")}
         {renderInput("fund_source", "Fund Source: ")}
         {renderInput("proponents_implementors", "Proponents/Implementors: ")}
+
         <h1 className='text-center m-3'>
-          Budgetary Requirements
+          Proposed Expenditures:
+        </h1>
+
+        <div className="overflow-x-auto">
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Item Type</th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Item</th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Estimated Cost</th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Remarks</th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Source of Funds</th>
+                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Total</th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {proposedExpenditures.map((input, index) => (
+                <tr key={index}>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.type}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.item}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.estimated}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.remarks}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.source_of_funds}</td>
+                  <td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <h1 className='text-center m-3'>
+          Actual Expenditures:
         </h1>
         <div>
             {inputFields.map((input, index) => {
               return(
                 <div key={index} className="space-x-4 space-y-2">
                   <select
-                    id="type"
-                    name="type"
-                    autoComplete="type"
-                    required
-                    className="flex-1 px-2 py-1"
-                    onChange={event => handleFormChange(index, event)}
-                  >
-                    <option value={input.type}>{input.type}</option>
-                    <option value="Meals and Snacks">Meals and Snacks</option>
-                    <option value="Function Room/Venue">Venue</option>
-                    <option value="Accomodation">Accomodation</option>
-                    <option value="Equipment Rental">Equipment Rental</option>
-                    <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                    <option value="Token/s">Token/s</option>
-                    <option value="Materials and Supplies">Materials and Supplies</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Others">Others...</option>
-                  </select>
-                  <input
-                    id="item"
-                    name="item"
-                    type="text"
-                    placeholder="Item"
-                    autoComplete="item"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.item}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="estimated"
-                    name="estimated"
-                    type="text"
-                    placeholder="Estimated Cost"
-                    autoComplete="estimated"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.estimated}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="remarks"
-                    name="remarks"
-                    type="text"
-                    placeholder="Remarks"
-                    autoComplete="remarks"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.remarks}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="source_of_funds"
-                    name="source_of_funds"
-                    type="text"
-                    placeholder="Source of Funds"
-                    autoComplete="source_of_funds"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.source_of_funds}
-                    onChange={event => handleFormChange(index, event)}
-                  />
+                  id="type"
+                  name="type"
+                  autoComplete="type"
+                  required
+                  className="flex-1 px-2 py-1"
+                  onChange={event => handleFormChange(index, event)}
+                  //<option value="" disabled selected>Select Type</option>
+                >
+                  <option value="" disabled selected>Select Type</option>
+                  <option value="Meals and Snacks">Meals and Snacks</option>
+                  <option value="Function Room/Venue">Venue</option>
+                  <option value="Accomodation">Accomodation</option>
+                  <option value="Equipment Rental">Equipment Rental</option>
+                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                  <option value="Token/s">Token/s</option>
+                  <option value="Materials and Supplies">Materials and Supplies</option>
+                  <option value="Transportation">Transportation</option>
+                  <option value="Others">Others...</option>
+                </select>
+            <input
+                  id="item"
+                  name="item"
+                  type="text"
+                  placeholder="Item"
+                  autoComplete="item"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={actualExpendatures.item}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="actual_cost"
+                  name="actual_cost"
+                  type="text"
+                  placeholder="Actual Cost"
+                  autoComplete="actual_cost"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={actualExpendatures.actual_cost}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="remarks"
+                  name="remarks"
+                  type="text"
+                  placeholder="Remarks"
+                  autoComplete="remarks"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={actualExpendatures.remarks}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="source_of_funds"
+                  name="source_of_funds"
+                  type="text"
+                  placeholder="Source of Funds"
+                  autoComplete="source_of_funds"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={actualExpendatures.source_of_funds}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="total"
+                  name="total"
+                  type="text"
+                  placeholder="Actual Total"
+                  autoComplete="total"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={actualExpendatures.total}
+                  onChange={event => handleFormChange(index, event)}
+                />
                   {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
                 </div>
                 
