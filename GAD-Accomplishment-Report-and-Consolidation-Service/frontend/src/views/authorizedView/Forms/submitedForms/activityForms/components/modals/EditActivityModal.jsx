@@ -9,7 +9,7 @@ export default function EditActivityModal({ selectedForm }) {
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', phpd: '', total: ''}
+    {type: '', item: '', per_item: '', no_item: '', total: ''}
   ])
 
   //------------------------------
@@ -20,7 +20,8 @@ export default function EditActivityModal({ selectedForm }) {
         id: expenditure.id,
         type: expenditure.type,
         item: expenditure.items,
-        phpd: expenditure.per_head_per_day,
+        per_item: expenditure.per_item,
+        no_item: expenditure.no_item,
         total: expenditure.total
       }));
       setInputFields(newInputFields);
@@ -37,7 +38,7 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', phpd: '', total:'' }
+    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'' }
     setInputFields([...inputFields, newfield])
     //will also add to DB
   }
@@ -192,14 +193,25 @@ const renderInput = (name, label) => {
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
-                  id="phpd"
-                  name="phpd"
+                  id="per_item"
+                  name="per_item"
                   type="text"
-                  placeholder="Per Head/Per Day"
-                  autoComplete="phpd"
+                  placeholder="Cost Per Item"
+                  autoComplete="per_item"
                   required
                   className="flex-1 px-2 py-1"
-                  value={input.phpd}
+                  value={input.per_item}
+                  onChange={event => handleFormChange(index, event)}
+                />
+                <input
+                  id="no_item"
+                  name="no_item"
+                  type="text"
+                  placeholder="Number of Items"
+                  autoComplete="no_item"
+                  required
+                  className="flex-1 px-2 py-1"
+                  value={input.no_item}
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
@@ -213,7 +225,7 @@ const renderInput = (name, label) => {
                   value={input.total}
                   onChange={event => handleFormChange(index, event)}
                 />
-        <button onClick={() => removeFields(index)}>Remove</button>
+        {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
       </div>
     ))}
         

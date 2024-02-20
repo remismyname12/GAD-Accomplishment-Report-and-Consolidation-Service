@@ -202,7 +202,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                     value={input.source_of_funds}
                     onChange={event => handleFormChange(index, event)}
                   />
-                  <button onClick={() => removeFields(index)}>Remove</button>
+                  {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
                 </div>
                 
               )
