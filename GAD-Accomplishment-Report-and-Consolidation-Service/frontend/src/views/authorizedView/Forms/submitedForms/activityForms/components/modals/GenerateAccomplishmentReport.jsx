@@ -63,6 +63,8 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     venue: selectedForm.venue,
     clientele_type: selectedForm.clientele_type,
     clientele_number: selectedForm.clientele_number,
+    participants_male: selectedForm.participants_male,
+    participants_female: selectedForm.participants_female,
     estimated_cost: selectedForm.estimated_cost,
     cooperating_agencies_units: selectedForm.cooperating_agencies_units,
     expected_outputs: selectedForm.expected_outputs,
@@ -103,6 +105,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
         name={name}
         type="text"
         autoComplete={name}
+        placeholder="I am empty..."
         required
         value={formData[name]}
         onChange={handleChange}
@@ -127,6 +130,8 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
         {renderInput("venue", "Venue: ")}
         {renderInput("clientele_type", "Clientele Type: ")}
         {renderInput("clientele_number", "Clientele Number: ")}
+        {renderInput("participants_male", "Male Participants: ")}
+        {renderInput("participants_female", "Female Participants: ")}
         {renderInput("estimated_cost", "Estimated Cost: ")}
         {renderInput("cooperating_agencies_units", "Cooperating Agencies/Units: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
