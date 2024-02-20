@@ -137,7 +137,8 @@ class FormController extends Controller
             if (isset($xpArray[$index])) {
                 $xp_form->type = $xpArray[$index]['type'];
                 $xp_form->items = $xpArray[$index]['item'];
-                $xp_form->per_head_per_day = $xpArray[$index]['phpd'];
+                $xp_form->per_item = $xpArray[$index]['per_item'];
+                $xp_form->no_item = $xpArray[$index]['no_item'];
                 $xp_form->total = $xpArray[$index]['total'];
                 // Update other fields as needed
                 
@@ -200,7 +201,6 @@ class FormController extends Controller
                 'items' => $data['item'],
                 'per_item' => $data['per_item'],
                 'no_item' => $data['no_item'],
-                //'per_head_per_day' => $data['phpd'], // Assuming 'phpd' corresponds to 'perhead'
                 'total' => $data['total'],
             ]);
         }
@@ -225,7 +225,8 @@ class FormController extends Controller
             if (isset($xpArray[$index])) {
                 $xp_form->type = $xpArray[$index]['type'];
                 $xp_form->items = $xpArray[$index]['item'];
-                $xp_form->per_head_per_day = $xpArray[$index]['phpd'];
+                $xp_form->per_item = $xpArray[$index]['per_item'];
+                $xp_form->no_item = $xpArray[$index]['no_item'];
                 $xp_form->total = $xpArray[$index]['total'];
                 // Update other fields as needed
                 
@@ -282,7 +283,7 @@ class FormController extends Controller
                 'forms_id' => $firstItem->id,
                 'type' => $data['type'],
                 'items' => $data['item'],
-                'estimated_cost' => $data['estimated'], // Assuming 'phpd' corresponds to 'perhead'
+                'estimated_cost' => $data['estimated'], // 
                 'remarks' => $data['remarks'],
                 'source_of_funds' => $data['source_of_funds'],
             ]);
