@@ -37,7 +37,7 @@ export default function InsetForm() {
     setInputFields(data)
 }
 
-  const [details, setDetails] = useState({
+  const [formData, setFormData] = useState({
     title: '',
     purpose: '',
     legal_bases: '',
@@ -50,11 +50,15 @@ export default function InsetForm() {
     proponents_implementors: '',
   });
   
+  const handleChange = async (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
       const response = await axiosClient.post('/form_inset', { 
-        form_data: details, 
+        form_data: formData, 
         xp_data: inputFields 
       });
       setAxiosMessage(response.data.Message); // Set success message
@@ -75,137 +79,50 @@ export default function InsetForm() {
     }
   };
 
-  const handleChange = (e) => {
-    setDetails({ ...details, [e.target.name]: e.target.value });
-  };
+    //For Unified Inputs 
+    const renderInput = (name, label) => (
+      <div className="flex flex-1 flex-col">
+        <label htmlFor={name}>{label}</label>
+        <input
+          id={name}
+          name={name}
+          type="text"
+          autoComplete={name}
+          required
+          value={formData[name]}
+          onChange={handleChange}
+          className="bg-white"
+        />
+      </div>
+    );
 
   return (
-    <div className='bg-gray-300 m-5 p-3'>
+    <div className='bg-gray-100 m-5 p-3'>
     {/**For Feedback */}
     <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
     
     {/* Integrate the Success component */}
     <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
-      
       <h1 className='text-center'>
-        Inset New Lead
+        Inset New Lead Form
       </h1>
 
-      <form action="" className='flex flex-1 flex-col'>
-          <label htmlFor="title">Title: </label>
-            <input 
-              id="title"
-              name="title"
-              type="text"
-              autoComplete="title"
-              required
-              value={details.title}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="purpose">Purpose: </label>
-            <input 
-              id="purpose"
-              name="purpose"
-              type="text"
-              autoComplete="purpose"
-              required
-              value={details.purpose}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="legal_bases">Legal Bases: </label>
-            <input 
-              id="legal_bases"
-              name="legal_bases"
-              type="text"
-              autoComplete="legal_bases"
-              required
-              value={details.legal_bases}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="date_of_activity">Date of lead Activity: </label>
-            <input 
-              id="date_of_activity"
-              name="date_of_activity"
-              type="text"
-              autoComplete="date_of_activity"
-              required
-              value={details.date_of_activity}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="venue">Venue: </label>
-            <input 
-              id="venue"
-              name="venue"
-              type="text"
-              autoComplete="venue"
-              required
-              value={details.venue}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="participants">Participants: </label>
-            <input 
-              id="participants"
-              name="participants"
-              type="text"
-              autoComplete="participants"
-              required
-              value={details.participants}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="learning_service_providers">Learning service providers: </label>
-            <input 
-              id="learning_service_providers"
-              name="learning_service_providers"
-              type="text"
-              autoComplete="learning_service_providers"
-              required
-              value={details.learning_service_providers}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="expected_outputs">Expected outputs: </label>
-            <input 
-              id="expected_outputs"
-              name="expected_outputs"
-              type="text"
-              autoComplete="expected_outputs"
-              required
-              value={details.expected_outputs}
-              onChange={handleChange}
-            />
-
-          <label htmlFor="fund_source">Fund Source: </label>
-            <input 
-              id="fund_source"
-              name="fund_source"
-              type="text"
-              autoComplete="fund_source"
-              required
-              value={details.fund_source}
-              onChange={handleChange}
-            />
-          
-          <label htmlFor="proponents_implementors">Proponents/Implementors: </label>
-            <input 
-              id="proponents_implementors"
-              name="proponents_implementors"
-              type="text"
-              autoComplete="proponents_implementors"
-              required
-              value={details.proponents_implementors}
-              onChange={handleChange}
-            />
-            
+      <form onSubmit={handleSubmit} >
+        {renderInput("title", "Title: ")}
+        {renderInput("purpose", "Purpose: ")}
+        {renderInput("legal_bases", "Legal Bases: ")}
+        {renderInput("date_of_activity", "Date of Lead Activity: ")}
+        {renderInput("venue", "Venue: ")}
+        {renderInput("participants", "Participants: ")}
+        {renderInput("learning_service_providers", "Learning Service Providers: ")}
+        {renderInput("expected_outputs", "Expected Outputs: ")}
+        {renderInput("fund_source", "Fund Source: ")}
+        {renderInput("proponents_implementors", "Proponents/Implementors: ")}
         <h1 className='text-center m-3'>
-        Budgetary Requirements
+          Budgetary Requirements
         </h1>
+            
         <div>
             {inputFields.map((input, index) => {
               return(
@@ -274,7 +191,7 @@ export default function InsetForm() {
           
         </div>
             <div className='mt-5'>
-              <Submit label="Submit" onClick={handleSubmit}/>
+              <Submit label="Submit"/>
             </div>
       </form>
     </div>

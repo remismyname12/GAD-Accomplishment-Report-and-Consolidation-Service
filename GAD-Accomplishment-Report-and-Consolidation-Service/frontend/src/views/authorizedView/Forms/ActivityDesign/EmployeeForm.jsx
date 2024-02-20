@@ -95,13 +95,13 @@ export default function EmployeeForm() {
         required
         value={formData[name]}
         onChange={handleChange}
-        className="bg-gray-100"
+        className="bg-white"
       />
     </div>
   );
 
   return (
-    <div className='bg-gray-300 m-5 p-3'>
+    <div className='bg-gray-100 m-5 p-3'>
       {/**For Feedback */}
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
@@ -207,8 +207,6 @@ export default function EmployeeForm() {
             </div>
           
         </div>
-        
-      
         
         <div className='mt-5'>
           <Submit label="Submit"/>
