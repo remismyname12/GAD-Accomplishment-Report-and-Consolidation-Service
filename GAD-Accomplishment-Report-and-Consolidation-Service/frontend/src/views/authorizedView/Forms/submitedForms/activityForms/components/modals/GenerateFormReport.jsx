@@ -6,7 +6,7 @@ import axiosClient from '../../../../../../axios/axios';
 export default function GenerateFormReport({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
-
+  //console.log("ID: ", selectedForm.id);
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', per_item: '', no_item: '', total: '0'}
@@ -77,10 +77,9 @@ export default function GenerateFormReport({ selectedForm }) {
     ev.preventDefault();
     setError({ __html: "" });
 
-    if(selectedForm.form_type === "EMPLOYEE"){
-      //For EMPLOYEE UPDATE
+   
       axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
+      .post('/accomplishment_report', {forms_id: selectedForm.id, expenditures: inputFields})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -91,21 +90,7 @@ export default function GenerateFormReport({ selectedForm }) {
         }
         console.error(error);
       });
-    } else {
-      //For INSET UPDATE
-      axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
-      .catch((error) => {
-        if (error.response) {
-          const finalErrors = Object.values(error.response.data.errors).reduce(
-            (accum, next) => [...accum, ...next],
-            []
-          );
-          setError({ __html: finalErrors.join("<br>") });
-        }
-        console.error(error);
-      });
-    }
+
   };
 
 // For Unified Inputs 
