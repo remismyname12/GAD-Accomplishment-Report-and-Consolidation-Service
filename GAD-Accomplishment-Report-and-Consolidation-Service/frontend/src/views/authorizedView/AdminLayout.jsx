@@ -4,10 +4,10 @@ import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import axiosClient from '../axios/axios';
+import SideBar from '../components/sidebar/sidebar';
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
-  { name: 'Manage Users', to: '/admin/manageusers'},
   { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Annual Report', to: '/admin/annualreport'},
@@ -135,10 +135,10 @@ export default function AdminLayout() {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
+                                href="/admin/manageusers"
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                               >
-                                Settings
+                                Manage Users
                               </a>
                             )}
                           </Menu.Item>
@@ -189,11 +189,16 @@ export default function AdminLayout() {
           )}
         </Disclosure>
 
-        <main>
-          <div className="mx-auto max-w-8xl py-6 sm:px-6 lg:px-8">
-            <Outlet />
-          </div>
-        </main>
+    <main className="flex"> {/* Apply flex to the main container */}
+      <div className="sidebar bg-purple-400 h-screen w-fit px-[1%]"> {/* Add sidebar styling */}
+        <SideBar />
+      </div>
+      <div className="mx-auto max-w-8xl py-6 sm:px-6 lg:px-8"> {/* Maintain the content container */}
+        <div>
+          <Outlet />
+        </div>
+      </div>
+    </main>
     </>
   );
 }

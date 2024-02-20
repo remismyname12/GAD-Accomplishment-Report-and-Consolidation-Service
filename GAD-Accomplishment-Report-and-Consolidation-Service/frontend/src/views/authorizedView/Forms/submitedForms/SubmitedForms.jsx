@@ -18,12 +18,6 @@ export default function SubmitedForms() {
 
   return (
     <div>
-          <div>
-              <NeutralButton label="Archived Forms List" onClick={() => {setIsArchivedFormModalOpen(true)}} />
-              <div className='mt-3'>
-              <NeutralButton label="Archived Accomplishment Report List" onClick={() => {setIsArchivedReportsModalOpen(true)}} />
-              </div>
-          </div>
       <div className="w-full px-4 pt-16">
         <div className="mx-auto w-full max-w-md rounded-2xl bg-white p-2">
           <Disclosure>
