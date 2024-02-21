@@ -20,9 +20,9 @@ export default function EmployeeForm() {
   ])
 
   const handleChangeNumbers = (index, event) => {
-    const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
-    const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
-    const n_times = parseInt(inputFields[index].times || 0, 10);
+    const C_per_item = parseFloat(inputFields[index].per_item || 0, 10);
+    const t_no_item = parseFloat(inputFields[index].no_item || 0, 10);
+    const n_times = parseFloat(inputFields[index].times || 0, 10);
     const total_cost = (C_per_item * t_no_item) * n_times;
 
     const updatedInputFields = [...inputFields];
@@ -181,7 +181,7 @@ export default function EmployeeForm() {
                     id="per_item"
                     name="per_item"
                     type="text"
-                    pattern="[0-9]*"
+                    pattern="[0-9]*\.?[0-9]*"
                     placeholder="Cost Per Item"
                     autoComplete="per_item"
                     required
@@ -197,7 +197,7 @@ export default function EmployeeForm() {
                     id="no_item"
                     name="no_item"
                     type="text"
-                    pattern="[0-9]*"
+                    pattern="[0-9]*\.?[0-9]*"
                     placeholder="Number of Items"
                     autoComplete="no_item"
                     required
@@ -212,8 +212,8 @@ export default function EmployeeForm() {
                   <input
                     id="times"
                     name="times"
-                    type="number"
-                    //pattern="[0-9]*"
+                    type="text"
+                    pattern="[0-9]*"
                     placeholder="Number of Times"
                     autoComplete="times"
                     required

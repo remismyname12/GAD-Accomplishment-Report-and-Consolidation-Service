@@ -7,16 +7,17 @@ export default function EditActivityModal({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
 
+  console.log('times: ', expendituresArray.times);
+
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', times: 1, total: '0'}
+    {type: '', item: '', per_item: '', no_item: '', times: '', total: '0'}
   ])
 
   const handleChangeNumbers = (index, event) => {
-    const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
-    const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
-
-    let n_times = parseInt(inputFields[index].times || 0, 10);
+    const C_per_item = parseFloat(inputFields[index].per_item || 0, 10);
+    const t_no_item = parseFloat(inputFields[index].no_item || 0, 10);
+    let n_times = parseFloat(inputFields[index].times || 0, 10);
     
     if (!n_times) {
       n_times = 1;
@@ -43,6 +44,7 @@ export default function EditActivityModal({ selectedForm }) {
         item: expenditure.items,
         per_item: expenditure.per_item,
         no_item: expenditure.no_item,
+        times: expenditure.times,
         total: expenditure.total
       }));
       setInputFields(newInputFields);
@@ -217,7 +219,7 @@ const renderInput = (name, label) => {
                     id="per_item"
                     name="per_item"
                     type="text"
-                    pattern="[0-9]*"
+                    pattern="[0-9]*\.?[0-9]*"
                     placeholder="Cost Per Item"
                     autoComplete="per_item"
                     required
@@ -231,7 +233,7 @@ const renderInput = (name, label) => {
                     id="no_item"
                     name="no_item"
                     type="text"
-                    pattern="[0-9]*"
+                    pattern="[0-9]*\.?[0-9]*"
                     placeholder="Number of Items"
                     autoComplete="no_item"
                     required
@@ -244,12 +246,12 @@ const renderInput = (name, label) => {
                 <input
                     id="times"
                     name="times"
-                    type="number"
+                    type="text"
+                    pattern="[0-9]*"
                     placeholder="Number of Times"
                     autoComplete="times"
                     required
                     className="appearance-none flex-1 px-2 py-1"
-                    min={1}
                     value={input.times}
                     onChange={(event) => {handleFormChange(index, event);
                       handleChangeNumbers(index, event.target.value);
