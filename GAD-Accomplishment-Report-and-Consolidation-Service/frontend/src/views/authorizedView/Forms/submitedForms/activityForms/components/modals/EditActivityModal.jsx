@@ -9,8 +9,29 @@ export default function EditActivityModal({ selectedForm }) {
 
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', total: '0'}
+    {type: '', item: '', per_item: '', no_item: '', times: 1, total: '0'}
   ])
+
+  const handleChangeNumbers = (index, event) => {
+    const C_per_item = parseInt(inputFields[index].per_item || 0, 10);
+    const t_no_item = parseInt(inputFields[index].no_item || 0, 10);
+
+    let n_times = parseInt(inputFields[index].times || 0, 10);
+    
+    if (!n_times) {
+      n_times = 1;
+    }
+
+    const total_cost = (C_per_item * t_no_item) * n_times;
+    const updatedInputFields = [...inputFields];
+
+    // Update the total_cost for the current index
+    updatedInputFields[index] = {
+      ...updatedInputFields[index],
+      total: total_cost
+  };
+  setInputFields(updatedInputFields);
+  }
 
   //------------------------------
   useEffect(() => {
@@ -38,7 +59,7 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'0' }
+    let newfield = { type: '', item: '', per_item: '', no_item: '', times: 1, total: '0' }
     setInputFields([...inputFields, newfield])
     //will also add to DB
   }
@@ -153,7 +174,7 @@ const renderInput = (name, label) => {
       {renderInput("fund_source", "Fund Source: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}
       <h1 className='text-center m-3'>
-        Actual Expendatures:
+        Budgetary Requirements:
       </h1>
       <div>
         
@@ -193,27 +214,47 @@ const renderInput = (name, label) => {
                   onChange={event => handleFormChange(index, event)}
                 />
                 <input
-                  id="per_item"
-                  name="per_item"
-                  type="text"
-                  placeholder="Cost Per Item"
-                  autoComplete="per_item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.per_item}
-                  onChange={event => handleFormChange(index, event)}
-                />
+                    id="per_item"
+                    name="per_item"
+                    type="text"
+                    pattern="[0-9]*"
+                    placeholder="Cost Per Item"
+                    autoComplete="per_item"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.per_item}
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
+                  />
+                  <input
+                    id="no_item"
+                    name="no_item"
+                    type="text"
+                    pattern="[0-9]*"
+                    placeholder="Number of Items"
+                    autoComplete="no_item"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    value={input.no_item}
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
+                  />
                 <input
-                  id="no_item"
-                  name="no_item"
-                  type="text"
-                  placeholder="Number of Items"
-                  autoComplete="no_item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.no_item}
-                  onChange={event => handleFormChange(index, event)}
-                />
+                    id="times"
+                    name="times"
+                    type="number"
+                    placeholder="Number of Times"
+                    autoComplete="times"
+                    required
+                    className="appearance-none flex-1 px-2 py-1"
+                    min={1}
+                    value={input.times}
+                    onChange={(event) => {handleFormChange(index, event);
+                      handleChangeNumbers(index, event.target.value);
+                    }}
+                  />
                 <input
                   id="total"
                   name="total"
@@ -225,7 +266,7 @@ const renderInput = (name, label) => {
                   value={input.total}
                   onChange={event => handleFormChange(index, event)}
                 />
-        {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
+          <button onClick={() => removeFields(index)}>Remove</button>
       </div>
     ))}
         
