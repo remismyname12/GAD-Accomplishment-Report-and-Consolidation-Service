@@ -178,99 +178,118 @@ const renderInput = (name, label) => {
       <h1 className='text-center m-3'>
         Budgetary Requirements:
       </h1>
-      <div>
-        
-        {/*------------------------------------------------------------------------------*/}
-
-        {inputFields.map((input, index) => (
-        <div key={index} className="space-x-4 space-y-2">
-          <select
-                  id="type"
-                  name="type"
-                  autoComplete="type"
-                  required
-                  className="flex-1 px-2 py-1"
-                  onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
-                >
-                  <option value = {input.type} selected>{input.type}</option>
-                  <option value="Meals and Snacks">Meals and Snacks</option>
-                  <option value="Function Room/Venue">Venue</option>
-                  <option value="Accomodation">Accomodation</option>
-                  <option value="Equipment Rental">Equipment Rental</option>
-                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                  <option value="Token/s">Token/s</option>
-                  <option value="Materials and Supplies">Materials and Supplies</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Others">Others...</option>
-                </select>
-            <input
-                  id="item"
-                  name="item"
-                  type="text"
-                  placeholder="Item"
-                  autoComplete="item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                    id="per_item"
-                    name="per_item"
-                    type="text"
-                    pattern="[0-9]*\.?[0-9]*"
-                    placeholder="Cost Per Item"
-                    autoComplete="per_item"
-                    required
-                    className="appearance-none flex-1 px-2 py-1"
-                    value={input.per_item}
-                    onChange={(event) => {handleFormChange(index, event);
-                      handleChangeNumbers(index, event.target.value);
-                    }}
-                  />
-                  <input
-                    id="no_item"
-                    name="no_item"
-                    type="text"
-                    pattern="[0-9]*\.?[0-9]*"
-                    placeholder="Number of Items"
-                    autoComplete="no_item"
-                    required
-                    className="appearance-none flex-1 px-2 py-1"
-                    value={input.no_item}
-                    onChange={(event) => {handleFormChange(index, event);
-                      handleChangeNumbers(index, event.target.value);
-                    }}
-                  />
-                <input
-                    id="times"
-                    name="times"
-                    type="text"
-                    pattern="[0-9]*"
-                    placeholder="Number of Times"
-                    autoComplete="times"
-                    required
-                    className="appearance-none flex-1 px-2 py-1"
-                    value={input.times}
-                    onChange={(event) => {handleFormChange(index, event);
-                      handleChangeNumbers(index, event.target.value);
-                    }}
-                  />
-                <input
-                  id="total"
-                  name="total"
-                  type="text"
-                  placeholder="Total"
-                  autoComplete="total"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.total}
-                  onChange={event => handleFormChange(index, event)}
-                />
-          <button onClick={() => removeFields(index)}>Remove</button>
-      </div>
-    ))}
+      <div >
+        <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Item</th>
+                  <th>Cost Per Item</th>
+                  <th>Number of Items</th>
+                  <th>Number of Times</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inputFields.map((input, index) => (
+                  <tr key={index}>
+                    <td>
+                      <select
+                        id="type"
+                        name="type"
+                        autoComplete="type"
+                        required
+                        value={input.type}
+                        onChange={event => handleFormChange(index, event)}
+                      >
+                        <option value={input.type}>{input.type}</option>
+                        <option value="Meals and Snacks">Meals and Snacks</option>
+                        <option value="Function Room/Venue">Venue</option>
+                        <option value="Accomodation">Accomodation</option>
+                        <option value="Equipment Rental">Equipment Rental</option>
+                        <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                        <option value="Token/s">Token/s</option>
+                        <option value="Materials and Supplies">Materials and Supplies</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Others">Others...</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        id="item"
+                        name="item"
+                        type="text"
+                        placeholder="Item"
+                        autoComplete="item"
+                        required
+                        value={input.item}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="per_item"
+                        name="per_item"
+                        type="text"
+                        pattern="[0-9]*\.?[0-9]*"
+                        placeholder="Cost Per Item"
+                        autoComplete="per_item"
+                        required
+                        value={input.per_item}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="no_item"
+                        name="no_item"
+                        type="text"
+                        pattern="[0-9]*\.?[0-9]*"
+                        placeholder="Number of Items"
+                        autoComplete="no_item"
+                        required
+                        value={input.no_item}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="times"
+                        name="times"
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Number of Times"
+                        autoComplete="times"
+                        required
+                        value={input.times}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="total"
+                        name="total"
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Total"
+                        autoComplete="Total"
+                        required
+                        readOnly
+                        value={input.total}
+                        onChange={event => { handleFormChange(index, event);}}
+                      />
+                      </td>
+                    <td>
+                      <button onClick={() => removeFields(index)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
         
         
 
