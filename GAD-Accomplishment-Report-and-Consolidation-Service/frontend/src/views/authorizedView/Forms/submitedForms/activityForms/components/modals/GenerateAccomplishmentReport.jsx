@@ -9,14 +9,14 @@ import Feedback from '../../../../../../components/feedbacks/Feedback';
 export default function GenerateAccomplishmentReport({ selectedForm }) {
   // For feedback
 
-  const [actualExpendatures, setActualExpendatures] = useState({
-    type: 'Others',
-    item: 'placeholder',
-    remarks: 'placeholder',
-    source_of_funds: 'placeholder',
-    actual_cost: 'placeholder',
-    total: 'placeholder',
-  });
+  const [actualExpendatures, setActualExpendatures] = useState([{
+    type: '',
+    item: '',
+    remarks: '',
+    source_of_funds: '',
+    actual_cost: '',
+    total: '',
+  }]);
 
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
@@ -47,26 +47,22 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
 }, []);
   //------------------------------
 
-  const [inputFields, setInputFields] = useState([
-    {type: '', item: '', estimated: '', remarks: '', source_of_funds: '', total: ''}
-  ])
-
   const handleFormChange = (index, event) => {
-    let data = [...inputFields];
+    let data = [...actualExpendatures];
     data[index][event.target.name] = event.target.value;
-    setInputFields(data);
+    setActualExpendatures(data);
   }
 
   const addFields = () => {
     let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '', total: '' }
 
-    setInputFields([...inputFields, newfield])
+    setActualExpendatures([...actualExpendatures, newfield])
   }
 
   const removeFields = (index) => {
-    let data = [...inputFields];
+    let data = [...actualExpendatures];
     data.splice(index, 1)
-    setInputFields(data)
+    setActualExpendatures(data)
 }
 
   const [formData, setFormData] = useState({
@@ -94,7 +90,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
     try {
         const response = await axiosClient.post('/accomplishment_report', {
             forms_id: selectedForm.id,
-            expenditures: inputFields,
+            expenditures: actualExpendatures,
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
@@ -185,7 +181,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
           Actual Expenditures:
         </h1>
         <div>
-            {inputFields.map((input, index) => {
+            {actualExpendatures.map((input, index) => {
               return(
                 <div key={index} className="space-x-4 space-y-2">
                   <select

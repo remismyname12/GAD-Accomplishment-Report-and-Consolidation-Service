@@ -7,15 +7,19 @@ import axiosClient from '../../../../../../axios/axios';
 import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function GenerateFormReport({ selectedForm }) {
+  //save acc report to acc report table
+  //save acutal expenditure to actual expenditure table
+  //fix the requests, controller, axios endpoints, model and relationships
+  //for both acc report and actual expenditures table
 
-  const [actualExpendatures, setActualExpendatures] = useState({
-    type: 'Others',
-    item: 'placeholder',
-    remarks: 'placeholder',
-    source_of_funds: 'placeholder',
-    actual_cost: 'placeholder',
-    total: 'placeholder',
-  });
+  const [actualExpendatures, setActualExpendatures] = useState([{
+    type: '',
+    item: '',
+    remarks: '',
+    source_of_funds: '',
+    actual_cost: '',
+    total: '',
+  }]);
 
   const expendituresArray = selectedForm.expenditures;
 
@@ -43,10 +47,6 @@ export default function GenerateFormReport({ selectedForm }) {
 }, []);
   //------------------------------
 
-  const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', total: '0'}
-  ])
-
   //For feedback
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState(''); // State for success message
@@ -59,7 +59,7 @@ export default function GenerateFormReport({ selectedForm }) {
     try {
       const response = await axiosClient.post('/accomplishment_report', {
           forms_id: selectedForm.id,
-          expenditures: inputFields,
+          expenditures: actualExpendatures,
       });
       setAxiosMessage(response.data.message); // Set success message
       setAxiosStatus(response.data.success);
@@ -75,21 +75,21 @@ export default function GenerateFormReport({ selectedForm }) {
 
 
   const handleFormChange = (index, event) => {
-    let data = [...inputFields];
+    let data = [...actualExpendatures];
     data[index][event.target.name] = event.target.value;
-    setInputFields(data);
+    setActualExpendatures(data);
   }
   
   const addFields = () => {
     let newfield = { type: '', item: '', per_item: '', no_item: '', total:'0' }
-    setInputFields([...inputFields, newfield])
+    setActualExpendatures([...actualExpendatures, newfield])
     //will also add to DB
   }
   
   const removeFields = (index) => {
-    let data = [...inputFields];
+    let data = [...actualExpendatures];
     data.splice(index, 1)
-    setInputFields(data)
+    setActualExpendatures(data)
     //will also remove from DB
   }
 
@@ -113,7 +113,7 @@ export default function GenerateFormReport({ selectedForm }) {
   });
   
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -204,86 +204,88 @@ const renderInput = (name, label) => {
       </h1>
       <div>
         {/*------------------------------------------------------------------------------*/}
-        {inputFields.map((input, index) => (
-        <div key={index} className="space-x-4 space-y-2">
-          <select
-                  id="type"
-                  name="type"
-                  autoComplete="type"
-                  required
-                  className="flex-1 px-2 py-1"
-                  onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
-                >
-                  <option value="" disabled selected>Select Type</option>
-                  <option value="Meals and Snacks">Meals and Snacks</option>
-                  <option value="Function Room/Venue">Venue</option>
-                  <option value="Accomodation">Accomodation</option>
-                  <option value="Equipment Rental">Equipment Rental</option>
-                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                  <option value="Token/s">Token/s</option>
-                  <option value="Materials and Supplies">Materials and Supplies</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Others">Others...</option>
-                </select>
-            <input
-                  id="item"
-                  name="item"
-                  type="text"
-                  placeholder="Item"
-                  autoComplete="item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={actualExpendatures.item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="actual_cost"
-                  name="actual_cost"
-                  type="text"
-                  placeholder="Actual Cost"
-                  autoComplete="actual_cost"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={actualExpendatures.actual_cost}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="remarks"
-                  name="remarks"
-                  type="text"
-                  placeholder="Remarks"
-                  autoComplete="remarks"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={actualExpendatures.remarks}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="source_of_funds"
-                  name="source_of_funds"
-                  type="text"
-                  placeholder="Source of Funds"
-                  autoComplete="source_of_funds"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={actualExpendatures.source_of_funds}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="total"
-                  name="total"
-                  type="text"
-                  placeholder="Actual Total"
-                  autoComplete="total"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={actualExpendatures.total}
-                  onChange={event => handleFormChange(index, event)}
-                />
-        {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
-      </div>
-    ))}
+        {actualExpendatures.map((input, index) => {
+          return(
+          <div key={index} className="space-x-4 space-y-2">
+            <select
+                    id="type"
+                    name="type"
+                    autoComplete="type"
+                    required
+                    className="flex-1 px-2 py-1"
+                    onChange={event => handleFormChange(index, event)}
+                    //<option value="" disabled selected>Select Type</option>
+                  >
+                    <option value="" disabled selected>Select Type</option>
+                    <option value="Meals and Snacks">Meals and Snacks</option>
+                    <option value="Function Room/Venue">Venue</option>
+                    <option value="Accomodation">Accomodation</option>
+                    <option value="Equipment Rental">Equipment Rental</option>
+                    <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                    <option value="Token/s">Token/s</option>
+                    <option value="Materials and Supplies">Materials and Supplies</option>
+                    <option value="Transportation">Transportation</option>
+                    <option value="Others">Others...</option>
+                  </select>
+              <input
+                    id="item"
+                    name="item"
+                    type="text"
+                    placeholder="Item"
+                    autoComplete="item"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={actualExpendatures.item}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="actual_cost"
+                    name="actual_cost"
+                    type="text"
+                    placeholder="Actual Cost"
+                    autoComplete="actual_cost"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={actualExpendatures.actual_cost}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="remarks"
+                    name="remarks"
+                    type="text"
+                    placeholder="Remarks"
+                    autoComplete="remarks"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={actualExpendatures.remarks}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="source_of_funds"
+                    name="source_of_funds"
+                    type="text"
+                    placeholder="Source of Funds"
+                    autoComplete="source_of_funds"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={actualExpendatures.source_of_funds}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+                  <input
+                    id="total"
+                    name="total"
+                    type="text"
+                    placeholder="Actual Total"
+                    autoComplete="total"
+                    required
+                    className="flex-1 px-2 py-1"
+                    value={actualExpendatures.total}
+                    onChange={event => handleFormChange(index, event)}
+                  />
+              {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
+          </div>
+          )
+      })}
         
         
 
