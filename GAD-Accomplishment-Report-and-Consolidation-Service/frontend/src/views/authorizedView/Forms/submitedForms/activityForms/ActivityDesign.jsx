@@ -144,13 +144,13 @@ export default function ActivityDesign() {
                   </ul>
 
                   <ul>
-                      <button onClick={() => handleEditClick(form)}>
+                      <button title="Edit Activity Design" onClick={() => handleEditClick(form)}>
                           <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleArchiveClick(form)}>
+                      <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                      <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
                           <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                     </ul>
@@ -180,13 +180,13 @@ export default function ActivityDesign() {
                     </ul>
 
                     <ul>
-                      <button onClick={() => handleEditClick(form)}>
+                      <button title="Edit Activity Design" onClick={() => handleEditClick(form)}>
                           <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleArchiveClick(form)}>
+                      <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                      <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
                           <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                     </ul>
@@ -216,13 +216,13 @@ export default function ActivityDesign() {
                   </ul>
 
                   <ul>
-                      <button onClick={() => handleEditEADClick(form)}>
-                          <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      <button title="Edit Activity Design" onClick={() => handleEditEADClick(form)}>
+                          <PencilIcon title="Edit Activity Design" className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleArchiveClick(form)}>
+                      <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
                           <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
-                      <button onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                      <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
                           <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                       </button>
                     </ul>

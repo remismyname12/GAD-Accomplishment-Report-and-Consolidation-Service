@@ -68,10 +68,10 @@ export default function ArchivedActivityForms() {
                           >
                               <td className="text-center p-2">{forms.title}</td>
                               <td className= "flex items-center p-3">
-                                <button onClick={() => handleRestoreFormClick(forms)}>
+                                <button title="Restore Activity Form" onClick={() => handleRestoreFormClick(forms)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
-                                <button onClick={() => handleDeleteFormClick(forms)}>
+                                <button title="Delete Activity Form" onClick={() => handleDeleteFormClick(forms)}>
                                     <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
                               </td>

@@ -70,10 +70,10 @@ export default function ArchivedUser() {
                               <td className="text-center p-2">{users.username}</td>
                               <td className="text-center p-2">{users.email}</td>
                               <td className= "flex items-center p-3">
-                                <button onClick={() => handleRestoreUserClick(users)}>
+                                <button title="Restore User" onClick={() => handleRestoreUserClick(users)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
-                                <button onClick={() => handleDeleteUserClick(users)}>
+                                <button title="Delete User" onClick={() => handleDeleteUserClick(users)}>
                                     <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
                                 </button>
                               </td>
