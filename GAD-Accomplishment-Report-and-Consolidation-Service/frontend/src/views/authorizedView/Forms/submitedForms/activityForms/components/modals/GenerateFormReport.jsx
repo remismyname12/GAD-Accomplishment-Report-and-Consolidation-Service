@@ -135,8 +135,9 @@ const renderInput = (name, label) => {
         type="text"
         autoComplete={name}
         placeholder="I am empty..."
+        required
         // Include "required" attribute only if it's not INSET and not no_of_target_participants
-        {...(isRequired ? { required: true } : {})}
+        //{...(isRequired ? { required: true } : {})}
         value={formData[name]}
         onChange={handleChange}
         className="bg-gray-100"
