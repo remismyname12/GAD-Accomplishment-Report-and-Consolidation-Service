@@ -127,79 +127,100 @@ export default function EADForm() {
         </h1>
         
         <div>
-            {inputFields.map((input, index) => {
-              return(
-                <div key={index} className="space-x-4 space-y-2">
-                  <select
-                    id="type"
-                    name="type"
-                    autoComplete="type"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.type}
-                    onChange={event => handleFormChange(index, event)}
-                    //<option value="" disabled selected>Select Type</option>
-                  >
-                    <option value="" disabled selected>Select Type</option>
-                    <option value="Meals and Snacks">Meals and Snacks</option>
-                    <option value="Function Room/Venue">Venue</option>
-                    <option value="Accomodation">Accomodation</option>
-                    <option value="Equipment Rental">Equipment Rental</option>
-                    <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                    <option value="Token/s">Token/s</option>
-                    <option value="Materials and Supplies">Materials and Supplies</option>
-                    <option value="Transportation">Transportation</option>
-                    <option value="Others">Others...</option>
-                  </select>
-                  <input
-                    id="item"
-                    name="item"
-                    type="text"
-                    placeholder="Item"
-                    autoComplete="item"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.item}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="estimated"
-                    name="estimated"
-                    type="text"
-                    placeholder="Estimated Cost"
-                    autoComplete="estimated"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.estimated}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="remarks"
-                    name="remarks"
-                    type="text"
-                    placeholder="Remarks"
-                    autoComplete="remarks"
-                    //required
-                    className="flex-1 px-2 py-1"
-                    value={input.remarks}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <input
-                    id="source_of_funds"
-                    name="source_of_funds"
-                    type="text"
-                    placeholder="Source of Funds"
-                    autoComplete="source_of_funds"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.source_of_funds}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                  <button onClick={() => removeFields(index)}>Remove</button>
-                </div>
-                
-              )
-            })}
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Item</th>
+                  <th>Estimated Cost</th>
+                  <th>Remarks</th>
+                  <th>Source of Funds</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inputFields.map((input, index) => (
+                  <tr key={index}>
+                    <td>
+                      <select
+                        id="type"
+                        name="type"
+                        autoComplete="type"
+                        required
+                        className="flex-1 px-2 py-1"
+                        value={input.type}
+                        onChange={event => handleFormChange(index, event)}
+                      >
+                        <option value="" disabled>Select Type</option>
+                        <option value="Meals and Snacks">Meals and Snacks</option>
+                        <option value="Function Room/Venue">Venue</option>
+                        <option value="Accomodation">Accomodation</option>
+                        <option value="Equipment Rental">Equipment Rental</option>
+                        <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                        <option value="Token/s">Token/s</option>
+                        <option value="Materials and Supplies">Materials and Supplies</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Others">Others...</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        id="item"
+                        name="item"
+                        type="text"
+                        placeholder="Item"
+                        autoComplete="item"
+                        required
+                        className="flex-1 px-2 py-1"
+                        value={input.item}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="estimated"
+                        name="estimated"
+                        type="text"
+                        placeholder="Estimated Cost"
+                        autoComplete="estimated"
+                        required
+                        className="flex-1 px-2 py-1"
+                        value={input.estimated}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="remarks"
+                        name="remarks"
+                        type="text"
+                        placeholder="Remarks"
+                        autoComplete="remarks"
+                        className="flex-1 px-2 py-1"
+                        value={input.remarks}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="source_of_funds"
+                        name="source_of_funds"
+                        type="text"
+                        placeholder="Source of Funds"
+                        autoComplete="source_of_funds"
+                        required
+                        className="flex-1 px-2 py-1"
+                        value={input.source_of_funds}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <button onClick={() => removeFields(index)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
             <div className="flex justify-center">
               <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>

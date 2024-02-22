@@ -25,12 +25,12 @@ class AccomplishmentReportRequest extends FormRequest
             'forms_id' => 'required|integer',
             'expenditures' => 'required|array',
 
-            'type' => 'required|string',
-            'items' => 'required|string',
-            'remarks' => 'required|string',
-            'source_of_funds' => 'required|string',
-            'actual_cost' => 'required|string',
-            'total' => 'required|string',
+            'expenditures.*.type' => 'required|string',
+            'expenditures.*.item' => 'required|string',
+            'expenditures.*.remarks' => 'required|string',
+            'expenditures.*.source_of_funds' => 'required|string',
+            'expenditures.*.actual_cost' => 'required|string',
+            'expenditures.*.total' => 'required|string',
         ];
     }
 }

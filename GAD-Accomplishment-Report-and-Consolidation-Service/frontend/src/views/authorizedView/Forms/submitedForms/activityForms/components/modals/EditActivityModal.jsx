@@ -7,10 +7,32 @@ export default function EditActivityModal({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
 
+  console.log('times: ', expendituresArray.times);
+
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', per_item: '', no_item: '', total: '0'}
+    {type: '', item: '', per_item: '', no_item: '', times: '', total: '0'}
   ])
+
+  const handleChangeNumbers = (index, event) => {
+    const C_per_item = parseFloat(inputFields[index].per_item || 0, 10);
+    const t_no_item = parseFloat(inputFields[index].no_item || 0, 10);
+    let n_times = parseFloat(inputFields[index].times || 0, 10);
+    
+    if (!n_times) {
+      n_times = 1;
+    }
+
+    const total_cost = (C_per_item * t_no_item) * n_times;
+    const updatedInputFields = [...inputFields];
+
+    // Update the total_cost for the current index
+    updatedInputFields[index] = {
+      ...updatedInputFields[index],
+      total: total_cost
+  };
+  setInputFields(updatedInputFields);
+  }
 
   //------------------------------
   useEffect(() => {
@@ -22,6 +44,7 @@ export default function EditActivityModal({ selectedForm }) {
         item: expenditure.items,
         per_item: expenditure.per_item,
         no_item: expenditure.no_item,
+        times: expenditure.times,
         total: expenditure.total
       }));
       setInputFields(newInputFields);
@@ -38,7 +61,7 @@ export default function EditActivityModal({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'0' }
+    let newfield = { type: '', item: '', per_item: '', no_item: '', times: 1, total: '0' }
     setInputFields([...inputFields, newfield])
     //will also add to DB
   }
@@ -153,81 +176,120 @@ const renderInput = (name, label) => {
       {renderInput("fund_source", "Fund Source: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}
       <h1 className='text-center m-3'>
-        Actual Expendatures:
+        Budgetary Requirements:
       </h1>
-      <div>
-        
-        {/*------------------------------------------------------------------------------*/}
-
-        {inputFields.map((input, index) => (
-        <div key={index} className="space-x-4 space-y-2">
-          <select
-                  id="type"
-                  name="type"
-                  autoComplete="type"
-                  required
-                  className="flex-1 px-2 py-1"
-                  onChange={event => handleFormChange(index, event)}
-                  //<option value="" disabled selected>Select Type</option>
-                >
-                  <option value = {input.type} selected>{input.type}</option>
-                  <option value="Meals and Snacks">Meals and Snacks</option>
-                  <option value="Function Room/Venue">Venue</option>
-                  <option value="Accomodation">Accomodation</option>
-                  <option value="Equipment Rental">Equipment Rental</option>
-                  <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
-                  <option value="Token/s">Token/s</option>
-                  <option value="Materials and Supplies">Materials and Supplies</option>
-                  <option value="Transportation">Transportation</option>
-                  <option value="Others">Others...</option>
-                </select>
-            <input
-                  id="item"
-                  name="item"
-                  type="text"
-                  placeholder="Item"
-                  autoComplete="item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="per_item"
-                  name="per_item"
-                  type="text"
-                  placeholder="Cost Per Item"
-                  autoComplete="per_item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.per_item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="no_item"
-                  name="no_item"
-                  type="text"
-                  placeholder="Number of Items"
-                  autoComplete="no_item"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.no_item}
-                  onChange={event => handleFormChange(index, event)}
-                />
-                <input
-                  id="total"
-                  name="total"
-                  type="text"
-                  placeholder="Total"
-                  autoComplete="total"
-                  required
-                  className="flex-1 px-2 py-1"
-                  value={input.total}
-                  onChange={event => handleFormChange(index, event)}
-                />
-        {/*<button onClick={() => removeFields(index)}>Remove</button>*/}
-      </div>
-    ))}
+      <div >
+        <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Item</th>
+                  <th>Cost Per Item</th>
+                  <th>Number of Items</th>
+                  <th>Number of Times</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {inputFields.map((input, index) => (
+                  <tr key={index}>
+                    <td>
+                      <select
+                        id="type"
+                        name="type"
+                        autoComplete="type"
+                        required
+                        value={input.type}
+                        onChange={event => handleFormChange(index, event)}
+                      >
+                        <option value={input.type}>{input.type}</option>
+                        <option value="Meals and Snacks">Meals and Snacks</option>
+                        <option value="Function Room/Venue">Venue</option>
+                        <option value="Accomodation">Accomodation</option>
+                        <option value="Equipment Rental">Equipment Rental</option>
+                        <option value="Professional Fee/Honoria">Professional Fee/Honoria</option>
+                        <option value="Token/s">Token/s</option>
+                        <option value="Materials and Supplies">Materials and Supplies</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Others">Others...</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input
+                        id="item"
+                        name="item"
+                        type="text"
+                        placeholder="Item"
+                        autoComplete="item"
+                        required
+                        value={input.item}
+                        onChange={event => handleFormChange(index, event)}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="per_item"
+                        name="per_item"
+                        type="text"
+                        pattern="[0-9]*\.?[0-9]*"
+                        placeholder="Cost Per Item"
+                        autoComplete="per_item"
+                        required
+                        value={input.per_item}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="no_item"
+                        name="no_item"
+                        type="text"
+                        pattern="[0-9]*\.?[0-9]*"
+                        placeholder="Number of Items"
+                        autoComplete="no_item"
+                        required
+                        value={input.no_item}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="times"
+                        name="times"
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Number of Times"
+                        autoComplete="times"
+                        required
+                        value={input.times}
+                        onChange={event => { handleFormChange(index, event); 
+                          handleChangeNumbers(index, event.target.value); }}
+                      />
+                    </td>
+                    <td>
+                      <input
+                        id="total"
+                        name="total"
+                        type="text"
+                        pattern="[0-9]*"
+                        placeholder="Total"
+                        autoComplete="Total"
+                        required
+                        readOnly
+                        value={input.total}
+                        onChange={event => { handleFormChange(index, event);}}
+                      />
+                      </td>
+                    <td>
+                      <button onClick={() => removeFields(index)}>Remove</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
         
         
 
