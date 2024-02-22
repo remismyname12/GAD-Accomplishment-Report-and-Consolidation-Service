@@ -252,7 +252,7 @@ export default function EmployeeForm() {
                       />
                       </td>
                     <td className='text-center'>
-                      <button onClick={() => removeFields(index)}>
+                      <button title="Delete Row" onClick={() => removeFields(index)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
                       </button>
                     </td>

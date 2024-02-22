@@ -238,7 +238,7 @@ export default function EditEADModal({selectedForm}) {
                       />
                     </td>
                     <td className='text-center'>
-                      <button onClick={() => removeFields(index)}>
+                      <button title="Delete Item" onClick={() => removeFields(index)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
                       </button>
                     </td>
