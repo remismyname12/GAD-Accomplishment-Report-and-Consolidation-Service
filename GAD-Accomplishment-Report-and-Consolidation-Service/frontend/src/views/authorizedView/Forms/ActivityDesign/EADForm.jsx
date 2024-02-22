@@ -114,7 +114,7 @@ export default function EADForm() {
         Extension Activity Design Form
       </h1>
 
-      <form action="" >
+      <form onSubmit={handleSubmit} >
         {renderInput("title", "Title: ")}
         {renderInput("date_of_activity", "Date of Activity: ")}
         {renderInput("venue", "Venue: ")}
@@ -235,7 +235,7 @@ export default function EADForm() {
       
         
         <div className='mt-5'>
-          <Submit label="Submit" onClick={handleSubmit}/>
+          <Submit label="Submit"/>
         </div>
       </form>
     </div>
