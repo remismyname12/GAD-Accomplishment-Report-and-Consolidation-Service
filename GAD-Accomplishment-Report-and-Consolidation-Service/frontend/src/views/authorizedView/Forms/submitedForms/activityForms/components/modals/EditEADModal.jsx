@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import axiosClient from '../../../../../../axios/axios';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
+import { MinusCircleIcon } from '@heroicons/react/24/outline';
 
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
@@ -236,8 +237,10 @@ export default function EditEADModal({selectedForm}) {
                         onChange={event => handleFormChange(index, event)}
                       />
                     </td>
-                    <td>
-                      <button onClick={() => removeFields(index)}>Remove</button>
+                    <td className='text-center'>
+                      <button onClick={() => removeFields(index)}>
+                        <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
+                      </button>
                     </td>
                   </tr>
                 ))}
