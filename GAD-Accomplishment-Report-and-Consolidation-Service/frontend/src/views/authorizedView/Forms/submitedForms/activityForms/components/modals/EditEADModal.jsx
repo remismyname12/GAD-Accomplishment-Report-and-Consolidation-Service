@@ -41,7 +41,14 @@ export default function EditEADModal({selectedForm}) {
     
       generateInputFields();
   }, []);
-    //------------------------------
+  //------------------------------
+
+   //-----
+  
+   const [removeID, setRemoveID] = useState([]);
+   //send to update only when submit is pressed
+ 
+   //-----
 
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
@@ -55,11 +62,19 @@ export default function EditEADModal({selectedForm}) {
     setInputFields([...inputFields, newfield])
   }
 
-  const removeFields = (index) => {
+  const removeFields = (index, id) => {
+    if (inputFields.length === 1) {
+      return;
+    }
+
     let data = [...inputFields];
     data.splice(index, 1)
     setInputFields(data)
-}
+
+    // Update the removeID array by adding the id
+    setRemoveID(prevRemoveID => [...prevRemoveID, id]);
+    //will also remove from DB
+  }
 
   const [formData, setFormData] = useState({
     title: selectedForm.title,
@@ -80,11 +95,13 @@ export default function EditEADModal({selectedForm}) {
 
   //----------axiosClient
   const handleSubmit = async (e) => {
+    console.log('ID: ', removeID);
     e.preventDefault();
     try {
         const response = await axiosClient.put(`/update_form_ead/${selectedForm.id}`, {
             form_data: formData,
-            xp_data: inputFields
+            xp_data: inputFields,
+            to_remove: removeID
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
@@ -238,7 +255,7 @@ export default function EditEADModal({selectedForm}) {
                       />
                     </td>
                     <td className='text-center'>
-                      <button title="Delete Item" onClick={() => removeFields(index)}>
+                      <button type="button" title="Delete Item" onClick={() => removeFields(index, input.id)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
                       </button>
                     </td>

@@ -148,10 +148,22 @@ class FormController extends Controller
             }
         }
 
+        //remove fields ---> remove from DB
+        $toRemove = $request->input('to_remove');
+
+        foreach ($toRemove as $id) {
+            // Find the item by its ID
+            $item = Expenditures::find($id);
+            
+            // If the item exists, delete it
+            if ($item) {
+                $item->delete();
+            }
+        }
 
             return response([
              'Success' => true,
-             'Message' => $xpArray,
+             'Message' => $toRemove,
        ]);
     }
     
@@ -238,6 +250,19 @@ class FormController extends Controller
             }
         }
 
+          //remove fields ---> remove from DB
+          $toRemove = $request->input('to_remove');
+
+          foreach ($toRemove as $id) {
+              // Find the item by its ID
+              $item = Expenditures::find($id);
+              
+              // If the item exists, delete it
+              if ($item) {
+                  $item->delete();
+              }
+          }
+
             return response([
              'Success' => true,
              'Message' => 'Form Updated'
@@ -320,6 +345,19 @@ class FormController extends Controller
                 $xp_form->save();
 
                 //try catch, then delete
+            }
+        }
+
+        //remove fields ---> remove from DB
+        $toRemove = $request->input('to_remove');
+
+        foreach ($toRemove as $id) {
+            // Find the item by its ID
+            $item = Expenditures::find($id);
+             
+            // If the item exists, delete it
+            if ($item) {
+                 $item->delete();
             }
         }
 

@@ -8,8 +8,6 @@ export default function EditActivityModal({ selectedForm }) {
 
   const expendituresArray = selectedForm.expenditures;
 
-  console.log('times: ', expendituresArray.times);
-
   const [error, setError] = useState("");
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', per_item: '', no_item: '', times: '', total: '0'}
@@ -55,6 +53,13 @@ export default function EditActivityModal({ selectedForm }) {
 }, []);
   //------------------------------
 
+  //-----
+  
+  const [removeID, setRemoveID] = useState([]);
+  //send to update only when submit is pressed
+
+  //-----
+
   const handleFormChange = (index, event) => {
     let data = [...inputFields];
     data[index][event.target.name] = event.target.value;
@@ -67,11 +72,24 @@ export default function EditActivityModal({ selectedForm }) {
     //will also add to DB
   }
   
-  const removeFields = (index) => {
+  const removeFields = (index, id) => {
+    if (inputFields.length === 1) {
+      // Do not remove the field if there's only one row
+      //add error message that says: Text Field Cannot be deleted please edit
+      //One row must remain
+      //if no fields, will cause error in request
+      //if submit is pressed should warn the user that expenditures will be deleted
+      return;
+    }
+
     let data = [...inputFields];
     data.splice(index, 1)
     setInputFields(data)
+
+    // Update the removeID array by adding the id
+    setRemoveID(prevRemoveID => [...prevRemoveID, id]);
     //will also remove from DB
+   
   }
 
   const [formData, setFormData] = useState({
@@ -96,15 +114,16 @@ export default function EditActivityModal({ selectedForm }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = (ev) => {
+    console.log('ID Array: ', removeID);
+
     ev.preventDefault();
     setError({ __html: "" });
 
     if(selectedForm.form_type === "EMPLOYEE"){
       //For EMPLOYEE UPDATE
       axiosClient
-      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
+      .put(`/update_form_employee/${selectedForm.id}`, {form_data: formData, xp_data: inputFields, to_remove: removeID})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -118,7 +137,7 @@ export default function EditActivityModal({ selectedForm }) {
     } else {
       //For INSET UPDATE
       axiosClient
-      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData, xp_data: inputFields})
+      .put(`/update_form_inset/${selectedForm.id}`, {form_data: formData, xp_data: inputFields, to_remove: removeID})
       .catch((error) => {
         if (error.response) {
           const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -285,7 +304,7 @@ const renderInput = (name, label) => {
                       />
                       </td>
                       <td className='text-center'>
-                      <button title="Delete Item" onClick={() => removeFields(index)}>
+                      <button type="button" title="Delete Item" onClick={() => removeFields(index, input.id)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
                       </button>
                     </td>
