@@ -136,11 +136,11 @@ export default function ActivityDesign() {
                   className="relative rounded-md p-3 hover:bg-gray-100"
                 >
                   <h3 className="text-sm font-medium leading-5">
-                    Title
+                  {form.title}
                   </h3>
 
                   <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                    <li>{form.title}</li>
+                    <li>{form.proponents_implementors}</li>
                   </ul>
 
                   <ul>
@@ -172,11 +172,11 @@ export default function ActivityDesign() {
                     className="relative rounded-md p-3 hover:bg-gray-100"
                   >
                     <h3 className="text-sm font-medium leading-5">
-                      Title
+                      {form.title}
                     </h3>
 
                     <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                      <li>{form.title}</li>
+                      <li>{form.proponents_implementors}</li>
                     </ul>
 
                     <ul>
@@ -208,11 +208,11 @@ export default function ActivityDesign() {
                   className="relative rounded-md p-3 hover:bg-gray-100"
                 >
                   <h3 className="text-sm font-medium leading-5">
-                    Title
+                    {form.title}
                   </h3>
 
                   <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                    <li>{form.title}</li>
+                    <li>{form.proponents_implementors}</li>
                   </ul>
 
                   <ul>
@@ -267,7 +267,7 @@ export default function ActivityDesign() {
         <ReactModal
             isOpen={isEditEADModalOpen}
             onRequestClose={() => setIsEditEADModalOpen(false)}
-            className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
+            className="w-full md:w-[30%] lg:w-[90%] h-[95%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[1%] mx-auto p-5 overflow-auto"
         >
             <div>
                 <EditEADModal
