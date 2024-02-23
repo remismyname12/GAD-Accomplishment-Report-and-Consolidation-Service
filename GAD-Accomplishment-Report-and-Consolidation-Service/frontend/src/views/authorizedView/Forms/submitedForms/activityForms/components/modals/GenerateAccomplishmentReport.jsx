@@ -180,7 +180,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
         <h1 className='text-center m-3'>
           Actual Expenditures:
         </h1>
-        <div>
+        <div className="overflow-x-auto">
             <table>
               <thead>
                 <tr>
