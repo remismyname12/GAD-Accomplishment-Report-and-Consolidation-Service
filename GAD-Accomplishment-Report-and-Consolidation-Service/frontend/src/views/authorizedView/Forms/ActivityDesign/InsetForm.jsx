@@ -102,10 +102,22 @@ export default function InsetForm() {
     }
   };
 
-    //For Unified Inputs 
-    const renderInput = (name, label) => (
-      <div className="flex flex-1 flex-col">
-        <label htmlFor={name}>{label}</label>
+  //For Unified Inputs 
+  const renderInput = (name, label) => (
+    <div className="flex flex-1 flex-col">
+      <label htmlFor={name}>{label}</label>
+      {name === "purpose" ? ( // Check if the input is for "Purpose"
+        <textarea
+          id={name}
+          name={name}
+          autoComplete={name}
+          required
+          value={formData[name]}
+          onChange={handleChange}
+          className="bg-white"
+          rows={4} // Set the number of rows to accommodate long text
+        />
+      ) : (
         <input
           id={name}
           name={name}
@@ -116,8 +128,9 @@ export default function InsetForm() {
           onChange={handleChange}
           className="bg-white"
         />
-      </div>
-    );
+      )}
+    </div>
+  );
 
   return (
     <div className='bg-gray-100 m-5 p-3'>

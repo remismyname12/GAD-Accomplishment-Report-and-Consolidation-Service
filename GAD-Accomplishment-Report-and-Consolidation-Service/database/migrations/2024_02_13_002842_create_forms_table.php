@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('form_type')->default('FORM');
             $table->string('title')->unique();
-            $table->string('purpose')->nullable();
+            $table->string('purpose', 10000)->nullable();
             $table->string('legal_bases')->nullable();
             $table->string('date_of_activity');
             $table->string('venue');
