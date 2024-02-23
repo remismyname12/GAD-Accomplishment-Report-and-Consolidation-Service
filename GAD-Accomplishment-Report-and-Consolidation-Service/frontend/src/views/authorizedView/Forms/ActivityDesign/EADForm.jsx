@@ -33,10 +33,12 @@ export default function EADForm() {
   }
 
   const removeFields = (index) => {
-    let data = [...inputFields];
-    data.splice(index, 1)
-    setInputFields(data)
-}
+    if (inputFields.length > 1) {
+      let data = [...inputFields];
+      data.splice(index, 1)
+      setInputFields(data);
+    }
+  }
 
   const [formData, setFormData] = useState({
     title: '',
@@ -112,7 +114,7 @@ export default function EADForm() {
         Extension Activity Design Form
       </h1>
 
-      <form action="" >
+      <form onSubmit={handleSubmit} >
         {renderInput("title", "Title: ")}
         {renderInput("date_of_activity", "Date of Activity: ")}
         {renderInput("venue", "Venue: ")}
@@ -216,7 +218,7 @@ export default function EADForm() {
                       />
                     </td>
                     <td className='text-center'>
-                      <button title="Delete Row" onClick={() => removeFields(index)}>
+                      <button type="button" title="Delete Row" onClick={() => removeFields(index)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
                       </button>
                     </td>
@@ -233,7 +235,7 @@ export default function EADForm() {
       
         
         <div className='mt-5'>
-          <Submit label="Submit" onClick={handleSubmit}/>
+          <Submit label="Submit"/>
         </div>
       </form>
     </div>
