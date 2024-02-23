@@ -159,7 +159,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                 <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider">Estimated Cost</th>
                 <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider">Remarks</th>
                 <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider">Source of Funds</th>
-                <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider">Total</th>
+              {/*<th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium uppercase tracking-wider">Total</th>*/}
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -170,7 +170,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                   <td className="px-6 py-4 whitespace-no-wrap">{input.estimated}</td>
                   <td className="px-6 py-4 whitespace-no-wrap">{input.remarks}</td>
                   <td className="px-6 py-4 whitespace-no-wrap">{input.source_of_funds}</td>
-                  <td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>
+                  {/*<td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>*/}
                 </tr>
               ))}
             </tbody>
