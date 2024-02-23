@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccomplishmentReportRequest;
 use App\Models\accReport;
+use App\Models\ActualExpendature;
 use App\Models\Expenditures;
 use App\Models\Forms;
 
@@ -49,21 +50,45 @@ class AccomplishmentReportController extends Controller
     }
 
     public function accomplishment_report_store(AccomplishmentReportRequest $request) {
-        $forms_id = $request->input('forms_id');
-        $expenditures = $request->input('expenditures');
+        $accReport = $request->validated('accReport');
+        $expenditures = $request->validated('expenditures');
 
-        foreach ($expenditures as $expenditure) {
             accReport::create([
-                'forms_id' => $forms_id,
-                'expenditures_id' => $expenditure['id']
+                'forms_id' => $accReport['forms_id'],
+                'title' => $accReport['title'],
+                'date_of_activity' => $accReport['date_of_activity'],
+                'venue' => $accReport['venue'],
+                'no_of_participants' => $accReport['no_of_participants'],
+                'male_participants' => $accReport['male_participants'],
+                'female_participants' => $accReport['female_participants'],
+                'fund_source' => $accReport['fund_source'],
+                'clientele_type' => $accReport['clientele_type'],
+                'clientele_number' => $accReport['clientele_number'],
+                'actual_cost' => $accReport['actual_cost'],
+                'cooperating_agencies_units' => $accReport['cooperating_agencies_units'],
             ]);
-        }
-        
+
+            // Find the first item with the given title
+            $firstItem = accReport::where('title', $accReport['title'])->first();
+
+            foreach ($expenditures as $expenditure) {
+                ActualExpendature::create([
+                    'acc_report_id' => $firstItem->id,
+                    'type' => $expenditure['type'],
+                    'items' => $expenditure['item'],
+                    'remarks' => $expenditure['remarks'],
+                    'actual_cost' => $expenditure['actual_cost'],
+                    'source_of_funds' => $expenditure['source_of_funds'],
+                    'total' => $expenditure['total'],
+
+                ]);
+            }
+            
         //update parent tables or not?
 
         return response([
             'success' => true,
-            'message' => 'Accomplishment Report Generated'
+            'message' => 'Accomplishment Report Successfully Created'
     ]);
     }
 

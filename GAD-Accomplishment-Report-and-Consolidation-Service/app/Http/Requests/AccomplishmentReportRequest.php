@@ -22,9 +22,21 @@ class AccomplishmentReportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'forms_id' => 'required|integer',
+            'accReport' => 'required|array',
+            'accReport.forms_id' => 'required|integer',
+            'accReport.title' => 'required|string',
+            'accReport.date_of_activity' => 'required|string',
+            'accReport.venue' => 'required|string',
+            'accReport.no_of_participants' => 'string',
+            'accReport.male_participants' => 'string',
+            'accReport.female_participants' => 'string',
+            'accReport.fund_source' => 'string',
+            'accReport.clientele_type' => 'string',
+            'accReport.clientele_number' => 'string',
+            'accReport.actual_cost' => 'string',
+            'accReport.cooperating_agencies_units' => 'string',
+            
             'expenditures' => 'required|array',
-
             'expenditures.*.type' => 'required|string',
             'expenditures.*.item' => 'required|string',
             'expenditures.*.remarks' => 'required|string',
@@ -32,5 +44,5 @@ class AccomplishmentReportRequest extends FormRequest
             'expenditures.*.actual_cost' => 'required|string',
             'expenditures.*.total' => 'required|string',
         ];
-    }
+}
 }

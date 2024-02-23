@@ -16,7 +16,18 @@ class accReport extends Model
 
     protected $fillable = [
         'forms_id',
-        'expenditures_id',
+        'title',
+        'date_of_activity',
+        'venue',
+        'no_of_participants',
+        'male_participants',
+        'female_participants',
+        'fund_source',
+        'clientele_type',
+        'clientele_number',
+        'actual_cost',
+        'cooperating_agencies_units'
+        
     ];
 
     //
