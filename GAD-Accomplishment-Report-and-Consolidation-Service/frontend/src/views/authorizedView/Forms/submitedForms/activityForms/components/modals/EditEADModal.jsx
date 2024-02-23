@@ -141,7 +141,7 @@ export default function EditEADModal({selectedForm}) {
   );
 
   return (
-    <div className='bg-gray-300 m-5 p-3'>
+    <div className='flex flex-1 flex-col'>
       {/**For Feedback */}
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       

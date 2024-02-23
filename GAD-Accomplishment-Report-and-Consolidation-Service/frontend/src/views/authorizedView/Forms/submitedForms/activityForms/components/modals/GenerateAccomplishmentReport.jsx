@@ -123,7 +123,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   );
 
   return (
-    <div className='bg-gray-300 m-5 p-3'>
+    <div className="flex flex-1 flex-col">
       {/**For Feedback */}
       {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setAxiosStatus('')} successMessage={message}  status={status}/>
