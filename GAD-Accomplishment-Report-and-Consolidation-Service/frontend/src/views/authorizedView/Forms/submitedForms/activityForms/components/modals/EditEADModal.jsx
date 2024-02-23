@@ -166,7 +166,7 @@ export default function EditEADModal({selectedForm}) {
         <h1 className='text-center m-3'>
           Budgetary Requirements
         </h1>
-        <div>
+        <div className="overflow-x-auto">
         <table>
               <thead>
                 <tr>
