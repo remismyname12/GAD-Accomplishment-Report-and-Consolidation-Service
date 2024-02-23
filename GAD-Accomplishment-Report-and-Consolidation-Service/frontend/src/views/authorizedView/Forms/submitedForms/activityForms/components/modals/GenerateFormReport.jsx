@@ -6,6 +6,7 @@ import axiosClient from '../../../../../../axios/axios';
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
 
+
 export default function GenerateFormReport({ selectedForm }) {
   //save acc report to acc report table
   //save acutal expenditure to actual expenditure table
@@ -58,7 +59,7 @@ export default function GenerateFormReport({ selectedForm }) {
 
     try {
       const response = await axiosClient.post('/accomplishment_report', {
-          forms_id: selectedForm.id,
+          accReport: formData,
           expenditures: actualExpendatures,
       });
       setAxiosMessage(response.data.message); // Set success message
@@ -94,22 +95,21 @@ export default function GenerateFormReport({ selectedForm }) {
   }
 
   const [formData, setFormData] = useState({
+    forms_id: selectedForm.id,
     title: selectedForm.title,
-    purpose: selectedForm.purpose,
-    legal_bases: selectedForm.legal_bases,
+    fund_source: 'n/a',
+    clientele_type: 'n/a',
+    clientele_number: 'n/a',
+    actual_cost: 'n/a',
+    cooperating_agencies_units: 'n/a',
     //Change date_of_activity to date_of_LEAD_activity depending of the form_type
     ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     venue: selectedForm.venue,
-    participants: selectedForm.participants,
-    participants_male: selectedForm.participants_male,
-    participants_female: selectedForm.participants_female,
-    learning_service_providers: selectedForm.learning_service_providers,
-    expected_outputs: selectedForm.expected_outputs,
-    fund_source: selectedForm.fund_source,
+    no_of_participants: '0',
+    male_participants: '0',
+    female_participants: '0',
     proponents_implementors: selectedForm.proponents_implementors,
-    // Exclude no_of_target_participants if form type is INSET
-    ...(selectedForm.form_type !== "INSET" && { no_of_target_participants: selectedForm.no_of_target_participants }),
   });
   
 
@@ -157,17 +157,11 @@ const renderInput = (name, label) => {
 
     <form onSubmit={handleSubmit} className="flex flex-1 flex-col">
       {renderInput("title", "Title: ")}
-      {renderInput("purpose", "Purpose: ")}
-      {renderInput("legal_bases", "Legal Bases: ")}
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
-      {renderInput("participants", "Participants: ")}
       {renderInput("participants_male", "Male Participants: ")}
       {renderInput("participants_female", "Female Participants: ")}
-      {selectedForm.form_type !== "INSET" && renderInput("no_of_target_participants", "Number of Participants: ")} {/**Render this only when the form is inset */}
-      {renderInput("learning_service_providers", "Learning Service Providers: ")}
-      {renderInput("expected_outputs", "Expected Outputs: ")}
-      {renderInput("fund_source", "Fund Source: ")}
+      {renderInput("participants", "Number of Participants: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}
 
       <h1 className='text-center m-3'>

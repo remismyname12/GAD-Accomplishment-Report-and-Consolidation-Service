@@ -11,6 +11,7 @@ class ActualExpendature extends Model
     use HasFactory;
 
     protected $fillable = [
+        'acc_report_id',
         'type',
         'items',
         'remarks',

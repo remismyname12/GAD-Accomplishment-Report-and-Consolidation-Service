@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('actual_expendature', function (Blueprint $table) {
+        Schema::create('actual_expendatures', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('accReport_id')->constrained('forms')->onDelete('cascade');
+            $table->foreignId('acc_report_id')->constrained('acc_report')->onDelete('cascade');
             $table->string('type')->default('OTHERS');
             $table->string('items');
             $table->string('remarks');
