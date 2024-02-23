@@ -64,16 +64,38 @@ export default function AnnualReport() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th colSpan="11" style={thStyles}>Client-Focus Activities</th>
+                    <tr >
+                        <td style={thStyles}>1</td>
+                        <td style={thStyles}>2</td>
+                        <td style={thStyles}>3</td>
+                        <td style={thStyles}>4</td>
+                        <td style={thStyles}>5</td>
+                        <td style={thStyles}>6</td>
+                        <td colSpan="2" style={thStyles}>7</td>
+                        <td colSpan="3" style={thStyles}>8</td>
                     </tr>
-
+                    <tr>
+                        <th colSpan="11" style={thStyles}>Client-Focused Activities</th>
+                    </tr>
+                    <tr >
+                        <td style={thStyles}>First Mandate</td>
+                        <td style={thStyles}>Cause of Gender Issue 1</td>
+                        <td style={thStyles}>GAD Objective A</td>
+                        <td style={thStyles}>GAD Activity A</td>
+                        <td style={thStyles}>Performance Indicator 1</td>
+                        <td style={thStyles}>Target Result 1</td>
+                        <td style={thStyles}>Total Males for Mandate</td>
+                        <td style={thStyles}>Total Females for Mandate</td>
+                        <td style={thStyles}></td>
+                        <td style={thStyles}>Total Actual Expenses</td>
+                        <td style={thStyles}>Total Attribution</td>
+                    </tr>
                     {report.map((form, index) => (
                         <tr key={index}>
                             <td colSpan="6" style={thStyles}>{form.forms.title}</td>
-                            <td style={thStyles}>MALE PARTICIPANTS HERE</td>
-                            <td style={thStyles}>FEMALE PARTICIPANTS HERE</td>
-                            <th style={thStyles}></th>
+                            <td style={thStyles}>{form.male_participants}</td>
+                            <td style={thStyles}>{form.female_participants}</td>
+                            <td style={thStyles}>BUDGETARY REQUIREMENTS HERE</td>
                             <td style={thStyles}>ACTUAL EXPENSES HERE</td>
                             <td style={thStyles}>ATTRIBUTION HERE</td>
                         </tr>
