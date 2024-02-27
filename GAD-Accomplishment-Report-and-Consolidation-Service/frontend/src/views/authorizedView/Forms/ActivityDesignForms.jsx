@@ -9,8 +9,8 @@ export default function ActivityDesignForms() {
 
   return (
     <div>
-      <div className="w-full px-4 pt-16">
-        <div className="mx-auto w-full max-w-9xl rounded-2xl bg-white p-2">
+      <div className="w-full h-full px-4">
+        <div className="mx-auto w-full max-h-screen max-w-9xl rounded-2xl bg-white p-2 overflow-auto">
           <Tab.Group>
             <Tab.List className="flex p-1 space-x-1 bg-purple-100 rounded-lg">
               <Tab
