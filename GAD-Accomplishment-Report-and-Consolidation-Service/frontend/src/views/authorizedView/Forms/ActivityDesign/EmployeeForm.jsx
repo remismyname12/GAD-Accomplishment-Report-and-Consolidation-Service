@@ -3,16 +3,20 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import { MinusCircleIcon } from '@heroicons/react/24/outline';
+import ReactModal from 'react-modal';
 
 //For Feedback
 import Feedback from '../../../components/feedbacks/Feedback';
 import Error from '../../../components/feedbacks/Error';
+import PrintEmployeeForms from '../../../components/printing/activity/PrintEmployeeForms';
 
 export default function EmployeeForm() {
   //For feedback
   const [error, setError] = useState('');
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
+
+  const [isPrintEmployeeModalOpen, setIsPrintEmployeeModalOpen] = useState(false);
 
   //----------for exenditure
 
@@ -282,10 +286,26 @@ export default function EmployeeForm() {
           </div>
         
         <div className='mt-5'>
+          <NeutralButton label="Preview" onClick={() => setIsPrintEmployeeModalOpen(true)} />
+        </div>
+
+        <div className='mt-5'>
           <Submit label="Submit"/>
         </div>
       </form>
+
+      <ReactModal
+            isOpen={isPrintEmployeeModalOpen}
+            onRequestClose={() => setIsPrintEmployeeModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+      >
+            <div>
+              <PrintEmployeeForms
+                 closeModal={() => setIsPrintEmployeeModalOpen(false)}
+                 selectedForm={formData}
+                 />
+            </div>
+      </ReactModal>
     </div>
   )
-  
 }
