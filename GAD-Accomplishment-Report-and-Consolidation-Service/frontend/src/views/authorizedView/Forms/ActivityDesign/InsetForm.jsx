@@ -164,9 +164,9 @@ export default function InsetForm() {
       });
       setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
-        populateDocx(); // Run the download of DOCX
         
         if (response.data.Success === true){
+          populateDocx(); // Run the download of DOCX
         }
         setTimeout(() => {
             setAxiosMessage(''); // Clear success message
