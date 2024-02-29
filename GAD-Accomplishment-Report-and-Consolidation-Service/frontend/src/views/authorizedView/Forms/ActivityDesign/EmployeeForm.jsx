@@ -137,24 +137,23 @@ export default function EmployeeForm() {
   }
 
   const [formData, setFormData] = useState({
-    title: 'BSU 2021 18-Day Campaign to End Violence Against Women',
-    purpose: 'Over two years after the enactment and approval of the IRR of the Safe Spaces Act, there is a need to intensify awareness raising on the core provisions of the law, the penalties, and mechanisms in place as the country continue to fight the COVID-19 pandemic which breeds various forms of VAW, especially online with many spending their time in the digital realm. Thus, the 2021 18-Day Campaign to End VAW shall spotlight on RA No. 11313    ',
-    legal_bases: 'RA 9710 - Magna Carta of Women/n CHED Memo 2015-01- Gender Mainstreaming in HEIs/n General Appropriations Act (GAA)/n Sustainable Development Goal: SDG 5',
-    date_of_activity: 'November 25- December 12, 2021',
-    venue: 'BSU La Trinidad, Bokod and Buguias, Benguet',
-    participants: 'BSU-Faculty and non-teaching employee',
-    no_of_target_participants: 'To be Determined',
-    learning_service_providers: 'To be Determined',
-    expected_outputs: 'The 2021 campaign generally aims to promote awareness about the SSA, both for the general public and the institutions that are mandated to implement the law.',
-    fund_source: 'GAD',
-    proponents_implementors: 'GAD Office',
+    title: '',
+    purpose: '',
+    legal_bases: '',
+    date_of_activity: '',
+    venue: '',
+    participants: '',
+    no_of_target_participants: '',
+    learning_service_providers: '',
+    expected_outputs: '',
+    fund_source: '',
+    proponents_implementors: '',
   });
 
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //----------axiosClient
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -164,11 +163,14 @@ export default function EmployeeForm() {
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
+        
+        if (response.data.Success === true){
+          populateDocx(); // Run the download of DOCX
+        }
         setTimeout(() => {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
-        populateDocx(); // Run the download of DOCX
     } catch (error) {
         if (error.response) {
             const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -180,6 +182,8 @@ export default function EmployeeForm() {
         console.error(error);
     }
 };
+
+
 
   //----------
 
