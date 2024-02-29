@@ -3,12 +3,12 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import { MinusCircleIcon } from '@heroicons/react/24/outline';
-import ReactModal from 'react-modal';
+import { TemplateHandler } from 'easy-template-x';
+import EmployeesActivityForm from '../../../components/printing/forms/EmployeesActivityForm.docx'
 
 //For Feedback
 import Feedback from '../../../components/feedbacks/Feedback';
 import Error from '../../../components/feedbacks/Error';
-import PrintEmployeeForms from '../../../components/printing/activity/PrintEmployeeForms';
 
 export default function EmployeeForm() {
   //For feedback
@@ -16,10 +16,82 @@ export default function EmployeeForm() {
   const [message, setAxiosMessage] = useState('');
   const [status, setAxiosStatus] = useState('');
 
-  const [isPrintEmployeeModalOpen, setIsPrintEmployeeModalOpen] = useState(false);
+  //----------for docx
+  const fileUrl = EmployeesActivityForm; // Use the imported file directly
+
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    return await response.blob();
+  };
+
+  const populateDocx = async () => {
+    try {
+        const blob = await fetchData(fileUrl);
+        console.log('Received blob:', blob); // Check the type and content of the blob
+        const data = {
+            title: formData.title,
+            purpose: formData.purpose,
+            legalBases: formData.legal_bases,
+            dateOfActivity: formData.date_of_activity,
+            venue: formData.venue,
+            participants: formData.participants,
+            numberOftargetParticipants: formData.no_of_target_participants,
+            learningServiceProviders: formData.learning_service_providers,
+            expectedOutputs: formData.expected_outputs,
+            fundSource: formData.fund_source,
+            // Include additional fields here as needed
+            // For example, for budgetary requirements
+            budgetaryRequirements: inputFields.reduce((acc, field) => {
+              const existingField = acc.find(item => item.type === field.type);
+              if (existingField) {
+                  existingField.items.push({
+                      item: `-${field.item}`,
+                      perItem: field.per_item,
+                      noItem: field.no_item,
+                      times: field.times,
+                      total: field.total
+                  });
+              } else {
+                  acc.push({
+                      type: field.type,
+                      items: [{
+                          item: `-${field.item}`,
+                          perItem: field.per_item,
+                          noItem: field.no_item,
+                          times: field.times,
+                          total: field.total
+                      }],
+                  });
+              }
+              return acc;
+          }, [])
+        };
+        
+        const handler = new TemplateHandler();
+        const processedBlob = await handler.process(blob, data); // Process the blob
+        console.log('Processed blob:', processedBlob); // Check the processed blob
+        saveFile('myTemplate - output.docx', processedBlob);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+  const saveFile = (filename, blob) => {
+    try {
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link); // Clean up the DOM
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error('Error creating object URL:', error);
+    }
+  };
 
   //----------for exenditure
-
   const [inputFields, setInputFields] = useState([
     {type: '', item: '', per_item: '', no_item: '', times: 1, total: '0'}
   ])
@@ -65,17 +137,17 @@ export default function EmployeeForm() {
   }
 
   const [formData, setFormData] = useState({
-    title: '',
-    purpose: '',
-    legal_bases: '',
-    date_of_activity: '',
-    venue: '',
-    participants: '',
-    no_of_target_participants: '',
-    learning_service_providers: '',
-    expected_outputs: '',
-    fund_source: '',
-    proponents_implementors: '',
+    title: 'BSU 2021 18-Day Campaign to End Violence Against Women',
+    purpose: 'Over two years after the enactment and approval of the IRR of the Safe Spaces Act, there is a need to intensify awareness raising on the core provisions of the law, the penalties, and mechanisms in place as the country continue to fight the COVID-19 pandemic which breeds various forms of VAW, especially online with many spending their time in the digital realm. Thus, the 2021 18-Day Campaign to End VAW shall spotlight on RA No. 11313    ',
+    legal_bases: 'RA 9710 - Magna Carta of Women/n CHED Memo 2015-01- Gender Mainstreaming in HEIs/n General Appropriations Act (GAA)/n Sustainable Development Goal: SDG 5',
+    date_of_activity: 'November 25- December 12, 2021',
+    venue: 'BSU La Trinidad, Bokod and Buguias, Benguet',
+    participants: 'BSU-Faculty and non-teaching employee',
+    no_of_target_participants: 'To be Determined',
+    learning_service_providers: 'To be Determined',
+    expected_outputs: 'The 2021 campaign generally aims to promote awareness about the SSA, both for the general public and the institutions that are mandated to implement the law.',
+    fund_source: 'GAD',
+    proponents_implementors: 'GAD Office',
   });
 
   const handleChange = async (e) => {
@@ -96,6 +168,7 @@ export default function EmployeeForm() {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
+        populateDocx(); // Run the download of DOCX
     } catch (error) {
         if (error.response) {
             const finalErrors = Object.values(error.response.data.errors).reduce(
@@ -284,28 +357,13 @@ export default function EmployeeForm() {
               <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>
           </div>
-        
-        <div className='mt-5'>
-          <NeutralButton label="Preview" onClick={() => setIsPrintEmployeeModalOpen(true)} />
-        </div>
 
         <div className='mt-5'>
           <Submit label="Submit"/>
         </div>
       </form>
 
-      <ReactModal
-            isOpen={isPrintEmployeeModalOpen}
-            onRequestClose={() => setIsPrintEmployeeModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-      >
-            <div>
-              <PrintEmployeeForms
-                 closeModal={() => setIsPrintEmployeeModalOpen(false)}
-                 selectedForm={formData}
-                 />
-            </div>
-      </ReactModal>
+
     </div>
   )
 }
