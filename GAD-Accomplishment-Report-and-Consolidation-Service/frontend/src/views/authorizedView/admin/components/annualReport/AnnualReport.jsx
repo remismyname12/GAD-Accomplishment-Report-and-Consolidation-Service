@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../../../axios/axios';
 import * as XLSX from 'xlsx';
+//import * as fs from 'fs';
+
 
 export default function AnnualReport() {
     const [report, setReport] = useState([]);
@@ -22,7 +24,6 @@ export default function AnnualReport() {
         }
     };
 
-    // Unified style for all th
     const thStyles = {
         border: '1px solid black',
         padding: '10px',
@@ -55,12 +56,12 @@ export default function AnnualReport() {
                     </tr>
                     <tr>
                         
-                        <th colSpan="6" style={thStyles}></th> {/* Empty header for alignment */}
-                        <th style={thStyles}>MALE</th> {/* Header for MALE under ATTENDANCE */}
-                        <th style={thStyles}>FEMALE</th> {/* Header for FEMALE under ATTENDANCE */}
-                        <th style={{ ...thStyles, width: '10%' }}></th> {/* Empty header for alignment */}
-                        <th style={{ ...thStyles, width: '10%' }}>ACTUAL EXPENSES</th> {/* Empty header for alignment */}
-                        <th style={{ ...thStyles, width: '10%' }}>ATTRIBUTION</th> {/* Empty header for alignment */}
+                        <th colSpan="6" style={thStyles}></th>
+                        <th style={thStyles}>MALE</th>
+                        <th style={thStyles}>FEMALE</th>
+                        <th style={{ ...thStyles, width: '10%' }}></th>
+                        <th style={{ ...thStyles, width: '10%' }}>ACTUAL EXPENSES</th>
+                        <th style={{ ...thStyles, width: '10%' }}>ATTRIBUTION</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,21 +85,27 @@ export default function AnnualReport() {
                         <td style={thStyles}>GAD Activity A</td>
                         <td style={thStyles}>Performance Indicator 1</td>
                         <td style={thStyles}>Target Result 1</td>
-                        <td style={thStyles}>Total Males for Mandate</td>
-                        <td style={thStyles}>Total Females for Mandate</td>
+                        <td style={thStyles}>Calculate Total Males for Mandate</td>
+                        <td style={thStyles}>Calculate Total Females for Mandate</td>
                         <td style={thStyles}></td>
-                        <td style={thStyles}>Total Actual Expenses</td>
-                        <td style={thStyles}>Total Attribution</td>
+                        <td style={thStyles}>Calculate Total Actual Expenses</td>
+                        <td style={thStyles}>Calculate Total Attribution</td>
                     </tr>
                     {report.map((form, index) => (
-                        <tr key={index}>
-                            <td colSpan="6" style={thStyles}>{form.forms.title}</td>
-                            <td style={thStyles}>{form.male_participants}</td>
-                            <td style={thStyles}>{form.female_participants}</td>
-                            <td style={thStyles}>BUDGETARY REQUIREMENTS HERE</td>
-                            <td style={thStyles}>ACTUAL EXPENSES HERE</td>
-                            <td style={thStyles}>ATTRIBUTION HERE</td>
-                        </tr>
+                        form.actual_expenditure.map((expenditure, idx) => (
+                            <tr key={index * 1000 + idx}>
+                                {idx === 0 && (
+                                    <>
+                                        <td rowspan={form.actual_expenditure.length} colSpan="6" style={thStyles}>{index + 1}) {form.title}</td>
+                                        <td rowspan={form.actual_expenditure.length}  style={thStyles}>{form.male_participants}</td>
+                                        <td rowspan={form.actual_expenditure.length}  style={thStyles}>{form.female_participants}</td>
+                                    </>
+                                )}
+                                <td style={thStyles}>{expenditure.type}</td>
+                                <td style={thStyles}>{expenditure.actual_cost}</td>
+                                <td style={thStyles}>Utang</td>
+                            </tr>
+                        ))
                     ))}
                 </tbody>
             </table>

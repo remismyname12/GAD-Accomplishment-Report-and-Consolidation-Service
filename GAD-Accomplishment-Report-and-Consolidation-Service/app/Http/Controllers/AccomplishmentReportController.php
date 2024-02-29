@@ -12,32 +12,9 @@ class AccomplishmentReportController extends Controller
 {
     
     public function index_accomplishment_report() {
-        $accomplishmentReport = accReport::with('forms')->get();
+        $accomplishmentReport = accReport::with('actualExpenditure')->get();
 
-        $formsParent = Forms::with('expenditures')->get();
-
-        $groupedReports = $accomplishmentReport->groupBy('forms_id');
-
-        // Initialize an empty array to store the unique instances
-        $uniqueInstances = [];
-
-        // Iterate through the grouped reports
-        foreach ($groupedReports as $formsId => $reports) {
-            // Take only the first instance for each 'forms_id'
-        $uniqueInstance = $reports->first();
-        
-        // Append expenditures if forms_id matches
-        $uniqueInstance['expenditures'] = $formsParent
-            ->where('id', $formsId) // Filter formsParent to match forms_id
-            ->first() // Retrieve the first matching record
-            ->expenditures; // Access expenditures relationship
-        
-        // Add the unique instance to the array
-        $uniqueInstances[] = $uniqueInstance;
-        }
-
-        return response($uniqueInstances);
-        //return response($formsParent);
+        return response($accomplishmentReport);
     }
 
     public function index_expenditures($id)
