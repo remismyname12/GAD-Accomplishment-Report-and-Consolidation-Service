@@ -4,6 +4,7 @@ import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import { MinusCircleIcon } from '@heroicons/react/24/outline';
 
+
 //For Feedback
 import Feedback from '../../../components/feedbacks/Feedback';
 import Error from '../../../components/feedbacks/Error';
@@ -14,6 +15,7 @@ export default function EADForm() {
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
 
+  
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
@@ -108,7 +110,7 @@ export default function EADForm() {
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
       {/* Integrate the Success component */}
-      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosStatus('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>
         Extension Activity Design Form
