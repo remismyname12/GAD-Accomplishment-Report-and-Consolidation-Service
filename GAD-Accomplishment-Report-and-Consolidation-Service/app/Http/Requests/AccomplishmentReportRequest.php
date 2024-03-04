@@ -42,7 +42,6 @@ class AccomplishmentReportRequest extends FormRequest
             'expenditures.*.remarks' => 'required|string',
             'expenditures.*.source_of_funds' => 'required|string',
             'expenditures.*.actual_cost' => 'required|string',
-            'expenditures.*.total' => 'required|string',
         ];
 }
 }

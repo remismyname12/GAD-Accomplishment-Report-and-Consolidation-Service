@@ -53,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //expenditure list
     Route::post('/xpenditure_i', [FormController::class, 'xpenditure_i_store']);
 
-    Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report']);
+    //Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report']);
 
     //For accomplishment Report================================================
 

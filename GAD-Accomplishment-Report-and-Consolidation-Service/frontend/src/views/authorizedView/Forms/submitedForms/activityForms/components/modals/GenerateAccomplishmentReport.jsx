@@ -66,13 +66,15 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
 }
 
   const [formData, setFormData] = useState({
+    forms_id: selectedForm.id,
     title: selectedForm.title,
     date_of_activity: selectedForm.date_of_activity,
     venue: selectedForm.venue,
     clientele_type: selectedForm.clientele_type,
     clientele_number: selectedForm.clientele_number,
-    participants_male: selectedForm.participants_male,
-    participants_female: selectedForm.participants_female,
+    male_participants: selectedForm.participants_male,
+    female_participants: selectedForm.participants_female,
+    no_of_participants: selectedForm.no_of_participants,
     estimated_cost: selectedForm.estimated_cost,
     cooperating_agencies_units: selectedForm.cooperating_agencies_units,
     expected_outputs: selectedForm.expected_outputs,
@@ -87,14 +89,16 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   //----------axiosClient
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
         const response = await axiosClient.post('/accomplishment_report', {
-            forms_id: selectedForm.id,
+          accReport: formData,
             expenditures: actualExpendatures,
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
         setTimeout(() => {
+          
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
@@ -125,11 +129,10 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
   return (
     <div className="flex flex-1 flex-col">
       {/**For Feedback */}
-      {/* Integrate the Success component */}
-      <Feedback isOpen={message !== ''} onClose={() => setAxiosStatus('')} successMessage={message}  status={status}/>
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>
-        Extension Activity Design Form
+        Generate Extension Accomplishment Report
       </h1>
 
       <form onSubmit={handleSubmit} >
@@ -138,8 +141,9 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
         {renderInput("venue", "Venue: ")}
         {renderInput("clientele_type", "Clientele Type: ")}
         {renderInput("clientele_number", "Clientele Number: ")}
-        {renderInput("participants_male", "Male Participants: ")}
-        {renderInput("participants_female", "Female Participants: ")}
+        {renderInput("male_participants", "Male Participants: ")}
+        {renderInput("female_participants", "Female Participants: ")}
+        {renderInput("no_of_participants", "Total Number of Participants: ")}
         {renderInput("estimated_cost", "Estimated Cost: ")}
         {renderInput("cooperating_agencies_units", "Cooperating Agencies/Units: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
@@ -189,7 +193,6 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                   <th>Actual Cost</th>
                   <th>Remarks</th>
                   <th>Source of Funds</th>
-                  <th>Actual Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -266,19 +269,6 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                         required
                         className="flex-1 px-2 py-1"
                         value={input.source_of_funds}
-                        onChange={event => handleFormChange(index, event)}
-                      />
-                    </td>
-                    <td>
-                      <input
-                        id={`total${index}`}
-                        name="total"
-                        type="text"
-                        placeholder="Actual Total"
-                        autoComplete="total"
-                        required
-                        className="flex-1 px-2 py-1"
-                        value={input.total}
                         onChange={event => handleFormChange(index, event)}
                       />
                     </td>
