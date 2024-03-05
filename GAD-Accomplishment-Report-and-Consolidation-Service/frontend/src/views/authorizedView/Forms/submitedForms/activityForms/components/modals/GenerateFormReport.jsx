@@ -13,18 +13,36 @@ export default function GenerateFormReport({ selectedForm }) {
   //save acutal expenditure to actual expenditure table
   //fix the requests, controller, axios endpoints, model and relationships
   //for both acc report and actual expenditures table
+  
+  const [formData, setFormData] = useState({
+    forms_id: selectedForm.id,
+    title: selectedForm.title,
+    fund_source: 'n/a',
+    clientele_type: 'n/a',
+    clientele_number: 'n/a',
+    actual_cost: 'n/a',
+    cooperating_agencies_units: 'n/a',
+    //Change date_of_activity to date_of_LEAD_activity depending of the form_type
+    ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
+    ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
+    venue: selectedForm.venue,
+    no_of_participants: '',
+    male_participants: '',
+    female_participants: '',
+    proponents_implementors: selectedForm.proponents_implementors,
+  });
 
   const [actualExpendatures, setActualExpendatures] = useState([{
     type: '',
     item: '',
-    remarks: '',
-    source_of_funds: '',
+    approved_budget: '',
+    actual_expenditure: '',
   }]);
 
   const expendituresArray = selectedForm.expenditures;
 
   const [proposedExpenditures, setProposedExpenditures] = useState([
-    {type: '', item: '', per_item: '', no_item: '', times: ''}
+    {type: '', item: '', approved_budget: '', actual_expenditure: ''}
   ]);
 
   //------------------------------
@@ -35,9 +53,8 @@ export default function GenerateFormReport({ selectedForm }) {
         id: expenditure.id,
         type: expenditure.type,
         item: expenditure.items,
-        per_item: expenditure.per_item,
-        no_item: expenditure.no_item,
-        times: expenditure.times,
+        approved_budget: expenditure.approved_budget,
+        actual_expenditure: expenditure.actual_expenditure
       }));
       setProposedExpenditures(newInputFields);
     };
@@ -80,7 +97,7 @@ export default function GenerateFormReport({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '' }
+    let newfield = { type: '', item: '', approved_budget: '', actual_expenditure: '' }
     setActualExpendatures([...actualExpendatures, newfield])
     //will also add to DB
   }
@@ -91,25 +108,6 @@ export default function GenerateFormReport({ selectedForm }) {
     setActualExpendatures(data)
     //will also remove from DB
   }
-
-  const [formData, setFormData] = useState({
-    forms_id: selectedForm.id,
-    title: selectedForm.title,
-    fund_source: 'n/a',
-    clientele_type: 'n/a',
-    clientele_number: 'n/a',
-    actual_cost: 'n/a',
-    cooperating_agencies_units: 'n/a',
-    //Change date_of_activity to date_of_LEAD_activity depending of the form_type
-    ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
-    ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
-    venue: selectedForm.venue,
-    no_of_participants: '0',
-    male_participants: '0',
-    female_participants: '0',
-    proponents_implementors: selectedForm.proponents_implementors,
-  });
-  
 
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -122,7 +120,7 @@ const renderInput = (name, label) => {
 
   return (
     <div className='flex flex-1 flex-col'>
-
+      
     {/* Integrate the Success component */}
     <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
 
@@ -157,10 +155,10 @@ const renderInput = (name, label) => {
       {renderInput("title", "Title: ")}
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
+      {renderInput("proponents_implementors", "Proponents/Implementors ")}
       {renderInput("participants_male", "Male Participants: ")}
       {renderInput("participants_female", "Female Participants: ")}
-      {renderInput("participants", "Number of Participants: ")}
-      {renderInput("proponents_implementors", "Proponents/Implementors ")}
+      {renderInput("no_of_participants", "Total Number of Participants: ")}
 
       <h1 className='text-center m-3'>
         Proposed Expenditures:
@@ -194,16 +192,15 @@ const renderInput = (name, label) => {
       <h1 className='text-center m-3'>
         Actual Expenditures:
       </h1>
-      <div className="overflow-x-auto">
+      <div className="flex flex-col justify-center items-center w-full overflow-x-auto">
         {/*------------------------------------------------------------------------------*/}
         <table>
           <thead>
             <tr>
               <th>Type</th>
-              <th>Item</th>
-              <th>Actual Cost</th>
-              <th>Remarks</th>
-              <th>Source of Funds</th>
+              <th>Item Description</th>
+              <th>Approved Budget</th>
+              <th>Actual Expendatures</th>
             </tr>
           </thead>
           <tbody>
@@ -239,47 +236,34 @@ const renderInput = (name, label) => {
                     placeholder="Item"
                     autoComplete="item"
                     required
-                    className="flex-1 px-2 py-1"
+                    className="flex-1 px-2 py-1 mr-3"
                     value={input.item}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
                 <td>
                   <input
-                    id={`actual_cost${index}`}
-                    name="actual_cost"
+                    id={`approved_budget${index}`}
+                    name="approved_budget"
                     type="text"
-                    placeholder="Actual Cost"
-                    autoComplete="actual_cost"
+                    placeholder="Approved Budget"
+                    autoComplete="approved_budget"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.actual_cost}
+                    className="flex-1 px-2 py-1 mr-3"
+                    value={input.approved_budget}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
                 <td>
                   <input
-                    id={`remarks${index}`}
-                    name="remarks"
+                    id={`actual_expenditure${index}`}
+                    name="actual_expenditure"
                     type="text"
-                    placeholder="Remarks"
-                    autoComplete="remarks"
+                    placeholder="Actual Expenditure"
+                    autoComplete="actual_expenditure"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.remarks}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                </td>
-                <td>
-                  <input
-                    id={`source_of_funds${index}`}
-                    name="source_of_funds"
-                    type="text"
-                    placeholder="Source of Funds"
-                    autoComplete="source_of_funds"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.source_of_funds}
+                    className="flex-1 px-2 py-1 mr-3"
+                    value={input.actual_expenditure}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
