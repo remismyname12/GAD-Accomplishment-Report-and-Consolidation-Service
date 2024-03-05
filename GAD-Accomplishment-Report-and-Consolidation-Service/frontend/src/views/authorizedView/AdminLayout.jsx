@@ -10,8 +10,8 @@ const navigation = [
   { name: 'Home', href: '#', current: false },
   { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
+  { name: 'Accomplishment Report', to: '/admin/accomplishmentreport'},
   { name: 'Annual Report', to: '/admin/annualreport'},
-  { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
 
 function classNames(...classes) {

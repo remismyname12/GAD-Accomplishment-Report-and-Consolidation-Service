@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('items');
             $table->string('remarks');
             $table->string('source_of_funds');
-            $table->string('actual_cost');
-            $table->string('total');
+            // $table->string('actual_cost');
+            // $table->string('total');
             $table->timestamps();
         });
     }

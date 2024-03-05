@@ -41,7 +41,6 @@ class AccomplishmentReportController extends Controller
                 'fund_source' => $accReport['fund_source'],
                 'clientele_type' => $accReport['clientele_type'],
                 'clientele_number' => $accReport['clientele_number'],
-                'actual_cost' => $accReport['actual_cost'],
                 'cooperating_agencies_units' => $accReport['cooperating_agencies_units'],
             ]);
 
@@ -54,9 +53,9 @@ class AccomplishmentReportController extends Controller
                     'type' => $expenditure['type'],
                     'items' => $expenditure['item'],
                     'remarks' => $expenditure['remarks'],
-                    'actual_cost' => $expenditure['actual_cost'],
+                    // 'actual_cost' => $expenditure['actual_cost'],
                     'source_of_funds' => $expenditure['source_of_funds'],
-                    'total' => $expenditure['total'],
+                    // 'total' => $expenditure['total'],
 
                 ]);
             }

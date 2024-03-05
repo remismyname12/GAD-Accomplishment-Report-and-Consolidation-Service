@@ -70,18 +70,18 @@ export default function InsetForm() {
             const handler = new TemplateHandler();
             const processedBlob = await handler.process(blob, data); // Process the blob
             console.log('Processed blob:', processedBlob); // Check the processed blob
-            saveFile('myTemplate - output.docx', processedBlob);
+            saveFile('output.docx', processedBlob, data.title);
         } catch (error) {
             console.error('Error:', error);
         }
     };
 
-    const saveFile = (filename, blob) => {
+    const saveFile = (filename, blob, title) => {
       try {
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.download = filename;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link); // Clean up the DOM
@@ -90,6 +90,7 @@ export default function InsetForm() {
         console.error('Error creating object URL:', error);
       }
     };
+    
     
   //----------for exenditure
 

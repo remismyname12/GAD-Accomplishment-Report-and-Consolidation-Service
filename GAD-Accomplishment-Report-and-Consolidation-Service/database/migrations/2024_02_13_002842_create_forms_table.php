@@ -32,12 +32,13 @@ return new class extends Migration
             //inset ---> has no unique columns
            
             //research/EAD
-            $table->string('clientele_type')->nullable();
-            $table->string('clientele_number')->nullable();
+            $table->string('clientele_type_and_number', 1000)->nullable();
             $table->string('estimated_cost')->nullable();
-            $table->string('cooperating_agencies_units')->nullable();
-            $table->string('proponents_implementors')->default('IMPLEMENTOR');;
-
+            $table->string('cooperating_agencies_units', 1000)->nullable();
+            $table->string('proponents_implementors', 1000)->default('IMPLEMENTOR');
+            $table->string('date_and_venue', 1000)->nullable();
+            $table->string('program_title', 1000)->nullable();
+            $table->string('project_title', 1000)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

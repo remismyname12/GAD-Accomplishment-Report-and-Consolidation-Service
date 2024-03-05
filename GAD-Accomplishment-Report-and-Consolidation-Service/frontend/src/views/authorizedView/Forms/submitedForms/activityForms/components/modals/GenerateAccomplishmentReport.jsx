@@ -103,7 +103,7 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
             setAxiosStatus('');
         }, 3000); // Timeout after 3 seconds
       } catch (error) {
-        setAxiosMessage(error.response.data.message); // Set success message
+        setAxiosMessage(error.response.data.message);
       }
     
   };
@@ -274,7 +274,8 @@ export default function GenerateAccomplishmentReport({ selectedForm }) {
                     </td>
                     {/*<td>
                       <button onClick={() => removeFields(index)}>Remove</button>
-                    </td>*/}
+                    </td>
+                */}
                   </tr>
                 ))}
               </tbody>

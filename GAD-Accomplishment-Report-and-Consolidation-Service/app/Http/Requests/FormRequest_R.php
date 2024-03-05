@@ -33,11 +33,11 @@ class FormRequest_R extends FormRequest
             //differen for EAD
             'form_data' => 'required|array',
             //-----
+            'form_data.program_title' => 'required|string',
+            'form_data.project_title' => 'required|string',
             'form_data.title' => 'required|string',
-            'form_data.date_of_activity' => 'required|string',
-            'form_data.venue' => 'required|string',
-            'form_data.clientele_type' => 'required|string',
-            'form_data.clientele_number' => 'required|string',
+            'form_data.date_and_venue' => 'required|string',
+            'form_data.clientele_type_and_number' => 'required|string',
             'form_data.estimated_cost' => 'required|string',
             'form_data.cooperating_agencies_units' => 'required|string',
             'form_data.expected_outputs' => 'required|string',

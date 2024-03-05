@@ -5,6 +5,7 @@ import axiosClient from '../../../../../../axios/axios';
 
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
+import { MinusCircleIcon } from '@heroicons/react/20/solid';
 
 
 export default function GenerateFormReport({ selectedForm }) {
@@ -18,14 +19,12 @@ export default function GenerateFormReport({ selectedForm }) {
     item: '',
     remarks: '',
     source_of_funds: '',
-    actual_cost: '',
-    total: '',
   }]);
 
   const expendituresArray = selectedForm.expenditures;
 
   const [proposedExpenditures, setProposedExpenditures] = useState([
-    {type: '', item: '', per_item: '', no_item: '', times: '', total: ''}
+    {type: '', item: '', per_item: '', no_item: '', times: ''}
   ]);
 
   //------------------------------
@@ -39,7 +38,6 @@ export default function GenerateFormReport({ selectedForm }) {
         per_item: expenditure.per_item,
         no_item: expenditure.no_item,
         times: expenditure.times,
-        total: expenditure.total
       }));
       setProposedExpenditures(newInputFields);
     };
@@ -82,7 +80,7 @@ export default function GenerateFormReport({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'' }
+    let newfield = { type: '', item: '', per_item: '', no_item: '' }
     setActualExpendatures([...actualExpendatures, newfield])
     //will also add to DB
   }
@@ -187,7 +185,6 @@ const renderInput = (name, label) => {
                 <td className="px-6 py-4 whitespace-no-wrap">{input.per_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.no_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.times}</td>
-                <td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>
               </tr>
             ))}
           </tbody>
@@ -207,7 +204,6 @@ const renderInput = (name, label) => {
               <th>Actual Cost</th>
               <th>Remarks</th>
               <th>Source of Funds</th>
-              <th>Actual Total</th>
             </tr>
           </thead>
           <tbody>
@@ -287,19 +283,11 @@ const renderInput = (name, label) => {
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
-                <td>
-                  <input
-                    id={`total${index}`}
-                    name="total"
-                    type="text"
-                    placeholder="Actual Total"
-                    autoComplete="total"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.total}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                </td>
+                  <td className='text-center'>
+                    <button type="button" title="Delete Row" onClick={() => removeFields(index)}>
+                      <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
+                    </button>
+                  </td>
               </tr>
             ))}
           </tbody>
