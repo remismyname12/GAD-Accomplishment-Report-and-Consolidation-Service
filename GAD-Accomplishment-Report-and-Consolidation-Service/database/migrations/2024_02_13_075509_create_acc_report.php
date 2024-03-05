@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->string('date_of_activity');
             $table->string('venue');
+            $table->string('proponents_implementors')->default('IMPLEMENTOR');
             $table->string('no_of_participants');
             $table->string('male_participants');
             $table->string('female_participants');

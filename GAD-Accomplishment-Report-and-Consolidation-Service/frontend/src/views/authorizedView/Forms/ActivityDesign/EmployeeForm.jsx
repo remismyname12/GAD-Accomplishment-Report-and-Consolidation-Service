@@ -70,26 +70,27 @@ export default function EmployeeForm() {
         const handler = new TemplateHandler();
         const processedBlob = await handler.process(blob, data); // Process the blob
         console.log('Processed blob:', processedBlob); // Check the processed blob
-        saveFile('myTemplate - output.docx', processedBlob);
+        saveFile('output.docx', processedBlob, data.title);
     } catch (error) {
         console.error('Error:', error);
     }
-};
-
-  const saveFile = (filename, blob) => {
-    try {
-      const blobUrl = window.URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = blobUrl;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link); // Clean up the DOM
-      window.URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error('Error creating object URL:', error);
-    }
   };
+
+    const saveFile = (filename, blob, title) => {
+      try {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up the DOM
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Error creating object URL:', error);
+      }
+    };
+
 
   //----------for exenditure
   const [inputFields, setInputFields] = useState([
