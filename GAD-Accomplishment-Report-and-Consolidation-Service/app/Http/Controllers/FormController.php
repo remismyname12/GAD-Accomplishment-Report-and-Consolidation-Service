@@ -289,18 +289,21 @@ class FormController extends Controller
         }
  
         $form = Forms::create([
+            'program_title' => $formData['program_title'], 
+            'project_title' => $formData['project_title'], 
             'title' => $formtitle,
             'user_id' => $user->id,
             'form_type' => $formtype,
-            'date_of_activity' => $formData['date_of_activity'],
-            'venue' => $formData['venue'],
-            'clientele_type' => $formData['clientele_type'],
-            'clientele_number' => $formData['clientele_number'],
+            'date_and_venue' => $formData['date_and_venue'],
+            'clientele_type_and_number' => $formData['clientele_type_and_number'],
             'estimated_cost' => $formData['estimated_cost'],
             'cooperating_agencies_units' => $formData['cooperating_agencies_units'],
             'expected_outputs' => $formData['expected_outputs'],
             'fund_source' => $formData['fund_source'],
             'proponents_implementors' => $formData['proponents_implementors'],
+
+            'date_of_activity' => 'n/a',
+            'venue' => 'n/a'
         ]);
  
         // Find the first item with the given title
