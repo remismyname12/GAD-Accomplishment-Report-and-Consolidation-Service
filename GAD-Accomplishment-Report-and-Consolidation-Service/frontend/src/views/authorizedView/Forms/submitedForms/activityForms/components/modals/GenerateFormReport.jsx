@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
+import { TemplateHandler } from 'easy-template-x';
 import axiosClient from '../../../../../../axios/axios';
+import InsetEmployeeAccomplishmentReport from '../../../../../../components/printing/forms/InsetEmployeeAccomplishmentReport.docx'
 
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
@@ -42,8 +44,61 @@ export default function GenerateFormReport({ selectedForm }) {
   const expendituresArray = selectedForm.expenditures;
 
   const [proposedExpenditures, setProposedExpenditures] = useState([
-    {type: '', item: '', approved_budget: '', actual_expenditure: ''}
+    {type: '', item: '', per_item: '', no_item: '', times: '', total: ''}
   ]);
+
+  //----------for docx
+  const fileUrl = InsetEmployeeAccomplishmentReport; // Use the imported file directly
+
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    return await response.blob();
+  };
+
+  const populateDocx = async () => {
+    try {
+        const blob = await fetchData(fileUrl);
+        console.log('Received blob:', blob); // Check the type and content of the blob
+        const data = {
+            title: formData.title,
+            dateOfActivity: formData.date_of_activity,
+            venue: formData.venue,
+            proponents: formData.proponents_implementors,
+            maleParticipants: formData.male_participants,
+            femaleParticipants: formData.female_participants,
+            totalParticipants: formData.no_of_participants,
+            // Include additional fields here as needed
+            // For example, for budgetary requirements
+            budgetaryExpenditure: actualExpendatures.map(field => ({
+              item: field.item,
+              approvedBudget: field.approved_budget,
+              actualExpenditure: field.actual_expenditure
+          }))
+        };
+        
+        const handler = new TemplateHandler();
+        const processedBlob = await handler.process(blob, data); // Process the blob
+        saveFile('output.docx', processedBlob, data.title);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
+
+    const saveFile = (filename, blob, title) => {
+      try {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up the DOM
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Error creating object URL:', error);
+      }
+    };
+  //----------
 
   //------------------------------
   useEffect(() => {
@@ -53,8 +108,10 @@ export default function GenerateFormReport({ selectedForm }) {
         id: expenditure.id,
         type: expenditure.type,
         item: expenditure.items,
-        approved_budget: expenditure.approved_budget,
-        actual_expenditure: expenditure.actual_expenditure
+        per_item: expenditure.per_item,
+        no_item: expenditure.no_item,
+        times: expenditure.times,
+        total: expenditure.total
       }));
       setProposedExpenditures(newInputFields);
     };
@@ -79,7 +136,10 @@ export default function GenerateFormReport({ selectedForm }) {
       });
       setAxiosMessage(response.data.message); // Set success message
       setAxiosStatus(response.data.success);
-      console.log('status =',response.data.success);
+      console.log();
+      if (response.data.success === true){
+        populateDocx(); // Run the download of DOCX
+      }
       setTimeout(() => {
           setAxiosMessage(''); // Clear success message
           setAxiosStatus('');
@@ -156,8 +216,8 @@ const renderInput = (name, label) => {
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}
-      {renderInput("participants_male", "Male Participants: ")}
-      {renderInput("participants_female", "Female Participants: ")}
+      {renderInput("male_participants", "Male Participants: ")}
+      {renderInput("female_participants", "Female Participants: ")}
       {renderInput("no_of_participants", "Total Number of Participants: ")}
 
       <h1 className='text-center m-3'>
