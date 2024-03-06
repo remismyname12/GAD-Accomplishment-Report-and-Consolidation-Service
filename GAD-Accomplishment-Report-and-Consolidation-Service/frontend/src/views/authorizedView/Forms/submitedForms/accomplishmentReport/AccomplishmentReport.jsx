@@ -51,7 +51,7 @@ export default function AccomplishmentReport() {
     <div className='flex justify-center'>
       <div className="w-full max-w-md px-2 py-5 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 px-5">
             <Tab
               key="AccomplishmentReport"
               className={({ selected }) =>
@@ -59,12 +59,12 @@ export default function AccomplishmentReport() {
                   'w-full rounded-lg py-2.5 text-sm font-medium leading-5',
                   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                   selected
-                    ? 'bg-white text-blue-700 shadow'
+                    ? 'bg-white text-blue-700 shadow px-3'
                     : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
                 )
               }
             >
-              Employee
+              Accomplishment Reports
             </Tab>
           </Tab.List>
           <Tab.Panels className="mt-2">
