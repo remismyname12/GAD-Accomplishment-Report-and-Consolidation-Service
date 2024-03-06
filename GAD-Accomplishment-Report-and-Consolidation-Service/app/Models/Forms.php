@@ -35,6 +35,12 @@ class Forms extends Model
         'estimated_cost',
         'cooperating_agencies_units',
         'proponents_implementors',
+
+        //For EAD Form
+        'program_title',
+        'project_title',
+        'date_and_venue',
+        'clientele_type_and_number'
     ];
 
     // BELONGS TO USER

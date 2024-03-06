@@ -14,10 +14,8 @@ class ActualExpendature extends Model
         'acc_report_id',
         'type',
         'items',
-        'remarks',
-        'source_of_funds',
-        'actual_cost',
-        'total',
+        'approved_budget',
+        'actual_expenditure'
     ];
     public function accReport(): BelongsTo
     {
