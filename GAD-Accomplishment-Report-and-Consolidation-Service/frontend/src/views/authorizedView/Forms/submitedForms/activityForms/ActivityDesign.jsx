@@ -74,7 +74,7 @@ export default function ActivityDesign() {
   }
 
   const tabClassName = (selected) => classNames(
-  'w-full rounded-lg py-2.5 px-20 text-sm font-medium leading-5',
+  'w-fit rounded-lg py-2.5 px-20 text-sm font-medium leading-5',
   'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
   selected
     ? 'bg-white text-blue-700 shadow'
@@ -83,9 +83,9 @@ export default function ActivityDesign() {
   
   return (
     <div className='flex justify-center'>
-      <div className="w-full  px-2 py-5 sm:px-0">
+      <div className="w-full px-2 py-5 sm:px-0">
         <Tab.Group>
-          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 justify-center">
           <Tab
               key="Employee"
               className={tabClassName}
@@ -102,7 +102,7 @@ export default function ActivityDesign() {
               key="EAD"
               className={tabClassName}
             >
-              EAD
+              Extension Activity Design
           </Tab>
           </Tab.List>
           
