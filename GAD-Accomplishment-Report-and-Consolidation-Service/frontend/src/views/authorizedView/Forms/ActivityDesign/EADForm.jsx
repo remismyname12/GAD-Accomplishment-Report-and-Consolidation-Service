@@ -110,6 +110,7 @@ export default function EADForm() {
     proponents_implementors: '',
   });
 
+  console.log(formData);
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
