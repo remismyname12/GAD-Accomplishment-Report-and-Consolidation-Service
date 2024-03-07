@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('no_of_participants');
             $table->string('male_participants');
             $table->string('female_participants');
+            $table->string('focus');
             $table->softDeletes();
             $table->timestamps();
         });

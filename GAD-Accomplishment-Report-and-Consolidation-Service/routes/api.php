@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccomplishmentReportController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MandatesController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FormController;
 use Illuminate\Http\Request;
@@ -28,6 +29,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/deleteuser/{id}', [UserController::class, 'deleteuser']);
     Route::get('/showusers', [UserController::class, 'index']);
     Route::get('/showarchivedusers', [UserController::class, 'userarchiveindex']);
+
+    //Mandates
+    Route::post('/createmandates', [MandatesController::class, 'createmandates']);
+    Route::get('/showmandates', [MandatesController::class, 'index']);
+    Route::get('/showarchivedmandates', [MandatesController::class, 'archiveindex']);
+    Route::put('/updatemandate/{id}', [MandatesController::class, 'updatemandates']);
+    Route::put('/archivemandate/{id}', [MandatesController::class, 'archivemandates']);
+    Route::put('/restoremandate/{id}', [MandatesController::class, 'restoremandates']);
+    Route::put('/deletemandate/{id}', [MandatesController::class, 'deletemandates']);
     
     //Activity Forms Employee
     Route::post('/form_employee', [FormController::class, 'form_employee_store']);

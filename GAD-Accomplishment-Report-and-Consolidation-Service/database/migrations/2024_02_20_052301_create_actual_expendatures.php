@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('actual_expenditure');
             // $table->string('actual_cost');
             // $table->string('total');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
