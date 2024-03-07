@@ -298,7 +298,6 @@ export default function EmployeeForm() {
                         id="per_item"
                         name="per_item"
                         type="text"
-                        pattern="[0-9]*\.?[0-9]*"
                         placeholder="Cost Per Item"
                         autoComplete="per_item"
                         required
@@ -312,7 +311,7 @@ export default function EmployeeForm() {
                         id="no_item"
                         name="no_item"
                         type="text"
-                        pattern="[0-9]*\.?[0-9]*"
+                        
                         placeholder="Number of Items"
                         autoComplete="no_item"
                         required
@@ -326,7 +325,6 @@ export default function EmployeeForm() {
                         id="times"
                         name="times"
                         type="text"
-                        pattern="[0-9]*"
                         placeholder="Number of Times"
                         autoComplete="times"
                         required
@@ -340,7 +338,6 @@ export default function EmployeeForm() {
                         id="total"
                         name="total"
                         type="text"
-                        pattern="[0-9]*"
                         placeholder="Total"
                         autoComplete="Total"
                         required

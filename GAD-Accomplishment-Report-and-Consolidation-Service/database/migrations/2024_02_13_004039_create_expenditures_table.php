@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('expenditures', function (Blueprint $table) {
             $table->id();
             $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade'); //form_employee_id
-            $table->string('type')->default('OTHERS');
-            $table->string('items');
+            $table->string('type', 1000)->default('OTHERS');
+            $table->string('items', 1000);
             $table->string('per_item')->nullable();
             $table->string('no_item')->nullable();
             $table->string('times')->nullable();
             $table->string('per_head_per_day')->nullable();
             $table->string('estimated_cost')->nullable();
-            $table->string('remarks')->nullable();
-            $table->string('source_of_funds')->nullable();
+            $table->string('remarks', 1000)->nullable();
+            $table->string('source_of_funds', 1000)->nullable();
             $table->string('actual_cost')->nullable();
             $table->string('total')->nullable();
             $table->softDeletes();
