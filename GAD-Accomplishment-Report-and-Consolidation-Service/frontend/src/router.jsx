@@ -7,6 +7,8 @@ import SubmitedForms from "./views/authorizedView/Forms/submitedForms/SubmitedFo
 import AccomplishmentReport from "./views/authorizedView/Forms/submitedForms/accomplishmentReport/AccomplishmentReport";
 import CollegeLayout from "./views/authorizedView/CollegeLayout";
 import AnnualReport from "./views/authorizedView/admin/components/annualReport/AnnualReport";
+import TestTables from "./views/authorizedView/admin/components/annualreporttest/TestTables";
+import ExcelImport from "./views/authorizedView/admin/components/exceltest/ExcelImport";
 import Mandates from "./views/authorizedView/admin/components/mandates/Mandates";
 
 const router = createBrowserRouter([
@@ -40,6 +42,12 @@ const router = createBrowserRouter([
                 element: <AnnualReport />
             },
             {
+                path: 'annualreporttest',
+                element: <TestTables/>
+            },
+            {
+                path: 'exceltest',
+                element: <ExcelImport/>
                 path: 'mandates',
                 element: <Mandates />
             }

@@ -4,7 +4,7 @@ import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import axiosClient from '../axios/axios';
-import SideBar from '../components/sidebar/sidebar';
+import SideBar from '../components/sidebar/sidebar'; 
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
@@ -13,7 +13,11 @@ const navigation = [
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Accomplishment Report', to: '/admin/accomplishmentreport'},
   { name: 'Annual Report', to: '/admin/annualreport'},
+  { name: 'TestTable', to: '/admin/annualreporttest'},
+  { name: 'ExcelImport', to: '/admin/exceltest'},
+  { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
+
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
