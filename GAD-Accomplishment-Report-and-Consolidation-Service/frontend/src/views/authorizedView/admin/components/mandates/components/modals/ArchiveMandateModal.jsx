@@ -1,9 +1,9 @@
 import { React, useState} from 'react'
-import Submit from '../../../../../components/buttons/Submit';
-import axiosClient from '../../../../../axios/axios';
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
 
 //---------For Feedback
-import Feedback from '../../../../../components/feedbacks/Feedback';
+import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function ArchiveMandateModal({ mandateSelected }) {
       // For feedback

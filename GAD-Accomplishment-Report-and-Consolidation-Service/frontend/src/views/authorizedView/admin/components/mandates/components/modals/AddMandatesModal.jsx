@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import Submit from '../../../../../components/buttons/Submit';
-import axiosClient from '../../../../../axios/axios';
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
 
 export default function AddMandatesModal() {
 
