@@ -17,14 +17,11 @@ return new class extends Migration
             $table->string('title')->unique();
             $table->string('date_of_activity');
             $table->string('venue');
+            $table->string('proponents_implementors')->default('IMPLEMENTOR');
             $table->string('no_of_participants');
             $table->string('male_participants');
             $table->string('female_participants');
-            $table->string('fund_source')->nullable();
-            $table->string('clientele_type')->nullable();
-            $table->string('clientele_number')->nullable();
-            $table->string('actual_cost')->nullable();
-            $table->string('cooperating_agencies_units')->nullable();
+            $table->string('focus');
             $table->softDeletes();
             $table->timestamps();
         });

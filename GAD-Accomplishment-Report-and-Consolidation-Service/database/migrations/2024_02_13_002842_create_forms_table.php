@@ -16,28 +16,29 @@ return new class extends Migration
             //employee
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('form_type')->default('FORM');
-            $table->string('title')->unique();
-            $table->string('purpose', 10000)->nullable();
-            $table->string('legal_bases')->nullable();
-            $table->string('date_of_activity');
-            $table->string('venue');
-            $table->string('participants')->nullable();
+            $table->string('title', 1000)->unique();
+            $table->string('purpose', 1000)->nullable();
+            $table->string('legal_bases', 1000)->nullable();
+            $table->string('date_of_activity', 1000);
+            $table->string('venue', 1000);
+            $table->string('participants', 1000)->nullable();
             $table->string('participants_male')->nullable();
             $table->string('participants_female')->nullable();
             $table->string('no_of_target_participants')->nullable();
-            $table->string('learning_service_providers')->nullable();
-            $table->string('expected_outputs');
-            $table->string('fund_source');
+            $table->string('learning_service_providers', 1000)->nullable();
+            $table->string('expected_outputs', 1000);
+            $table->string('fund_source', 1000);
 
             //inset ---> has no unique columns
            
             //research/EAD
-            $table->string('clientele_type')->nullable();
-            $table->string('clientele_number')->nullable();
+            $table->string('clientele_type_and_number', 1000)->nullable();
             $table->string('estimated_cost')->nullable();
-            $table->string('cooperating_agencies_units')->nullable();
-            $table->string('proponents_implementors')->default('IMPLEMENTOR');;
-
+            $table->string('cooperating_agencies_units', 1000)->nullable();
+            $table->string('proponents_implementors', 1000)->default('IMPLEMENTOR');
+            $table->string('date_and_venue', 1000)->nullable();
+            $table->string('program_title', 1000)->nullable();
+            $table->string('project_title', 1000)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

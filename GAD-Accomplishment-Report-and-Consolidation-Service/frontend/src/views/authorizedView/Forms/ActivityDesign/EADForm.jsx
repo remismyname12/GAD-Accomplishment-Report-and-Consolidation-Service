@@ -3,6 +3,8 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import { MinusCircleIcon } from '@heroicons/react/24/outline';
+import { TemplateHandler } from 'easy-template-x';
+import ExtensionTrainingDesign from '../../../components/printing/forms/ExtensionTrainingDesign.docx'
 
 //For Feedback
 import Feedback from '../../../components/feedbacks/Feedback';
@@ -14,10 +16,65 @@ export default function EADForm() {
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
 
+  //----------for docx
+  const fileUrl = ExtensionTrainingDesign; // Use the imported file directly
+
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    return await response.blob();
+  };
+
+  const populateDocx = async () => {
+    try {
+        const blob = await fetchData(fileUrl);
+        console.log('Received blob:', blob); // Check the type and content of the blob
+        const data = {
+            programTitle: formData.program_title,
+            projectTitle: formData.project_title,
+            activityTitle: formData.title,
+            dateAndVenue: formData.date_and_venue,
+            clienteleTypeAndNumber: formData.clientele_type_and_number,
+            estimatedcost: formData.estimated_cost,
+            fundSource: formData.fund_source,
+            proponents: formData.proponents_implementors,
+            cooperatingAgency: formData.cooperating_agencies_units,
+            // Include additional fields here as needed
+            // For example, for budgetary requirements
+            budgetaryRequirements: inputFields.map(field => ({
+              item: field.item,
+              estimatedCost: field.estimated
+          }))
+        };
+        
+        const handler = new TemplateHandler();
+        const processedBlob = await handler.process(blob, data); // Process the blob
+        console.log('Processed Data:', data); // Check the processed blob
+        saveFile('output.docx', processedBlob, data.activityTitle);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
+
+    const saveFile = (filename, blob, title) => {
+      try {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up the DOM
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Error creating object URL:', error);
+      }
+    };
+  //----------
+
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
-    {type: '', item: '', estimated: '', remarks: '', source_of_funds: ''}
+    {type: 'n/a', item: '', estimated: '', remarks: 'n/a', source_of_funds: 'n/a'}
   ])
 
   const handleFormChange = (index, event) => {
@@ -27,7 +84,7 @@ export default function EADForm() {
   }
 
   const addFields = () => {
-    let newfield = { type: '', item: '', estimated: '', remarks: '', source_of_funds: '' }
+    let newfield = { type: 'n/a', item: '', estimated: '', remarks: 'n/a', source_of_funds: 'n/a' }
 
     setInputFields([...inputFields, newfield])
   }
@@ -41,11 +98,11 @@ export default function EADForm() {
   }
 
   const [formData, setFormData] = useState({
+    program_title: '',
+    project_title: '',
     title: '',
-    date_of_activity: '',
-    venue: '',
-    clientele_type: '',
-    clientele_number: '',
+    date_and_venue: '',
+    clientele_type_and_number: '',
     estimated_cost: '',
     cooperating_agencies_units: '',
     expected_outputs: '',
@@ -53,6 +110,7 @@ export default function EADForm() {
     proponents_implementors: '',
   });
 
+  console.log(formData);
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -67,6 +125,10 @@ export default function EADForm() {
         });
         setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
+        
+        if (response.data.Success === true){
+          populateDocx(); // Run the download of DOCX
+        }
         setTimeout(() => {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');
@@ -82,23 +144,35 @@ export default function EADForm() {
         console.error(error);
     }
 };
-
   //----------
 
   //For Unified Inputs 
   const renderInput = (name, label) => (
     <div className="flex flex-1 flex-col">
       <label htmlFor={name}>{label}</label>
-      <input
-        id={name}
-        name={name}
-        type="text"
-        autoComplete={name}
-        required
-        value={formData[name]}
-        onChange={handleChange}
-        className="bg-white"
-      />
+      {name === "expected_outputs"? ( // Check if the input is for "Purpose"
+        <textarea
+          id={name}
+          name={name}
+          autoComplete={name}
+          required
+          value={formData[name]}
+          onChange={handleChange}
+          className="bg-white"
+          rows={4} // Set the number of rows to accommodate long text
+        />
+      ) : (
+        <input
+          id={name}
+          name={name}
+          type="text"
+          autoComplete={name}
+          required
+          value={formData[name]}
+          onChange={handleChange}
+          className="bg-white"
+        />
+      )}
     </div>
   );
 
@@ -108,18 +182,18 @@ export default function EADForm() {
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
       {/* Integrate the Success component */}
-      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosStatus('')} successMessage={message}  status={status}/>
 
       <h1 className='text-center'>
         Extension Activity Design Form
       </h1>
 
       <form onSubmit={handleSubmit} >
-        {renderInput("title", "Title: ")}
-        {renderInput("date_of_activity", "Date of Activity: ")}
-        {renderInput("venue", "Venue: ")}
-        {renderInput("clientele_type", "Clientele Type: ")}
-        {renderInput("clientele_number", "Clientele Number: ")}
+        {renderInput("program_title", "Program Title: ")}
+        {renderInput("project_title", "Project Title: ")}
+        {renderInput("title", "Activity Title: ")}
+        {renderInput("date_and_venue", "Date and Venue of Activity: ")}
+        {renderInput("clientele_type_and_number", "Clientele Type and Number: ")}
         {renderInput("estimated_cost", "Estimated Cost: ")}
         {renderInput("cooperating_agencies_units", "Cooperating Agencies/Units: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
@@ -129,22 +203,22 @@ export default function EADForm() {
           Budgetary Requirements
         </h1>
         
-        <div>
+        <div className='flex flex-col justify-center items-center w-full'>
             <table>
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Item</th>
+                  {/* <th>Type</th> */}
+                  <th>Item Description</th>
                   <th>Estimated Cost</th>
-                  <th>Remarks</th>
+                  {/* <th>Remarks</th>
                   <th>Source of Funds</th>
-                  <th>Action</th>
+                  <th>Action</th> */}
                 </tr>
               </thead>
               <tbody>
                 {inputFields.map((input, index) => (
                   <tr key={index}>
-                    <td>
+                    {/* <td>
                       <select
                         id="type"
                         name="type"
@@ -165,16 +239,16 @@ export default function EADForm() {
                         <option value="Transportation">Transportation</option>
                         <option value="Others">Others...</option>
                       </select>
-                    </td>
+                    </td> */}
                     <td>
-                      <input
+                      <textarea
                         id="item"
                         name="item"
                         type="text"
                         placeholder="Item"
                         autoComplete="item"
                         required
-                        className="flex-1 px-2 py-1"
+                        className="flex-1 px-2 py-1 mr-3"
                         value={input.item}
                         onChange={event => handleFormChange(index, event)}
                       />
@@ -192,7 +266,7 @@ export default function EADForm() {
                         onChange={event => handleFormChange(index, event)}
                       />
                     </td>
-                    <td>
+                    {/* <td>
                       <input
                         id="remarks"
                         name="remarks"
@@ -204,8 +278,8 @@ export default function EADForm() {
                         value={input.remarks}
                         onChange={event => handleFormChange(index, event)}
                       />
-                    </td>
-                    <td>
+                    </td> */}
+                    {/* <td>
                       <input
                         id="source_of_funds"
                         name="source_of_funds"
@@ -217,7 +291,7 @@ export default function EADForm() {
                         value={input.source_of_funds}
                         onChange={event => handleFormChange(index, event)}
                       />
-                    </td>
+                    </td> */}
                     <td className='text-center'>
                       <button type="button" title="Delete Row" onClick={() => removeFields(index)}>
                         <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
@@ -227,7 +301,7 @@ export default function EADForm() {
                 ))}
               </tbody>
             </table>
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-3">
               <NeutralButton label="Add more.." onClick={() => addFields()} />
             </div>
           

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\AccomplishmentReportRequest;
+use App\Http\Requests\ACReportRequest_E_I;
 use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
-use App\Models\Forms;
 
 class AccomplishmentReportController extends Controller
 {
@@ -26,7 +25,7 @@ class AccomplishmentReportController extends Controller
         return response($forms_id);
     }
 
-    public function accomplishment_report_store(AccomplishmentReportRequest $request) {
+    public function accomplishment_report_store(ACReportRequest_E_I $request) {
         $accReport = $request->validated('accReport');
         $expenditures = $request->validated('expenditures');
 
@@ -38,11 +37,6 @@ class AccomplishmentReportController extends Controller
                 'no_of_participants' => $accReport['no_of_participants'],
                 'male_participants' => $accReport['male_participants'],
                 'female_participants' => $accReport['female_participants'],
-                'fund_source' => $accReport['fund_source'],
-                'clientele_type' => $accReport['clientele_type'],
-                'clientele_number' => $accReport['clientele_number'],
-                'actual_cost' => $accReport['actual_cost'],
-                'cooperating_agencies_units' => $accReport['cooperating_agencies_units'],
             ]);
 
             // Find the first item with the given title
@@ -53,11 +47,8 @@ class AccomplishmentReportController extends Controller
                     'acc_report_id' => $firstItem->id,
                     'type' => $expenditure['type'],
                     'items' => $expenditure['item'],
-                    'remarks' => $expenditure['remarks'],
-                    'actual_cost' => $expenditure['actual_cost'],
-                    'source_of_funds' => $expenditure['source_of_funds'],
-                    'total' => $expenditure['total'],
-
+                    'approved_budget' => $expenditure['approved_budget'],
+                    'actual_expenditure' => $expenditure['actual_expenditure'],
                 ]);
             }
             

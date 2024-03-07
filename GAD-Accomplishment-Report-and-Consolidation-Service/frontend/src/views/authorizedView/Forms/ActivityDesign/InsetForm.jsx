@@ -3,6 +3,8 @@ import Submit from '../../../components/buttons/Submit';
 import axiosClient from '../../../axios/axios';
 import NeutralButton from '../../../components/buttons/NeutralButton';
 import { MinusCircleIcon } from '@heroicons/react/24/outline';
+import { TemplateHandler } from 'easy-template-x';
+import InsetNEWLEADSFORM from '../../../components/printing/forms/InsetNEWLEADSFORM.docx'
 
 //For Feedback
 import Feedback from '../../../components/feedbacks/Feedback';
@@ -14,6 +16,82 @@ export default function InsetForm() {
   const [message, setAxiosMessage] = useState(''); // State for success message
   const [status, setAxiosStatus] = useState('');
 
+      //----------for docx
+      const fileUrl = InsetNEWLEADSFORM; // Use the imported file directly
+
+      const fetchData = async (url) => {
+        const response = await fetch(url);
+        return await response.blob();
+      };
+    
+      const populateDocx = async () => {
+        try {
+            const blob = await fetchData(fileUrl);
+            console.log('Received blob:', blob); // Check the type and content of the blob
+            const data = {
+                title: formData.title,
+                purpose: formData.purpose,
+                legalBases: formData.legal_bases,
+                dateOfActivity: formData.date_of_activity,
+                venue: formData.venue,
+                participants: formData.participants,
+                numberOftargetParticipants: formData.no_of_target_participants,
+                learningServiceProviders: formData.learning_service_providers,
+                expectedOutputs: formData.expected_outputs,
+                fundSource: formData.fund_source,
+                // Include additional fields here as needed
+                // For example, for budgetary requirements
+                budgetaryRequirements: inputFields.reduce((acc, field) => {
+                  const existingField = acc.find(item => item.type === field.type);
+                  if (existingField) {
+                      existingField.items.push({
+                          item: `-${field.item}`,
+                          perItem: field.per_item,
+                          noItem: field.no_item,
+                          times: field.times,
+                          total: field.total
+                      });
+                  } else {
+                      acc.push({
+                          type: field.type,
+                          items: [{
+                              item: `-${field.item}`,
+                              perItem: field.per_item,
+                              noItem: field.no_item,
+                              times: field.times,
+                              total: field.total
+                          }],
+                      });
+                  }
+                  return acc;
+              }, [])
+            };
+            console.log(data);
+            const handler = new TemplateHandler();
+            const processedBlob = await handler.process(blob, data); // Process the blob
+            console.log('Processed blob:', processedBlob); // Check the processed blob
+            saveFile('output.docx', processedBlob, data.title);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const saveFile = (filename, blob, title) => {
+      try {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up the DOM
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Error creating object URL:', error);
+      }
+    };
+    
+    
   //----------for exenditure
 
   const [inputFields, setInputFields] = useState([
@@ -77,6 +155,7 @@ export default function InsetForm() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //----------axiosClient
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
@@ -86,6 +165,10 @@ export default function InsetForm() {
       });
       setAxiosMessage(response.data.Message); // Set success message
         setAxiosStatus(response.data.Success);
+        
+        if (response.data.Success === true){
+          populateDocx(); // Run the download of DOCX
+        }
         setTimeout(() => {
             setAxiosMessage(''); // Clear success message
             setAxiosStatus('');

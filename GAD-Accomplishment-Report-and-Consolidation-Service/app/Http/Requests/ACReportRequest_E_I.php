@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AccomplishmentReportRequest extends FormRequest
+class ACReportRequest_E_I extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,21 +27,16 @@ class AccomplishmentReportRequest extends FormRequest
             'accReport.title' => 'required|string',
             'accReport.date_of_activity' => 'required|string',
             'accReport.venue' => 'required|string',
-            'accReport.no_of_participants' => 'string',
+            'accReport.proponents_implementors' => 'required|string',
             'accReport.male_participants' => 'string',
             'accReport.female_participants' => 'string',
-            'accReport.fund_source' => 'string',
-            'accReport.clientele_type' => 'string',
-            'accReport.clientele_number' => 'string',
-            'accReport.actual_cost' => 'string',
-            'accReport.cooperating_agencies_units' => 'string',
+            'accReport.no_of_participants' => 'string',
             
             'expenditures' => 'required|array',
             'expenditures.*.type' => 'required|string',
             'expenditures.*.item' => 'required|string',
-            'expenditures.*.remarks' => 'required|string',
-            'expenditures.*.source_of_funds' => 'required|string',
-            // 'expenditures.*.actual_cost' => 'required|string',
+            'expenditures.*.approved_budget' => 'required|string',
+            'expenditures.*.actual_expenditure' => 'required|string',
         ];
-}
+    }
 }

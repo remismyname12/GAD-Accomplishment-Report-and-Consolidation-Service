@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Submit from '../../../../../../components/buttons/Submit';
 import NeutralButton from '../../../../../../components/buttons/NeutralButton';
+import { TemplateHandler } from 'easy-template-x';
 import axiosClient from '../../../../../../axios/axios';
+import InsetEmployeeAccomplishmentReport from '../../../../../../components/printing/forms/InsetEmployeeAccomplishmentReport.docx'
 
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
+import { MinusCircleIcon } from '@heroicons/react/20/solid';
 
 
 export default function GenerateFormReport({ selectedForm }) {
@@ -12,14 +15,30 @@ export default function GenerateFormReport({ selectedForm }) {
   //save acutal expenditure to actual expenditure table
   //fix the requests, controller, axios endpoints, model and relationships
   //for both acc report and actual expenditures table
+  
+  const [formData, setFormData] = useState({
+    forms_id: selectedForm.id,
+    title: selectedForm.title,
+    fund_source: 'n/a',
+    clientele_type: 'n/a',
+    clientele_number: 'n/a',
+    actual_cost: 'n/a',
+    cooperating_agencies_units: 'n/a',
+    //Change date_of_activity to date_of_LEAD_activity depending of the form_type
+    ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
+    ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
+    venue: selectedForm.venue,
+    no_of_participants: '',
+    male_participants: '',
+    female_participants: '',
+    proponents_implementors: selectedForm.proponents_implementors,
+  });
 
   const [actualExpendatures, setActualExpendatures] = useState([{
     type: '',
     item: '',
-    remarks: '',
-    source_of_funds: '',
-    actual_cost: '',
-    total: '',
+    approved_budget: '',
+    actual_expenditure: '',
   }]);
 
   const expendituresArray = selectedForm.expenditures;
@@ -27,6 +46,59 @@ export default function GenerateFormReport({ selectedForm }) {
   const [proposedExpenditures, setProposedExpenditures] = useState([
     {type: '', item: '', per_item: '', no_item: '', times: '', total: ''}
   ]);
+
+  //----------for docx
+  const fileUrl = InsetEmployeeAccomplishmentReport; // Use the imported file directly
+
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    return await response.blob();
+  };
+
+  const populateDocx = async () => {
+    try {
+        const blob = await fetchData(fileUrl);
+        console.log('Received blob:', blob); // Check the type and content of the blob
+        const data = {
+            title: formData.title,
+            dateOfActivity: formData.date_of_activity,
+            venue: formData.venue,
+            proponents: formData.proponents_implementors,
+            maleParticipants: formData.male_participants,
+            femaleParticipants: formData.female_participants,
+            totalParticipants: formData.no_of_participants,
+            // Include additional fields here as needed
+            // For example, for budgetary requirements
+            budgetaryExpenditure: actualExpendatures.map(field => ({
+              item: field.item,
+              approvedBudget: field.approved_budget,
+              actualExpenditure: field.actual_expenditure
+          }))
+        };
+        
+        const handler = new TemplateHandler();
+        const processedBlob = await handler.process(blob, data); // Process the blob
+        saveFile('output.docx', processedBlob, data.title);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
+
+    const saveFile = (filename, blob, title) => {
+      try {
+        const blobUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = `${title} - ${filename}`; // Include the title in the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up the DOM
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (error) {
+        console.error('Error creating object URL:', error);
+      }
+    };
+  //----------
 
   //------------------------------
   useEffect(() => {
@@ -64,7 +136,10 @@ export default function GenerateFormReport({ selectedForm }) {
       });
       setAxiosMessage(response.data.message); // Set success message
       setAxiosStatus(response.data.success);
-      console.log('status =',response.data.success);
+      console.log();
+      if (response.data.success === true){
+        populateDocx(); // Run the download of DOCX
+      }
       setTimeout(() => {
           setAxiosMessage(''); // Clear success message
           setAxiosStatus('');
@@ -82,7 +157,7 @@ export default function GenerateFormReport({ selectedForm }) {
   }
   
   const addFields = () => {
-    let newfield = { type: '', item: '', per_item: '', no_item: '', total:'' }
+    let newfield = { type: '', item: '', approved_budget: '', actual_expenditure: '' }
     setActualExpendatures([...actualExpendatures, newfield])
     //will also add to DB
   }
@@ -93,25 +168,6 @@ export default function GenerateFormReport({ selectedForm }) {
     setActualExpendatures(data)
     //will also remove from DB
   }
-
-  const [formData, setFormData] = useState({
-    forms_id: selectedForm.id,
-    title: selectedForm.title,
-    fund_source: 'n/a',
-    clientele_type: 'n/a',
-    clientele_number: 'n/a',
-    actual_cost: 'n/a',
-    cooperating_agencies_units: 'n/a',
-    //Change date_of_activity to date_of_LEAD_activity depending of the form_type
-    ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
-    ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
-    venue: selectedForm.venue,
-    no_of_participants: '0',
-    male_participants: '0',
-    female_participants: '0',
-    proponents_implementors: selectedForm.proponents_implementors,
-  });
-  
 
   const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -124,7 +180,7 @@ const renderInput = (name, label) => {
 
   return (
     <div className='flex flex-1 flex-col'>
-
+      
     {/* Integrate the Success component */}
     <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
 
@@ -159,10 +215,10 @@ const renderInput = (name, label) => {
       {renderInput("title", "Title: ")}
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
-      {renderInput("participants_male", "Male Participants: ")}
-      {renderInput("participants_female", "Female Participants: ")}
-      {renderInput("participants", "Number of Participants: ")}
       {renderInput("proponents_implementors", "Proponents/Implementors ")}
+      {renderInput("male_participants", "Male Participants: ")}
+      {renderInput("female_participants", "Female Participants: ")}
+      {renderInput("no_of_participants", "Total Number of Participants: ")}
 
       <h1 className='text-center m-3'>
         Proposed Expenditures:
@@ -187,7 +243,6 @@ const renderInput = (name, label) => {
                 <td className="px-6 py-4 whitespace-no-wrap">{input.per_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.no_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.times}</td>
-                <td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>
               </tr>
             ))}
           </tbody>
@@ -197,17 +252,15 @@ const renderInput = (name, label) => {
       <h1 className='text-center m-3'>
         Actual Expenditures:
       </h1>
-      <div className="overflow-x-auto">
+      <div className="flex flex-col justify-center items-center w-full overflow-x-auto">
         {/*------------------------------------------------------------------------------*/}
         <table>
           <thead>
             <tr>
               <th>Type</th>
-              <th>Item</th>
-              <th>Actual Cost</th>
-              <th>Remarks</th>
-              <th>Source of Funds</th>
-              <th>Actual Total</th>
+              <th>Item Description</th>
+              <th>Approved Budget</th>
+              <th>Actual Expendatures</th>
             </tr>
           </thead>
           <tbody>
@@ -243,63 +296,42 @@ const renderInput = (name, label) => {
                     placeholder="Item"
                     autoComplete="item"
                     required
-                    className="flex-1 px-2 py-1"
+                    className="flex-1 px-2 py-1 mr-3"
                     value={input.item}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
                 <td>
                   <input
-                    id={`actual_cost${index}`}
-                    name="actual_cost"
+                    id={`approved_budget${index}`}
+                    name="approved_budget"
                     type="text"
-                    placeholder="Actual Cost"
-                    autoComplete="actual_cost"
+                    placeholder="Approved Budget"
+                    autoComplete="approved_budget"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.actual_cost}
+                    className="flex-1 px-2 py-1 mr-3"
+                    value={input.approved_budget}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
                 <td>
                   <input
-                    id={`remarks${index}`}
-                    name="remarks"
+                    id={`actual_expenditure${index}`}
+                    name="actual_expenditure"
                     type="text"
-                    placeholder="Remarks"
-                    autoComplete="remarks"
+                    placeholder="Actual Expenditure"
+                    autoComplete="actual_expenditure"
                     required
-                    className="flex-1 px-2 py-1"
-                    value={input.remarks}
+                    className="flex-1 px-2 py-1 mr-3"
+                    value={input.actual_expenditure}
                     onChange={event => handleFormChange(index, event)}
                   />
                 </td>
-                <td>
-                  <input
-                    id={`source_of_funds${index}`}
-                    name="source_of_funds"
-                    type="text"
-                    placeholder="Source of Funds"
-                    autoComplete="source_of_funds"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.source_of_funds}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                </td>
-                <td>
-                  <input
-                    id={`total${index}`}
-                    name="total"
-                    type="text"
-                    placeholder="Actual Total"
-                    autoComplete="total"
-                    required
-                    className="flex-1 px-2 py-1"
-                    value={input.total}
-                    onChange={event => handleFormChange(index, event)}
-                  />
-                </td>
+                  <td className='text-center'>
+                    <button type="button" title="Delete Row" onClick={() => removeFields(index)}>
+                      <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
+                    </button>
+                  </td>
               </tr>
             ))}
           </tbody>

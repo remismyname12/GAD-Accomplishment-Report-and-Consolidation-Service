@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('acc_report_id')->constrained('acc_report')->onDelete('cascade');
             $table->string('type')->default('OTHERS');
             $table->string('items');
-            $table->string('remarks');
-            $table->string('source_of_funds');
-            $table->string('actual_cost');
-            $table->string('total');
+            $table->string('approved_budget');
+            $table->string('actual_expenditure');
+            // $table->string('actual_cost');
+            // $table->string('total');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
