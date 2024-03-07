@@ -37,6 +37,7 @@ class AccomplishmentReportController extends Controller
                 'no_of_participants' => $accReport['no_of_participants'],
                 'male_participants' => $accReport['male_participants'],
                 'female_participants' => $accReport['female_participants'],
+                'focus' => '0',
             ]);
 
             // Find the first item with the given title

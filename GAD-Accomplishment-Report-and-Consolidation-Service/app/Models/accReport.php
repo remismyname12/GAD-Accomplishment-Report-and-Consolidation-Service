@@ -26,7 +26,8 @@ class accReport extends Model
         'clientele_type',
         'clientele_number',
         'actual_cost',
-        'cooperating_agencies_units'
+        'cooperating_agencies_units',
+        'focus'
         
     ];
 
