@@ -14,9 +14,8 @@ class MandatesController extends Controller
         return response()->json($mandates);
     }
 
-    public function archiveindex(){
-        $mandates = Mandates::onlyTrashed()
-        ->get();
+    public function archivedindex(){
+        $mandates = Mandates::onlyTrashed()->get();
 
         return response()->json($mandates);
     }
@@ -68,9 +67,9 @@ class MandatesController extends Controller
     }
 
     public function archivemandates($id){
-        $mandate = Mandates::find($id);
-
         try {
+            $mandate = Mandates::find($id);
+
             $mandate->delete();
 
             return response([

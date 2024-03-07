@@ -7,6 +7,7 @@ import AddUserModal from '../../authorizedView/admin/components/ManageUser/Modal
 import ArchivedUser from '../../authorizedView/admin/components/ManageUser/ArchivedUser';
 import ArchivedActivityForms from '../../authorizedView/Forms/submitedForms/activityForms/ArchivedActivityForms';
 import ArchivedReports from '../../authorizedView/Forms/submitedForms/accomplishmentReport/components/ArchivedReports';
+import ShowArchiveMandates from '../../authorizedView/admin/components/mandates/components/ShowArchiveMandates';
 
 export default function SideBar() {
     //For Modals
@@ -14,7 +15,8 @@ export default function SideBar() {
     const [isArchivedUserModalOpen, setIsArchivedUserModalOpen] = useState(false);
     const [isArchivedFormModalOpen, setIsArchivedFormModalOpen] = useState(false);
     const [isArchivedReportsModalOpen, setIsArchivedReportsModalOpen] = useState(false);
-    
+    const [isShowArchiveMandateModalOpen, setIsShowArchiveMandateModalOpen] = useState(false);
+
     return (
         <div className="sidebar">
           <ul className="sidebar-list">
@@ -29,6 +31,9 @@ export default function SideBar() {
             </li>
             <li className='pt-3'>
                 <NeutralButton label="Archived Accomplishment Report List" onClick={() => {setIsArchivedReportsModalOpen(true)}} />
+            </li>
+            <li className='pt-3'>
+                <NeutralButton label="Archived Mandates List" onClick={() => {setIsShowArchiveMandateModalOpen(true)}} />
             </li>
           </ul>
 
@@ -80,6 +85,19 @@ export default function SideBar() {
             <div>
                 <ArchivedReports
                  closeModal={() => setIsArchivedReportsModalOpen(false)}
+                 />
+            </div>
+        </ReactModal>
+
+            {/** Modal For Archived Mandates List */}
+            <ReactModal
+            isOpen={isShowArchiveMandateModalOpen}
+            onRequestClose={() => setIsShowArchiveMandateModalOpen(false)}
+            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+        >
+            <div>
+                <ShowArchiveMandates
+                 closeModal={() => setIsShowArchiveMandateModalOpen(false)}
                  />
             </div>
         </ReactModal>

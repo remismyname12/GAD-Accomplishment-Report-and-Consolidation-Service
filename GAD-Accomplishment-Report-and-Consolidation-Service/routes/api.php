@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //Mandates
     Route::post('/createmandates', [MandatesController::class, 'createmandates']);
     Route::get('/showmandates', [MandatesController::class, 'index']);
-    Route::get('/showarchivedmandates', [MandatesController::class, 'archiveindex']);
+    Route::get('/showarchivedmandates', [MandatesController::class, 'archivedindex']);
     Route::put('/updatemandate/{id}', [MandatesController::class, 'updatemandates']);
     Route::put('/archivemandate/{id}', [MandatesController::class, 'archivemandates']);
     Route::put('/restoremandate/{id}', [MandatesController::class, 'restoremandates']);
