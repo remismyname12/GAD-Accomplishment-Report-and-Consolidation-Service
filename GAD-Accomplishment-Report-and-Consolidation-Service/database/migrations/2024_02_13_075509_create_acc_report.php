@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('acc_report', function (Blueprint $table) {
             $table->id();
             $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade');
+            $table->foreignId('mandates_id')->nullable()->constrained('mandates')->onDelete('cascade');
             $table->string('title')->unique();
             $table->string('date_of_activity');
             $table->string('venue');

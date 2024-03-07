@@ -6,32 +6,13 @@ import * as XLSX from 'xlsx';
 
 export default function ExcelImport() {
 
-    const [mandate, setMandate] = useState([
-        "Mandate 1",
-        "Mandate 2",
-        "Mandate 3",
-        "Mandate 4",
-        "Mandate 5",
-        "Mandate 6",
-        "Mandate 7",
-        "Mandate 8"
-      ]);
-
-      const [activity, setActivity] = useState([
-        "Activity 1",
-        "Activity 2",
-        "Activity 3",
-        "Activity 4",
-        "Activity 5",
-        "Activity 6",
-        "Activity 7",
-        "Activity 8"
-      ]);
+    const [n_mandate, setMandate] = useState([]);
 
     const [report, setReport] = useState([]);
 
     useEffect(() => {
         fetchCurriculum();
+        fetchMandates();
     }, []);
 
     const fetchCurriculum = async () => {
@@ -39,6 +20,19 @@ export default function ExcelImport() {
             const response = await axiosClient.get('/show_accomplishment_report');
             if (response.data) {
                 setReport(response.data);
+            } else {
+                console.error('Invalid response format:', response.data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchMandates = async () => {
+        try {
+            const response = await axiosClient.get('/showmandates');
+            if (response.data) {
+                setMandate(response.data);
             } else {
                 console.error('Invalid response format:', response.data);
             }
@@ -86,6 +80,8 @@ export default function ExcelImport() {
     }
     //-----CSS
 
+    //-----CREATE UPDATE
+
     const [mandates, setMandates] = useState([{ name: '', activities: [{ type: '', cost: '' }] }]);
 
     const handleMandateNameChange = (index, value) => {
@@ -126,26 +122,34 @@ export default function ExcelImport() {
         <div>
             <table>
                 <thead>
-                    <tr>
-                    <th colSpan="7">Mandate</th>
-                    </tr>
-                    <tr>
-                    <th>Mandate Name</th>
-                    <th colSpan="6">Activities</th>
-                    </tr>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
+                    <td>+++++</td>
                 </thead>
                 <tbody>
                     {mandates.map((mandate, mandateIndex) => (
                     <React.Fragment key={mandateIndex}>
                         <tr>
-                        <td colSpan="3">
-                            <input
-                            type="text"
-                            value={mandate.name}
-                            placeholder="Mandate Name"
-                            onChange={(e) => handleMandateNameChange(mandateIndex, e.target.value)}
-                            className="w-full"
-                            />
+                        <td colSpan="6">
+                            <select
+                                value={mandate.name}
+                                onChange={(e) => handleMandateNameChange(mandateIndex, e.target.value)}
+                                className="w-full"
+                                >
+                                <option value="">Select Mandate</option>
+                                {n_mandate.map((item) => (
+                                    <option key={item.id} value={item.id}>{item.gender_issue}</option>
+                                ))}
+                            </select>
                         </td>
                         <td>
                             <button style={tnStyles} onClick={() => handleRemoveMandate(mandateIndex)}>Remove Mandate</button>
@@ -154,21 +158,18 @@ export default function ExcelImport() {
                         {mandate.activities.map((activity, activityIndex) => (
                         <tr key={activityIndex}>
                             <td></td>
-                            <td>
-                            <input
-                                type="text"
-                                value={activity.type}
-                                placeholder="Type"
-                                onChange={(e) => handleActivityChange(mandateIndex, activityIndex, 'type', e.target.value)}
-                            />
-                            </td>
-                            <td>
-                            <input
-                                type="text"
-                                value={activity.cost}
-                                placeholder="Cost"
-                                onChange={(e) => handleActivityChange(mandateIndex, activityIndex, 'cost', e.target.value)}
-                            />
+                            <td></td>
+                            <td colSpan="4">
+                                <select
+                                    value={activity.type}
+                                    onChange={(e) => handleActivityChange(mandateIndex, activityIndex, 'type', e.target.value)}
+                                    className="w-full"
+                                    >
+                                    <option value="">Select Activity</option>
+                                    {report.map((item) => (
+                                        <option key={item.id} value={item.title}>{item.title}</option>
+                                    ))}
+                                </select>
                             </td>
                             <td>
                                 <button style={tnStyles} onClick={() => handleRemoveActivity(mandateIndex, activityIndex)}>Remove Activity</button>
@@ -179,14 +180,14 @@ export default function ExcelImport() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>
+                        <td colSpan="7">
                             <button style={tnStyles} onClick={() => handleAddActivity(mandateIndex)}>Add Activity</button>
                         </td>
                         </tr>
                     </React.Fragment>
                     ))}
                     <tr>
-                    <td style={tvStyles} colSpan="4">
+                    <td style={tvStyles} colSpan="7">
                         <button onClick={handleAddMandate}>Add Mandate</button>
                     </td>
                     </tr>

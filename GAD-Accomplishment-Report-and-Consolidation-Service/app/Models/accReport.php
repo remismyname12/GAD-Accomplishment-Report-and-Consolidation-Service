@@ -16,6 +16,7 @@ class accReport extends Model
 
     protected $fillable = [
         'forms_id',
+        'mandates_id',
         'title',
         'date_of_activity',
         'venue',
@@ -45,5 +46,10 @@ class accReport extends Model
     public function actualExpenditure(): HasMany
     {
         return $this->hasMany(ActualExpendature::class);
+    }
+
+    public function mandates(): BelongsTo
+    {
+        return $this->belongsTo(Mandates::class);
     }
 }
