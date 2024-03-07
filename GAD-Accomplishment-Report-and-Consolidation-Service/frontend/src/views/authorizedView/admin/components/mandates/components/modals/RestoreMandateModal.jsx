@@ -1,7 +1,45 @@
-import React from 'react'
+import { React, useState } from 'react'
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
 
-export default function RestoreMandateModal() {
+//For Feedback
+import Feedback from '../../../../../../components/feedbacks/Feedback';
+
+export default function RestoreMandateModal({selectedForm}) {
+  //For feedback
+  const [error, setError] = useState('');
+  const [message, setAxiosMessage] = useState('');
+  const [status, setAxiosStatus] = useState('');  
+
+    const onSubmit = async (ev) => {
+        ev.preventDefault();
+        setError({ __html: "" });
+    
+        try {
+          const response = await axiosClient.put(`/restoremandate/${selectedForm[0].id}`, {});
+            setAxiosMessage(response.data.message); // Set success message
+            setAxiosStatus(response.data.success);
+            setTimeout(() => {
+                setAxiosMessage(''); // Clear success message
+                setAxiosStatus('');
+            }, 3000); // Timeout after 3 seconds
+          } catch (error) {
+            setAxiosMessage(error.response.data.message); // Set success message
+          }
+    };
+
   return (
-    <div>RestoreMandateModal</div>
+    <div>
+      {/**For Feedback */}
+      <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message}  status={status}/>
+
+      <h1>
+        Are you sure you want to Restore <b>{selectedForm[0].gender_issue}</b>
+      </h1>
+      {/**BUTTONS */}
+      <div className='mt-5'>
+          <Submit label="Restore User" onClick={onSubmit}/*disabled={ your condition }*/ />
+        </div>
+    </div>
   )
 }

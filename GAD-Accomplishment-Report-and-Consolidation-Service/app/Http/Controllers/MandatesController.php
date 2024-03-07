@@ -73,7 +73,7 @@ class MandatesController extends Controller
             $mandate->delete();
 
             return response([
-            'Success' => true,
+            'success' => true,
             'message' => 'Mandate archived successfully']);
         } catch (\Exception $e) {
             return response([
@@ -85,13 +85,13 @@ class MandatesController extends Controller
 
     public function restoremandates($id){
         try {
-            $mandate = Mandates::withTrached()
+            $mandate = Mandates::withTrashed()
             ->find($id);
 
             $mandate->restore();
 
             return response([
-                'Success' => true,
+                'success' => true,
                 'message' => 'Mandate Restored']);
         } catch (\Exception $e) {
             return response([

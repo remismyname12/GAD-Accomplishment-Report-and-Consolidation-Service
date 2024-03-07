@@ -18,7 +18,7 @@ export default function ArchiveMandateModal({ mandateSelected }) {
     try {
       const response = await axiosClient.put(`/archivemandate/${mandateSelected.id}`, {});
       setAxiosMessage(response.data.message); // Set success message
-      setAxiosStatus(response.data.Success);
+      setAxiosStatus(response.data.success);
       setTimeout(() => {
         setAxiosMessage(''); // Clear success message
         setAxiosStatus('');

@@ -14,25 +14,17 @@ export default function ArchivedActivityForms() {
     const [isDeleteMandateModalOpen, setIsDeleteMandateModalOpen] = useState(false);
 
     useEffect(() => {
-        fetchCurriculum();
-      }, []);
-    
-      const fetchCurriculum = async () => {
+      const fetchMandates = async () => {
         try {
-          const response = await axiosClient.get('/showarchivedmandates');
-          console.log('Response from API:', response.data);
-      
-          if (Array.isArray(response.data)) {
-            setForms(response.data);
-            console.log('test', forms);
-          } else {
-            console.error('Invalid response format:', response.data);
-          }
+          const { data } = await axiosClient.get('/showarchivedmandates');
+          Array.isArray(data) ? setForms(data) : console.error('Invalid response format:', data);
         } catch (error) {
-          console.error(error);
+          console.error('Error fetching mandates:', error);
         }
       };
-
+  
+      fetchMandates();
+    }, []);
     // for search function
     const filteredData = forms.filter(
         (forms) =>
@@ -54,7 +46,7 @@ export default function ArchivedActivityForms() {
     
   return (
     <>
-    <div className="table-container overflow-y-auto">
+    <div className="flex justify-center table-container overflow-y-auto">
             <table className='border-solid border-2 border-sky-500'>
                 <thead className='border-solid border-2 border-sky-500'>
                     <tr>
@@ -64,12 +56,12 @@ export default function ArchivedActivityForms() {
                 </thead>
 
                 <tbody>
-                    {filteredData.map((forms, index) => (
+                    {forms.map((form, index) => (
                           <tr 
                             key={index} 
                             className={`${index % 2 === 0 ? 'odd:bg-green-100' : ''}`}
                           >
-                              <td className="text-center p-2">{forms.title}</td>
+                              <td className="text-center p-2">{form.gender_issue}</td>
                               <td className= "flex items-center p-3">
                                 <button title="Restore Activity Form" onClick={() => handleRestoreFormClick(forms)}>
                                     <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
