@@ -1,9 +1,9 @@
 import { React, useState} from 'react'
-import Submit from '../../../../../components/buttons/Submit';
-import axiosClient from '../../../../../axios/axios';
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
 
 //---------For Feedback
-import Feedback from '../../../../../components/feedbacks/Feedback';
+import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function ArchiveMandateModal({ mandateSelected }) {
       // For feedback
@@ -16,9 +16,9 @@ export default function ArchiveMandateModal({ mandateSelected }) {
     setError({ __html: "" });
 
     try {
-      const response = await axiosClient.put(`/archivemandate/${mandateSelected[0].id}`, {});
+      const response = await axiosClient.put(`/archivemandate/${mandateSelected.id}`, {});
       setAxiosMessage(response.data.message); // Set success message
-      setAxiosStatus(response.data.Success);
+      setAxiosStatus(response.data.success);
       setTimeout(() => {
         setAxiosMessage(''); // Clear success message
         setAxiosStatus('');
@@ -33,7 +33,7 @@ export default function ArchiveMandateModal({ mandateSelected }) {
       <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message} status={status} />
 
       <h1>
-        Are you sure you want to delete <b>{mandateSelected[0].gender_issue}</b>
+        Are you sure you want to delete <b>{mandateSelected.gender_issue}</b>
       </h1>
       {/** BUTTONS */}
       <div className='mt-5'>

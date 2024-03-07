@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import NeutralButton from '../../../../components/buttons/NeutralButton'
 import ReactModal from 'react-modal';
-import AddMandatesModal from './modals/AddMandatesModal';
-import ShowMandates from './ShowMandates';
+import AddMandatesModal from './components/modals/AddMandatesModal';
+import ShowMandates from './components/ShowMandates';
 
 export default function Mandates() {
   const[isAddMandateModalOpen, setIsAddMandateModalOpen] = useState(false);

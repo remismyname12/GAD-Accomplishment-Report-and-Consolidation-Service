@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mandates', function (Blueprint $table) {
             $table->id();
-            $table->string('gender_issue', 1000);
+            $table->string('gender_issue', 1000)->unique();
             $table->string('cause_of_gender_issue', 1000);
             $table->string('gad_result_statement', 1000);
             $table->string('gad_activity', 1000);
