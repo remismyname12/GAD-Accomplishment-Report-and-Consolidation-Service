@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Submit from '../../../../../components/buttons/Submit';
-import axiosClient from '../../../../../axios/axios';
+import Submit from '../../../../../../components/buttons/Submit';
+import axiosClient from '../../../../../../axios/axios';
 
 //For Feedback
-import Feedback from '../../../../../components/feedbacks/Feedback';
-import Error from '../../../../../components/feedbacks/Error';
+import Feedback from '../../../../../../components/feedbacks/Feedback';
 
 export default function EditMandatesModal({ mandateSelected }) {
     //--------For Feedback

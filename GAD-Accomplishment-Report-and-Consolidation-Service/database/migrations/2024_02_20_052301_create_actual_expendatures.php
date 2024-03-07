@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('acc_report_id')->constrained('acc_report')->onDelete('cascade');
             $table->string('type')->default('OTHERS');
-            $table->string('items');
+            $table->string('items', 1000);
             $table->string('approved_budget');
             $table->string('actual_expenditure');
             // $table->string('actual_cost');
