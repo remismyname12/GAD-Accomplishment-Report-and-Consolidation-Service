@@ -8,6 +8,7 @@ import SideBar from '../components/sidebar/sidebar';
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
+  { name: 'Mandates', to: '/admin/mandates'},
   { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Accomplishment Report', to: '/admin/accomplishmentreport'},
