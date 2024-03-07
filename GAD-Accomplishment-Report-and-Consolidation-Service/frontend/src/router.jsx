@@ -48,6 +48,8 @@ const router = createBrowserRouter([
             {
                 path: 'exceltest',
                 element: <ExcelImport/>
+            },
+            {
                 path: 'mandates',
                 element: <Mandates />
             }
