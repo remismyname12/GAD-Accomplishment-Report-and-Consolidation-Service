@@ -276,7 +276,7 @@ export default function TestTables() {
                                     </>
                                 )}
                                
-                                <td style={tnStyles}>{expenditure.type}</td>
+                                <td style={tnStyles}>{expenditure.items}</td>
                                 <td style={tnStyles}>{expenditure.actual_expenditure}</td>
                                 <td style={tnStyles}>+++</td>
                             </tr>
