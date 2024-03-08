@@ -31,6 +31,8 @@ class MandatesController extends Controller
                 'gad_result_statement' => $mandates['gad_result_statement'],
                 'gad_activity' => $mandates['gad_activity'],
                 'performance_indicators' => $mandates['performance_indicators'],
+                'target_result' => $mandates['target_result'],
+                'focus' => $mandates['focus'],
             ]);
     
             return response([

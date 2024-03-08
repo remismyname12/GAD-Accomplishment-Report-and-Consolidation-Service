@@ -19,6 +19,8 @@ class Mandates extends Model
         'gad_result_statement',
         'gad_activity',
         'performance_indicators',
+        'target_result',
+        'focus'
     ];
 
     public function accReport(): HasMany

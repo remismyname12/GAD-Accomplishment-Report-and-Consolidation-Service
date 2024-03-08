@@ -17,6 +17,8 @@ export default function EditMandatesModal({ mandateSelected }) {
     gad_result_statement: '',
     gad_activity: '',
     performance_indicators: '',
+    target_result: '',
+    focus: ''
   });
 
 
@@ -66,7 +68,7 @@ export default function EditMandatesModal({ mandateSelected }) {
   };
 
   return (
-    <div>
+    <div className="w-[50vw] h-[80vh] overflow-auto">
         {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
@@ -76,6 +78,8 @@ export default function EditMandatesModal({ mandateSelected }) {
         {renderInput('gad_result_statement', 'GAD Result Statements')}
         {renderInput('gad_activity', 'Gender Issues/GAD Mandate')}
         {renderInput('performance_indicators', 'Performance Indicator/Targets')}
+        {renderInput('target_result', 'Target Result')}
+        {renderInput('focus', 'Focus')}
 
         <div className='mt-5'>
           <Submit label="Submit"/>

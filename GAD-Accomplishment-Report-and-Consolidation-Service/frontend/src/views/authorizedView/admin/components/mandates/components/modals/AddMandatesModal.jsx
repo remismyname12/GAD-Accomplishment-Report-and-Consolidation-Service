@@ -10,6 +10,8 @@ export default function AddMandatesModal() {
     gad_result_statement: '',
     gad_activity: '',
     performance_indicators: '',
+    target_result: '',
+    focus: '',
   })
 
   const handleChange = async (e) => {
@@ -70,6 +72,8 @@ export default function AddMandatesModal() {
         {renderInput('gad_result_statement', 'GAD Result Statements')}
         {renderInput('gad_activity', 'Gender Issues/GAD Mandate')}
         {renderInput('performance_indicators', 'Performance Indicator/Targets')}
+        {renderInput('target_result', 'Target Result')}
+        {renderInput('focus', 'Focus')}
 
         <div className='mt-5'>
           <Submit label="Submit"/>

@@ -61,11 +61,6 @@ export default function AnnualReport() {
     //-----CSS
 
     const exportToExcel = () => {
-        /*const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Report');
-        XLSX.writeFile(wb, 'report.xlsx');*/
-        // Get the worksheet from the table
        // Get the worksheet from the table
        const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
 
@@ -149,7 +144,7 @@ export default function AnnualReport() {
                                 <td style={tvStyles}>{item.gad_result_statement}</td>
                                 <td style={tvStyles}>{item.gad_activity}</td>
                                 <td style={tvStyles}>{item.performance_indicators}</td>
-                                <td style={tvStyles}>Target Result 1</td>
+                                <td style={tvStyles}>{item.target_result}</td>
                                 <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
                                 <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
                                 <td style={tnStyles}></td>

@@ -52,6 +52,8 @@ export default function ShowMandates() {
             <TableHeader title="GAD Result Statement" />
             <TableHeader title="GAD Activity" />
             <TableHeader title="Performance Indicators" />
+            <TableHeader title="Target Result" />
+            <TableHeader title="Activity Focus" />
             <TableHeader title="Actions" />
           </tr>
         </thead>
@@ -63,6 +65,8 @@ export default function ShowMandates() {
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.gad_result_statement}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.gad_activity}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.performance_indicators}</td>
+              <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.target_result}</td>
+              <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.focus}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">
                 <ul className='flex flex-row items-center justify-center'>
                   <li>
