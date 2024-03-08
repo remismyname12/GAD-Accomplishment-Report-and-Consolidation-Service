@@ -21,62 +21,67 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
-    //Users
-    Route::post('/adduser', [UserController::class, 'adduser']);
-    Route::put('/updateuser/{id}', [UserController::class, 'updateuser']);
-    Route::put('/archiveuser/{id}', [UserController::class, 'archiveuser']);
-    Route::put('/restoreuser/{id}', [UserController::class, 'restoreuser']);
-    Route::put('/deleteuser/{id}', [UserController::class, 'deleteuser']);
-    Route::get('/showusers', [UserController::class, 'index']);
-    Route::get('/showarchivedusers', [UserController::class, 'userarchiveindex']);
+    //For Users================================================
+    Route::controller(UserController::class)->group(function() {
+        Route::post('/adduser', 'adduser');
+        Route::put('/updateuser/{id}', 'updateuser');
+        Route::put('/archiveuser/{id}', 'archiveuser');
+        Route::put('/restoreuser/{id}', 'restoreuser');
+        Route::put('/deleteuser/{id}', 'deleteuser');
+        Route::get('/showusers', 'index');
+        Route::get('/showarchivedusers', 'userarchiveindex');
+    });
 
-    //Mandates
-    Route::post('/createmandates', [MandatesController::class, 'createmandates']);
-    Route::get('/showmandates', [MandatesController::class, 'index']);
-    Route::get('/showarchivedmandates', [MandatesController::class, 'archivedindex']);
-    Route::put('/updatemandate/{id}', [MandatesController::class, 'updatemandates']);
-    Route::put('/archivemandate/{id}', [MandatesController::class, 'archivemandates']);
-    Route::put('/restoremandate/{id}', [MandatesController::class, 'restoremandates']);
-    Route::put('/deletemandate/{id}', [MandatesController::class, 'deletemandates']);
+    //For Mandates================================================
+    Route::controller(MandatesController::class)->group(function() {
+        Route::post('/createmandates', 'createmandates');
+        Route::put('/showmandates', 'index');
+        Route::put('/showarchivedmandates', 'archivedindex');
+        Route::put('/updatemandate/{id}', 'updatemandates');
+        Route::put('/archivemandate/{id}', 'archivemandates');
+        Route::get('/restoremandate/{id}', 'restoremandates');
+        Route::get('/deletemandate/{id}', 'deletemandates');
+    });
     
-    //Activity Forms Employee
-    Route::post('/form_employee', [FormController::class, 'form_employee_store']);
-    Route::get('/show_form_employee', [FormController::class, 'index_employee_forms']);
-    Route::put('/update_form_employee/{id}', [FormController::class, 'form_employee_update']);
-    
-    //Activity Forms Inset
-    Route::post('/form_inset', [FormController::class, 'form_inset_store']);
-    Route::put('/update_form_inset/{id}', [FormController::class, 'form_inset_update']);
-    Route::get('/show_form_inset', [FormController::class, 'indexInsetForms']);
+    //For Activity Design================================================
+    Route::controller(FormController::class)->group(function() {
+        //Activity Forms Employee
+        Route::post('/form_employee', 'form_employee_store');
+        Route::get('/show_form_employee', 'index_employee_forms');
+        Route::put('/update_form_employee/{id}', 'form_employee_update');
 
-    //Activity Forms EAD
-    Route::post('/form_ead', [FormController::class, 'form_ead_store']);
-    Route::get('/show_form_ead', [FormController::class, 'index_ead_form']);
-    Route::put('/update_form_ead/{id}', [FormController::class, 'form_ead_update']);
-  
-    //Form Crud Functions
-    Route::get('/show_archived_forms_all', [FormController::class, 'index_all_archived_forms']);
-    Route::put('/archive_form/{id}', [FormController::class, 'form_archive']);
-    Route::put('/restore_form/{id}', [FormController::class, 'form_restore']);
-    Route::put('/delete_form/{id}', [FormController::class, 'form_delete']);
-  
-    //expenditure list
-    Route::post('/xpenditure_i', [FormController::class, 'xpenditure_i_store']);
+        //Activity Forms Inset
+        Route::post('/form_inset', 'form_inset_store');
+        Route::put('/update_form_inset/{id}', 'form_inset_update');
+        Route::get('/show_form_inset', 'indexInsetForms');
 
-    //Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report']);
+        //Activity Forms EAD
+        Route::post('/form_ead', 'form_ead_store');
+        Route::get('/show_form_ead', 'index_ead_form');
+        Route::put('/update_form_ead/{id}', 'form_ead_update');
+
+        //Form Crud Functions
+        Route::get('/show_archived_forms_all', 'index_all_archived_forms');
+        Route::put('/archive_form/{id}', 'form_archive');
+        Route::put('/restore_form/{id}', 'form_restore');
+        Route::put('/delete_form/{id}', 'form_delete');
+    });
 
     //For accomplishment Report================================================
+    Route::controller(FormController::class)->group(function() {
+        //Accomplishment Report
+        Route::post('/accomplishment_report', 'accomplishment_report_store');
+        Route::get('/show_accomplishment_report', 'index_accomplishment_report');
+        Route::get('/update_accomplishment_report', 'accomplishment_report_update');
 
-    //Accomplishment Report
-    Route::post('/accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report_store']);
-    Route::get('/show_accomplishment_report', [AccomplishmentReportController::class, 'index_accomplishment_report']);
-    Route::get('/update_accomplishment_report', [AccomplishmentReportController::class, 'accomplishment_report_update']);
+        //Accomplishment Report Crud Functions
+        Route::get('/show_archived_accomplishment_report_all', 'index_all_archived_accomplishment_report');
+        Route::put('/archive_accomplishment_report/{id}', 'accomplishment_report_archive');
+        Route::put('/restore_accomplishment_report/{id}', 'accomplishment_report_restore');
+        Route::put('/delete_accomplishment_report/{id}', 'accomplishment_report_delete');
 
-    //Accomplishment Report Crud Functions
-    Route::get('/show_archived_accomplishment_report_all', [AccomplishmentReportController::class, 'index_all_archived_accomplishment_report']);
-    Route::put('/archive_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_archive']);
-    Route::put('/restore_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_restore']);
-    Route::put('/delete_accomplishment_report/{id}', [AccomplishmentReportController::class, 'accomplishment_report_delete']);
+    });
+
     
     Route::post('/logout', [AuthController::class, 'logout']);
 });
