@@ -5,7 +5,6 @@ import * as XLSX from 'xlsx';
 
 
 export default function AnnualReport() {
-    const [report, setReport] = useState([]);
     const [mandate, setMandate] = useState([]);
 
     useEffect(() => {
@@ -61,12 +60,6 @@ export default function AnnualReport() {
     };
     //-----CSS
 
-    /*const handleInputChange = (index, event) => {
-        let data = [...report];
-        data[index][event.target.name] = event.target.value;
-        setReport(data);
-    };*/
-
     const exportToExcel = () => {
         /*const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
         const wb = XLSX.utils.book_new();
@@ -91,14 +84,7 @@ export default function AnnualReport() {
             { width: 13 }, // Column J ACTUAL COST->ACTUAL EXPENSES
             { width: 13 }, // Column K ACTUAL COST->ATTRIBUTION
        ];
-   
-       // Set row heights
-       ws['!rows'] = [
-           //{ hpx: 30 }, // Row 1
-           //{ hpx: 30 }, // Row 2
-           //{ hpx: 30 }, // Row 3
-           // Add more rows as needed
-       ];
+
 
     // Create a new workbook and append the modified worksheet
     const wb = XLSX.utils.book_new();
