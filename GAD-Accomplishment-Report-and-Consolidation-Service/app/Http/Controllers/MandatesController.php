@@ -119,4 +119,9 @@ class MandatesController extends Controller
             ]);
         }
     }
+    public function showact_mandates(){
+        $accomplishmentReport = Mandates::with('accReport.actualExpenditure')->get();
+
+        return response($accomplishmentReport);
+    }
 }

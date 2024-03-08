@@ -6,16 +6,17 @@ import * as XLSX from 'xlsx';
 
 export default function AnnualReport() {
     const [report, setReport] = useState([]);
+    const [mandate, setMandate] = useState([]);
 
     useEffect(() => {
-        fetchCurriculum();
+        fetchMandate();
     }, []);
 
-    const fetchCurriculum = async () => {
+    const fetchMandate = async () => {
         try {
-            const response = await axiosClient.get('/show_accomplishment_report');
+            const response = await axiosClient.get('/showact_mandates');
             if (response.data) {
-                setReport(response.data);
+                setMandate(response.data);
             } else {
                 console.error('Invalid response format:', response.data);
             }
@@ -45,7 +46,7 @@ export default function AnnualReport() {
         border: '1px solid black',
         padding: '5px',
         backgroundColor: 'white',
-        textAlign: 'right',
+        textAlign: 'left',
         verticalAlign: 'top',
         whiteSpace: 'pre-wrap'
     };
@@ -153,53 +154,40 @@ export default function AnnualReport() {
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
                         <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Client-Focused Activities</th>
                     </tr>
-                    <tr>
-                        <td style={trStyles}>1</td>
-                        <td style={trStyles}>First Mandate</td>
-                        <td style={trStyles}>Cause of Gender Issue 1</td>
-                        <td style={trStyles}>GAD Objective A</td>
-                        <td style={trStyles}>GAD Activity A</td>
-                        <td style={trStyles}>Performance Indicator 1</td>
-                        <td style={tvStyles}>Target Result 1</td>
-                        <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
-                        <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
-                        <td style={tnStyles}></td>
-                        <td style={tnStyles}>Total Actual Expenses For Mandate</td>
-                        <td style={tnStyles}>Total Attribution For Mandate</td>
-                    </tr>
-                    {report.map((form, index) => (
-                        form.actual_expenditure.map((expenditure, idx) => (
-                            <tr key={index * 1000 + idx}>
-                                {idx === 0 && (
-                                    <>
-                                        <td rowspan={form.actual_expenditure.length} style={trStyles}></td>
-                                        <td rowspan={form.actual_expenditure.length} colSpan="6" style={trStyles}>
-                                            
-                                            {/*{index + 1}) <input 
-                                            style={{border: 'none' }} 
-                                            id="title"
-                                            name="title"
-                                            type="text"
-                                            placeholder="Title"
-                                            autoComplete="Title"
-                                            //value={form.title}
-                                            onChange={event => handleInputChange(index, event)}
-                                            />
-                                            {form.title} 
-                                            //possible to add input fields
-                                            */}
-                                            {index + 1}) {form.title}
-                                        </td>
-                                        <td rowspan={form.actual_expenditure.length}  style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{form.male_participants}</td>
-                                        <td rowspan={form.actual_expenditure.length}  style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{form.female_participants}</td>
-                                    </>
-                                )}
-                               
-                                <td style={tnStyles}>{expenditure.items}</td>
-                                <td style={tnStyles}>{expenditure.actual_expenditure}</td>
-                                <td style={tnStyles}>+++</td>
+                    {mandate.map((item) => (
+                        <React.Fragment key={item.id}>
+                            <tr>
+                                <td style={tvStyles}>{item.id}</td>
+                                <td style={tvStyles}>{item.gender_issue}</td>
+                                <td style={tvStyles}>{item.cause_of_gender_issue}</td>
+                                <td style={tvStyles}>{item.gad_result_statement}</td>
+                                <td style={tvStyles}>{item.gad_activity}</td>
+                                <td style={tvStyles}>{item.performance_indicators}</td>
+                                <td style={tvStyles}>Target Result 1</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
+                                <td style={tnStyles}></td>
+                                <td style={tnStyles}>Total Actual Expenses For Mandate</td>
+                                <td style={tnStyles}>Total Attribution For Mandate</td>
                             </tr>
-                        ))
+                            {item.acc_report && item.acc_report.map((report, reportIndex) => (
+                                report.actual_expenditure.map((expenditure, expenditureIndex) => (
+                                    <tr key={expenditureIndex}>
+                                        {expenditureIndex === 0 && (
+                                            <>
+                                                <td rowspan={report.actual_expenditure.length} style={tnStyles}></td>
+                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{report.title}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{report.male_participants}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{report.female_participants}</td>
+                                            </>
+                                        )}
+                                        <td style={tnStyles}>{expenditure.items}</td>
+                                        <td style={tnStyles}>{expenditure.actual_expenditure}</td>
+                                        <td style={tnStyles}>+++</td>
+                                    </tr>
+                                ))
+                            ))}
+                        </React.Fragment>
                     ))}
                     <tr>
                         <td style={tnStyles}></td>

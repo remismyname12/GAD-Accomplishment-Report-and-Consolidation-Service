@@ -39,6 +39,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/restoremandate/{id}', [MandatesController::class, 'restoremandates']);
     Route::put('/deletemandate/{id}', [MandatesController::class, 'deletemandates']);
     
+    //For Excel
+    Route::put('/addmandates', [AccomplishmentReportController::class, 'addmandates']);
+    Route::get('/showact_mandates', [MandatesController::class, 'showact_mandates']);
+
     //Activity Forms Employee
     Route::post('/form_employee', [FormController::class, 'form_employee_store']);
     Route::get('/show_form_employee', [FormController::class, 'index_employee_forms']);
