@@ -62,7 +62,7 @@ export default function ExcelImport() {
         border: '1px solid black',
         padding: '5px',
         backgroundColor: 'white',
-        textAlign: 'right',
+        textAlign: 'center',
         verticalAlign: 'top',
         whiteSpace: 'pre-wrap'
     };
@@ -129,11 +129,6 @@ export default function ExcelImport() {
                     <td>+++++</td>
                     <td>+++++</td>
                     <td>+++++</td>
-                    <td>+++++</td>
-                    <td>+++++</td>
-                    <td>+++++</td>
-                    <td>+++++</td>
-                    <td>+++++</td>
                 </thead>
                 <tbody>
                     {mandates.map((mandate, mandateIndex) => (
@@ -147,7 +142,7 @@ export default function ExcelImport() {
                                 >
                                 <option value="">Select Mandate</option>
                                 {n_mandate.map((item) => (
-                                    <option key={item.id} value={item.id}>{item.gender_issue}</option>
+                                    <option key={item.id} value={item.id}>{item.id}) {item.gender_issue}</option>
                                 ))}
                             </select>
                         </td>
@@ -167,7 +162,7 @@ export default function ExcelImport() {
                                     >
                                     <option value="">Select Activity</option>
                                     {report.map((item) => (
-                                        <option key={item.id} value={item.title}>{item.title}</option>
+                                        <option key={item.id} value={item.title}>{item.id}) {item.title}</option>
                                     ))}
                                 </select>
                             </td>
