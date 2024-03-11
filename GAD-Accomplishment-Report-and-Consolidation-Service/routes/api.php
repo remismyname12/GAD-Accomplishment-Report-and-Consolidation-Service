@@ -42,6 +42,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/archivemandate/{id}', 'archivemandates');
         Route::get('/restoremandate/{id}', 'restoremandates');
         Route::get('/deletemandate/{id}', 'deletemandates');
+        Route::get('/showact_mandates','showact_mandates');
+        
     });
     
     //For Activity Design================================================
@@ -69,11 +71,12 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //For accomplishment Report================================================
-    Route::controller(FormController::class)->group(function() {
+    Route::controller(AccomplishmentReportController::class)->group(function() {
         //Accomplishment Report
         Route::post('/accomplishment_report', 'accomplishment_report_store');
         Route::get('/show_accomplishment_report', 'index_accomplishment_report');
         Route::get('/update_accomplishment_report', 'accomplishment_report_update');
+        Route::put('/addmandates', 'addmandates');
 
         //Accomplishment Report Crud Functions
         Route::get('/show_archived_accomplishment_report_all', 'index_all_archived_accomplishment_report');
