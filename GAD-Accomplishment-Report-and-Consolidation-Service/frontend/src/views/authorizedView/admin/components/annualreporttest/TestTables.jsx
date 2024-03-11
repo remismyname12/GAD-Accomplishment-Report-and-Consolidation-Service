@@ -190,6 +190,7 @@ export default function TestTables() {
         report.forEach((form, index) => {
             form.actual_expenditure.forEach((expenditure, idx) => {
                 jsxContent += `<tr key="${index * 1000 + idx}">
+                
                     ${idx === 0 ? `
                         <td rowspan="${form.actual_expenditure.length}" style="border: 2px solid black;"></td>
                         <td rowspan="${form.actual_expenditure.length}" colSpan="6" style="border: 2px solid black;">${index + 1}) ${form.title}</td>
