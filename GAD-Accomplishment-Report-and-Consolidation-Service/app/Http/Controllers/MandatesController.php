@@ -124,6 +124,12 @@ class MandatesController extends Controller
     public function showact_mandates(){
         $accomplishmentReport = Mandates::with('accReport.actualExpenditure')->get();
 
-        return response($accomplishmentReport);
+        // Group the data by the 'focus' column value
+        $groupedData = $accomplishmentReport->groupBy('focus');
+
+        // Convert the grouped data to an array for easier manipulation
+        $splitData = $groupedData->toArray();
+
+        return response($splitData);
     }
 }
