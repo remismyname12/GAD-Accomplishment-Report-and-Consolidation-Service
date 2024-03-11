@@ -29,6 +29,8 @@ class MandatesRequest extends FormRequest
             'form_data.gad_result_statement' => 'required|string',
             'form_data.gad_activity' => 'required|string',
             'form_data.performance_indicators' => 'required|string',
+            'form_data.target_result' => 'required|string',
+            'form_data.focus' => 'required|string',
         ];
     }
 }

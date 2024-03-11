@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
 
+
     //For Users================================================
     Route::controller(UserController::class)->group(function() {
         Route::post('/adduser', 'adduser');

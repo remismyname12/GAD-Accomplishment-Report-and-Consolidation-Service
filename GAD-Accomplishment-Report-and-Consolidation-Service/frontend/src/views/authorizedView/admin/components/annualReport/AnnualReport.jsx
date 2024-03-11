@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../../../axios/axios';
 import * as XLSX from 'xlsx';
-//import * as fs from 'fs';
+//#D8D8D8 ---> grey
 
 
 export default function AnnualReport() {
-    const [report, setReport] = useState([]);
+    const [mandate, setMandate] = useState([]);
+    const [clientMandate, setClientMandate] = useState([]);
+    const [organizationMandate, setOrganizationMandate] = useState([]);
+    console.log('Mandate: ', mandate);
+    //const clientMandate = mandate.ClientFocused;
+    console.log('Client: ', clientMandate);
+    //const organizationMandate = mandate.OrganizationFocused;
+    console.log('Organ: ', organizationMandate);
+
 
     useEffect(() => {
-        fetchCurriculum();
+        fetchMandate();
     }, []);
 
-    const fetchCurriculum = async () => {
+    const fetchMandate = async () => {
         try {
-            const response = await axiosClient.get('/show_accomplishment_report');
+            const response = await axiosClient.get('/showact_mandates');
             if (response.data) {
-                setReport(response.data);
+                setMandate(response.data);
+                setClientMandate(response.data.ClientFocused)
+                setOrganizationMandate(response.data.OrganizationFocused)
             } else {
                 console.error('Invalid response format:', response.data);
             }
@@ -45,7 +55,7 @@ export default function AnnualReport() {
         border: '1px solid black',
         padding: '5px',
         backgroundColor: 'white',
-        textAlign: 'right',
+        textAlign: 'left',
         verticalAlign: 'top',
         whiteSpace: 'pre-wrap'
     };
@@ -60,18 +70,7 @@ export default function AnnualReport() {
     };
     //-----CSS
 
-    /*const handleInputChange = (index, event) => {
-        let data = [...report];
-        data[index][event.target.name] = event.target.value;
-        setReport(data);
-    };*/
-
     const exportToExcel = () => {
-        /*const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, 'Report');
-        XLSX.writeFile(wb, 'report.xlsx');*/
-        // Get the worksheet from the table
        // Get the worksheet from the table
        const ws = XLSX.utils.table_to_sheet(document.getElementById('report-table'));
 
@@ -90,14 +89,7 @@ export default function AnnualReport() {
             { width: 13 }, // Column J ACTUAL COST->ACTUAL EXPENSES
             { width: 13 }, // Column K ACTUAL COST->ATTRIBUTION
        ];
-   
-       // Set row heights
-       ws['!rows'] = [
-           //{ hpx: 30 }, // Row 1
-           //{ hpx: 30 }, // Row 2
-           //{ hpx: 30 }, // Row 3
-           // Add more rows as needed
-       ];
+
 
     // Create a new workbook and append the modified worksheet
     const wb = XLSX.utils.book_new();
@@ -153,63 +145,149 @@ export default function AnnualReport() {
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
                         <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Client-Focused Activities</th>
                     </tr>
-                    <tr>
-                        <td style={trStyles}>1</td>
-                        <td style={trStyles}>First Mandate</td>
-                        <td style={trStyles}>Cause of Gender Issue 1</td>
-                        <td style={trStyles}>GAD Objective A</td>
-                        <td style={trStyles}>GAD Activity A</td>
-                        <td style={trStyles}>Performance Indicator 1</td>
-                        <td style={tvStyles}>Target Result 1</td>
-                        <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
-                        <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
-                        <td style={tnStyles}></td>
-                        <td style={tnStyles}>Total Actual Expenses For Mandate</td>
-                        <td style={tnStyles}>Total Attribution For Mandate</td>
-                    </tr>
-                    {report.map((form, index) => (
-                        form.actual_expenditure.map((expenditure, idx) => (
-                            <tr key={index * 1000 + idx}>
-                                {idx === 0 && (
-                                    <>
-                                        <td rowspan={form.actual_expenditure.length} style={trStyles}></td>
-                                        <td rowspan={form.actual_expenditure.length} colSpan="6" style={trStyles}>
-                                            
-                                            {/*{index + 1}) <input 
-                                            style={{border: 'none' }} 
-                                            id="title"
-                                            name="title"
-                                            type="text"
-                                            placeholder="Title"
-                                            autoComplete="Title"
-                                            //value={form.title}
-                                            onChange={event => handleInputChange(index, event)}
-                                            />
-                                            {form.title} 
-                                            //possible to add input fields
-                                            */}
-                                            {index + 1}) {form.title}
-                                        </td>
-                                        <td rowspan={form.actual_expenditure.length}  style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{form.male_participants}</td>
-                                        <td rowspan={form.actual_expenditure.length}  style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{form.female_participants}</td>
-                                    </>
-                                )}
-                               
-                                <td style={tnStyles}>{expenditure.items}</td>
-                                <td style={tnStyles}>{expenditure.actual_expenditure}</td>
-                                <td style={tnStyles}>+++</td>
+                    {clientMandate.map((item) => (
+                        <React.Fragment key={item.id}>
+                            <tr>
+                                <td style={tvStyles}>1</td>
+                                <td style={tvStyles}>{item.gender_issue}</td>
+                                <td style={tvStyles}>{item.cause_of_gender_issue}</td>
+                                <td style={tvStyles}>{item.gad_result_statement}</td>
+                                <td style={tvStyles}>{item.gad_activity}</td>
+                                <td style={tvStyles}>{item.performance_indicators}</td>
+                                <td style={tvStyles}>{item.target_result}</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
+                                <td style={tnStyles}></td>
+                                <td style={tnStyles}>Total Actual Expenses For Mandate</td>
+                                <td style={tnStyles}>Total Attribution For Mandate</td>
                             </tr>
-                        ))
+                            {item.acc_report && item.acc_report.map((report, reportIndex) => (
+                                report.actual_expenditure.map((expenditure, expenditureIndex) => (
+                                    <tr key={expenditureIndex}>
+                                        {expenditureIndex === 0 && (
+                                            <>
+                                                <td rowspan={report.actual_expenditure.length} style={tnStyles}></td>
+                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{report.title}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{report.male_participants}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{report.female_participants}</td>
+                                            </>
+                                        )}
+                                        <td style={tnStyles}>{expenditure.items}</td>
+                                        <td style={tnStyles}>{expenditure.actual_expenditure}</td>
+                                        <td style={tnStyles}>+++</td>
+                                    </tr>
+                                ))
+                            ))}
+                        </React.Fragment>
                     ))}
                     <tr>
                         <td style={tnStyles}></td>
-                        <td style={tnStyles} colSpan="8"><b>TOTAL PER MANDATE. MAKE MANDATES TABLE TO MAP</b></td>
+                        <td style={tnStyles} colSpan="6"></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
                         <td style={tnStyles}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>Total Actual Expenses For Mandate</td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>Total Attribution For Mandate</td>
                     </tr>
                     <tr>
-                        <td style={tnStyles} colSpan="12">---</td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles} colSpan="6"></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                    </tr>
+                    <tr>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tvStyles, backgroundColor: '#C5E0B3' }} colSpan="6">CLIENT-FOCUSED ACTIVITIES</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                    </tr>
+                    <tr>
+                        <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
+                        <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Organization-Focused Activities</th>
+                    </tr>
+                    {organizationMandate.map((item) => (
+                        <React.Fragment key={item.id}>
+                            <tr>
+                                <td style={tvStyles}>1</td>
+                                <td style={tvStyles}>{item.gender_issue}</td>
+                                <td style={tvStyles}>{item.cause_of_gender_issue}</td>
+                                <td style={tvStyles}>{item.gad_result_statement}</td>
+                                <td style={tvStyles}>{item.gad_activity}</td>
+                                <td style={tvStyles}>{item.performance_indicators}</td>
+                                <td style={tvStyles}>{item.target_result}</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>Total Males for Mandate</td>
+                                <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
+                                <td style={tnStyles}></td>
+                                <td style={tnStyles}>Total Actual Expenses For Mandate</td>
+                                <td style={tnStyles}>Total Attribution For Mandate</td>
+                            </tr>
+                            {item.acc_report && item.acc_report.map((report, reportIndex) => (
+                                report.actual_expenditure.map((expenditure, expenditureIndex) => (
+                                    <tr key={expenditureIndex}>
+                                        {expenditureIndex === 0 && (
+                                            <>
+                                                <td rowspan={report.actual_expenditure.length} style={tnStyles}></td>
+                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{report.title}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{report.male_participants}</td>
+                                                <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{report.female_participants}</td>
+                                            </>
+                                        )}
+                                        <td style={tnStyles}>{expenditure.items}</td>
+                                        <td style={tnStyles}>{expenditure.actual_expenditure}</td>
+                                        <td style={tnStyles}>+++</td>
+                                    </tr>
+                                ))
+                            ))}
+                        </React.Fragment>
+                    ))}
+                    <tr>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles} colSpan="6"></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>Total Actual Expenses For Mandate</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>Total Attribution For Mandate</td>
+                    </tr>
+                    <tr>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles} colSpan="6"></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                    </tr>
+                    <tr>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tvStyles, backgroundColor: '#FFFF00' }} colSpan="6">ORGANIZATION-FOCUSED ACTIVITIES</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                    </tr>
+                    <tr>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles} colSpan="6"></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                        <td style={tnStyles}></td>
+                    </tr>
+                    <tr>
+                        <td style={{ ...tnStyles, backgroundColor: '#D8D8D8' }}></td>
+                        <td style={{ ...tvStyles, backgroundColor: '#D8D8D8' }} colSpan="8">SUB-TOTAL CLIENT-FOCUSED ACTIVITIES + ORGANIZATION-FOCUSED ACTIVITIES (ACTUAL COST/ EXPENDITURE + ATTRIBUTED AMOUNT)</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#D8D8D8' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#D8D8D8' }}>TOTAL ACTUAL COST/EXPENDITURE</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#D8D8D8' }}>TOTAL ATTRIBUTED AMOUNT</td>
                     </tr>
                 </tbody>
             </table>

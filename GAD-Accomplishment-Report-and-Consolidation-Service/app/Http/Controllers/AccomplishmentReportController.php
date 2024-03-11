@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ACReportRequest_E_I;
+use App\Http\Requests\AddMandate;
 use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
@@ -118,5 +119,30 @@ class AccomplishmentReportController extends Controller
         $form->forceDelete();
 
         return response()->json(['message' => 'Form permanently deleted']);
+    }
+
+    public function addmandates (Addmandate $request) 
+    {
+        $requestData = $request->validated(); // Assuming the data structure is sent in the request body
+        $full_list = $request->input('set_mandate');
+        
+        foreach ($full_list as $item) {
+            $mandate_id = $item['mandate_id'];
+    
+            foreach ($item['activities'] as $activity) {
+                $activity_id = $activity['activity_id'];
+    
+                // Find the accReport item by activity_id
+                $accReportItem = accReport::where('id', $activity_id)->first();
+    
+                if ($accReportItem) {
+                    // Update the mandates_id column with mandate_id
+                    $accReportItem->mandates_id = $mandate_id;
+                    $accReportItem->save();
+                }
+            }
+        }
+
+        return response()->json(['message' => 'Mandates set successfully!']);
     }
 }

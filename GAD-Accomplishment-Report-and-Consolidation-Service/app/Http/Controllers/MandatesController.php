@@ -31,6 +31,8 @@ class MandatesController extends Controller
                 'gad_result_statement' => $mandates['gad_result_statement'],
                 'gad_activity' => $mandates['gad_activity'],
                 'performance_indicators' => $mandates['performance_indicators'],
+                'target_result' => $mandates['target_result'],
+                'focus' => $mandates['focus'],
             ]);
     
             return response([
@@ -56,7 +58,7 @@ class MandatesController extends Controller
             
             return response([
                 'success' => true,
-                'message' => 'Mandate created successfully',
+                'message' => 'Mandate updated successfully',
             ]);
         } catch (\Exception $e) {
             return response([
@@ -118,5 +120,16 @@ class MandatesController extends Controller
                 'message' => 'Error: ' . $e->getMessage(),
             ]);
         }
+    }
+    public function showact_mandates(){
+        $accomplishmentReport = Mandates::with('accReport.actualExpenditure')->get();
+
+        // Group the data by the 'focus' column value
+        $groupedData = $accomplishmentReport->groupBy('focus');
+
+        // Convert the grouped data to an array for easier manipulation
+        $splitData = $groupedData->toArray();
+
+        return response($splitData);
     }
 }

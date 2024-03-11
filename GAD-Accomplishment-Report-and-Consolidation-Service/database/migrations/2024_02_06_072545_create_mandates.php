@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('gad_result_statement', 1000);
             $table->string('gad_activity', 1000);
             $table->string('performance_indicators', 1000);
+            $table->string('target_result', 1000);
+            $table->string('focus');
             $table->softDeletes();
             $table->timestamps();
         });

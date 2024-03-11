@@ -17,6 +17,8 @@ export default function EditMandatesModal({ mandateSelected }) {
     gad_result_statement: '',
     gad_activity: '',
     performance_indicators: '',
+    target_result: '',
+    focus: ''
   });
 
 
@@ -27,16 +29,30 @@ export default function EditMandatesModal({ mandateSelected }) {
   const renderInput = (name, label) => (
     <div className="flex flex-1 flex-col">
       <label htmlFor={name}>{label}</label>
-      <textarea
-        id={name}
-        name={name}
-        autoComplete={name}
-        required
-        value={formData[name]}
-        onChange={handleChange}
-        className="bg-gray-200"
-        rows={4}
-      />
+      {name === "focus" ? (
+        <select
+          id={name}
+          name={name}
+          onChange={handleChange}
+          value={formData[name]}
+          required
+        >
+          <option value="">Select Focus</option>
+          <option value="Client-Focused">Client-Focused</option>
+          <option value="Organization-Focused">Organization-Focused</option>
+        </select>
+      ):(
+          <textarea 
+            id={name}
+            name={name}
+            autoComplete={name}
+            required
+            value={formData[name]}
+            onChange={handleChange}
+            className="bg-gray-200"
+            rows={2}
+        />
+      )}
     </div>
   );
 
@@ -66,7 +82,7 @@ export default function EditMandatesModal({ mandateSelected }) {
   };
 
   return (
-    <div>
+    <div className="w-[50vw] h-[80vh] overflow-auto">
         {/* Integrate the Success component */}
       <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
 
@@ -76,6 +92,8 @@ export default function EditMandatesModal({ mandateSelected }) {
         {renderInput('gad_result_statement', 'GAD Result Statements')}
         {renderInput('gad_activity', 'Gender Issues/GAD Mandate')}
         {renderInput('performance_indicators', 'Performance Indicator/Targets')}
+        {renderInput('target_result', 'Target Result')}
+        {renderInput('focus', 'Focus')}
 
         <div className='mt-5'>
           <Submit label="Submit"/>

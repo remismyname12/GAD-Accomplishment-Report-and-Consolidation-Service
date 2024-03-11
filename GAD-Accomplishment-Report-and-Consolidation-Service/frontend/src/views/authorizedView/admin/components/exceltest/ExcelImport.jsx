@@ -82,17 +82,17 @@ export default function ExcelImport() {
 
     //-----CREATE UPDATE
 
-    const [mandates, setMandates] = useState([{ name: '', activities: [{ type: '', cost: '' }] }]);
+    const [mandates, setMandates] = useState([{ mandate_id: '', activities: [{ activity_id: ''}] }]);
 
     const handleMandateNameChange = (index, value) => {
         const updatedMandates = [...mandates];
-        updatedMandates[index].name = value;
+        updatedMandates[index].mandate_id = value;
         setMandates(updatedMandates);
     };
 
     const handleAddActivity = (mandateIndex) => {
         const updatedMandates = [...mandates];
-        updatedMandates[mandateIndex].activities.push({ type: '', cost: '' });
+        updatedMandates[mandateIndex].activities.push({ activity_id: ''});
         setMandates(updatedMandates);
     };
 
@@ -115,8 +115,23 @@ export default function ExcelImport() {
     };
 
     const handleAddMandate = () => {
-        setMandates([...mandates, { name: '', activities: [{ type: '', cost: '' }] }]);
+        setMandates([...mandates, { mandate_id: '', activities: [{ activity_id: ''}] }]);
     };
+
+    //-----SAVE TO DB and APPEND TO TABLE
+    const handeSubmit = () => {
+        // send acc_report, send activity_id, then mandate_id
+        console.log('Mandates: ', mandates);
+        axiosClient.put('/addmandates', {set_mandate: mandates})
+        .then(response => {
+            console.log('Success:', response.data);
+            // Handle success response here
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle error response here
+        });
+    }
 
     return (
         <div>
@@ -136,7 +151,7 @@ export default function ExcelImport() {
                         <tr>
                         <td colSpan="6">
                             <select
-                                value={mandate.name}
+                                value={mandate.mandate_id}
                                 onChange={(e) => handleMandateNameChange(mandateIndex, e.target.value)}
                                 className="w-full"
                                 >
@@ -156,13 +171,13 @@ export default function ExcelImport() {
                             <td></td>
                             <td colSpan="4">
                                 <select
-                                    value={activity.type}
-                                    onChange={(e) => handleActivityChange(mandateIndex, activityIndex, 'type', e.target.value)}
+                                    value={activity.activity_id}
+                                    onChange={(e) => handleActivityChange(mandateIndex, activityIndex, 'activity_id', e.target.value)}
                                     className="w-full"
                                     >
                                     <option value="">Select Activity</option>
                                     {report.map((item) => (
-                                        <option key={item.id} value={item.title}>{item.id}) {item.title}</option>
+                                        <option key={item.id} value={item.id}>{item.id}) {item.title}</option>
                                     ))}
                                 </select>
                             </td>
@@ -188,6 +203,9 @@ export default function ExcelImport() {
                     </tr>
                 </tbody>
             </table>
+            <div class="pt-2 flex justify-center">
+                <button onClick={handeSubmit} style={tvStyles}>Save/Export</button>
+            </div>
         </div>
     );
 }
