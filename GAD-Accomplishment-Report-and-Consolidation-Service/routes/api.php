@@ -36,12 +36,12 @@ Route::middleware('auth:sanctum')->group(function () {
     //For Mandates================================================
     Route::controller(MandatesController::class)->group(function() {
         Route::post('/createmandates', 'createmandates');
-        Route::put('/showmandates', 'index');
-        Route::put('/showarchivedmandates', 'archivedindex');
+        Route::get('/showmandates', 'index');
+        Route::get('/showarchivedmandates', 'archivedindex');
         Route::put('/updatemandate/{id}', 'updatemandates');
         Route::put('/archivemandate/{id}', 'archivemandates');
-        Route::get('/restoremandate/{id}', 'restoremandates');
-        Route::get('/deletemandate/{id}', 'deletemandates');
+        Route::put('/restoremandate/{id}', 'restoremandates');
+        Route::put('/deletemandate/{id}', 'deletemandates');
         Route::get('/showact_mandates','showact_mandates');
         
     });
