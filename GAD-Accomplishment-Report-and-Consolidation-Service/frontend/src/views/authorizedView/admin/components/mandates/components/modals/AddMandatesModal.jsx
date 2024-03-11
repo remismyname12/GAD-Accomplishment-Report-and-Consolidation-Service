@@ -21,16 +21,30 @@ export default function AddMandatesModal() {
   const renderInput = (name, label) => (
     <div className="flex flex-1 flex-col">
       <label htmlFor={name}>{label}</label>
-      <textarea 
-        id={name}
-        name={name}
-        autoComplete={name}
-        required
-        value={formData[name]}
-        onChange={handleChange}
-        className="bg-gray-200"
-        rows={2}
-      />
+      {name === "focus" ? (
+        <select
+          id={name}
+          name={name}
+          onChange={handleChange}
+          value={formData[name]}
+          required
+        >
+          <option value="">Select Focus</option>
+          <option value="Client-Focused">Client-Focused</option>
+          <option value="Organization-Focused">Organization-Focused</option>
+        </select>
+      ):(
+          <textarea 
+            id={name}
+            name={name}
+            autoComplete={name}
+            required
+            value={formData[name]}
+            onChange={handleChange}
+            className="bg-gray-200"
+            rows={2}
+        />
+      )}
     </div>
   );
 
@@ -70,7 +84,7 @@ export default function AddMandatesModal() {
         {renderInput('gender_issue', 'Gender Issues/GAD Mandate')}
         {renderInput('cause_of_gender_issue', 'Cause of Gender Issues')}
         {renderInput('gad_result_statement', 'GAD Result Statements')}
-        {renderInput('gad_activity', 'Gender Issues/GAD Mandate')}
+        {renderInput('gad_activity', 'GAD Activity')}
         {renderInput('performance_indicators', 'Performance Indicator/Targets')}
         {renderInput('target_result', 'Target Result')}
         {renderInput('focus', 'Focus')}

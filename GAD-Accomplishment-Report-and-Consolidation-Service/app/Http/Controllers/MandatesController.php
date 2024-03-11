@@ -58,7 +58,7 @@ class MandatesController extends Controller
             
             return response([
                 'success' => true,
-                'message' => 'Mandate created successfully',
+                'message' => 'Mandate updated successfully',
             ]);
         } catch (\Exception $e) {
             return response([
