@@ -106,7 +106,7 @@ export default function AnnualReport() {
             <table id="report-table">
                 <thead>
                     <tr>
-                        <th style={tnStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
+                        <th style={tvStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
                     </tr>
                     <tr>
                         <th style={thStyles}></th>
