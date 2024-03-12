@@ -46,20 +46,6 @@ class AccomplishmentReportController extends Controller
     
         // Find the first item with the given title
         $firstItem = accReport::where('title', $accReport['title'])->first();
-    
-        // Save Images
-
-            accReport::create([
-                'forms_id' => $accReport['forms_id'],
-                'title' => $accReport['title'],
-                'date_of_activity' => $accReport['date_of_activity'],
-                'venue' => $accReport['venue'],
-                'no_of_participants' => $accReport['no_of_participants'],
-                'male_participants' => $accReport['male_participants'],
-                'female_participants' => $accReport['female_participants'],
-                'proponents_implementors' => $accReport['proponents_implementors'],
-                'focus' => '0',
-            ]);
 
 
         // Save Actual Expenditures
