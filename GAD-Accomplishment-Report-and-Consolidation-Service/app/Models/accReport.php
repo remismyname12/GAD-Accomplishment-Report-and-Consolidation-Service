@@ -28,7 +28,8 @@ class accReport extends Model
         'clientele_number',
         'actual_cost',
         'cooperating_agencies_units',
-        'focus',
+        'proponents_implementors',
+        'focus'
     ];
 
     //

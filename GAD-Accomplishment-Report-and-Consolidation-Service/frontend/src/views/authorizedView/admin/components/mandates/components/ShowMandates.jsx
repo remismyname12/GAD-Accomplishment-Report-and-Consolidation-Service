@@ -60,7 +60,7 @@ export default function ShowMandates() {
         <tbody>
           {mandates.map((mandate, index) => (
             <tr key={index}>
-              <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.gender_issue}</td>
+              <td className="mx-1 p-2 border-solid border-2 border-sky-500">{index+1}) {mandate.gender_issue}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.cause_of_gender_issue}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.gad_result_statement}</td>
               <td className="mx-1 p-2 border-solid border-2 border-sky-500">{mandate.gad_activity}</td>
