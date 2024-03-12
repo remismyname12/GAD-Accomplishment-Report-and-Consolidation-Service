@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('learning_service_providers', 1000)->nullable();
             $table->string('expected_outputs', 1000);
             $table->string('fund_source', 1000);
-
+            
             //inset ---> has no unique columns
            
             //research/EAD
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('proponents_implementors', 1000)->default('IMPLEMENTOR');
             $table->string('date_and_venue', 1000)->nullable();
             $table->string('program_title', 1000)->nullable();
-            $table->string('project_title', 1000)->nullable();
+            $table->string('project_title', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -35,13 +35,15 @@ class AccomplishmentReportRequest extends FormRequest
             'accReport.clientele_number' => 'string',
             'accReport.actual_cost' => 'string',
             'accReport.cooperating_agencies_units' => 'string',
-            
+            'accReport.images' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
             'expenditures' => 'required|array',
             'expenditures.*.type' => 'required|string',
             'expenditures.*.item' => 'required|string',
             'expenditures.*.remarks' => 'required|string',
             'expenditures.*.source_of_funds' => 'required|string',
             // 'expenditures.*.actual_cost' => 'required|string',
+
         ];
 }
 }

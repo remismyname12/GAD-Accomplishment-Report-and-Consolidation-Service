@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('forms_id')->constrained('forms')->onDelete('cascade');
             $table->foreignId('mandates_id')->nullable()->constrained('mandates')->onDelete('cascade');
-            $table->string('title')->unique();
-            $table->string('date_of_activity');
-            $table->string('venue');
-            $table->string('proponents_implementors')->default('IMPLEMENTOR');
+            $table->string('title', 1000)->unique();
+            $table->string('date_of_activity', 1000);
+            $table->string('venue', 1000);
+            $table->string('proponents_implementors', 1000)->default('IMPLEMENTOR');
             $table->string('no_of_participants');
             $table->string('male_participants');
             $table->string('female_participants');
