@@ -99,9 +99,6 @@ export default function AnnualReport() {
     XLSX.writeFile(wb, 'report.xlsx');
     };
 
-    //contentEditable={true} contentEditable={true}
-    //ask if all are editable or just selected fields
-
     return (
         <div>
             <button onClick={exportToExcel}>Export to Excel</button>
@@ -109,7 +106,7 @@ export default function AnnualReport() {
             <table id="report-table">
                 <thead>
                     <tr>
-                        <th contentEditable={true} style={trStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
+                        <th style={tnStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
                     </tr>
                     <tr>
                         <th style={thStyles}></th>
@@ -162,7 +159,7 @@ export default function AnnualReport() {
                                 <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
                                 <td style={tnStyles}></td>
                                 <td style={tnStyles}>Total Actual Expenses For Mandate</td>
-                                <td contentEditable={true} style={trStyles}>Total Attribution For Mandate</td>
+                                <td style={tnStyles}>Total Attribution For Mandate</td>
                             </tr>
                             {item.acc_report && item.acc_report.map((report, reportIndex) => (
                                 report.actual_expenditure.map((expenditure, expenditureIndex) => (
@@ -177,7 +174,7 @@ export default function AnnualReport() {
                                         )}
                                         <td style={tnStyles}>{expenditure.items}</td>
                                         <td style={tnStyles}>{expenditure.actual_expenditure}</td>
-                                        <td contentEditable={true} style={trStyles}>+++</td>
+                                        <td style={tnStyles}>+++</td>
                                     </tr>
                                 ))
                             ))}
@@ -190,7 +187,7 @@ export default function AnnualReport() {
                         <td style={tnStyles}></td>
                         <td style={tnStyles}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>Total Actual Expenses For Mandate</td>
-                        <td contentEditable={true} style={{ ...trStyles, backgroundColor: '#C5E0B3' }}>Total Attribution For Mandate</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>Total Attribution For Mandate</td>
                     </tr>
                     <tr>
                         <td style={tnStyles}></td>
@@ -208,7 +205,7 @@ export default function AnnualReport() {
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>EXPENSES SUB-TOTAL</td>
-                        <td contentEditable={true} style={{ ...trStyles, backgroundColor: '#C5E0B3' }}>ATTRIBUTION SUB-TOTAL</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>ATTRIBUTION SUB-TOTAL</td>
                     </tr>
                     <tr>
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
@@ -228,7 +225,7 @@ export default function AnnualReport() {
                                 <td style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>Total Females for Mandate</td>
                                 <td style={tnStyles}></td>
                                 <td style={tnStyles}>Total Actual Expenses For Mandate</td>
-                                <td contentEditable={true} style={trStyles}>Total Attribution For Mandate</td>
+                                <td style={tnStyles}>Total Attribution For Mandate</td>
                             </tr>
                             {item.acc_report && item.acc_report.map((report, reportIndex) => (
                                 report.actual_expenditure.map((expenditure, expenditureIndex) => (
@@ -243,7 +240,7 @@ export default function AnnualReport() {
                                         )}
                                         <td style={tnStyles}>{expenditure.items}</td>
                                         <td style={tnStyles}>{expenditure.actual_expenditure}</td>
-                                        <td contentEditable={true} style={trStyles}>+++</td>
+                                        <td style={tnStyles}>+++</td>
                                     </tr>
                                 ))
                             ))}
@@ -256,7 +253,7 @@ export default function AnnualReport() {
                         <td style={tnStyles}></td>
                         <td style={tnStyles}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>Total Actual Expenses For Mandate</td>
-                        <td contentEditable={true} style={{ ...trStyles, backgroundColor: '#FFFF00' }}>Total Attribution For Mandate</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>Total Attribution For Mandate</td>
                     </tr>
                     <tr>
                         <td style={tnStyles}></td>
@@ -274,7 +271,7 @@ export default function AnnualReport() {
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>EXPENSES SUB-TOTAL</td>
-                        <td contentEditable={true} style={{ ...trStyles, backgroundColor: '#FFFF00' }}>ATTRIBUTION SUB-TOTAL</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>ATTRIBUTION SUB-TOTAL</td>
                     </tr>
                     <tr>
                         <td style={tnStyles}></td>
