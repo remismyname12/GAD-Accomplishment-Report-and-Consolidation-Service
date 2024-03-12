@@ -38,6 +38,7 @@ class AccomplishmentReportController extends Controller
                 'no_of_participants' => $accReport['no_of_participants'],
                 'male_participants' => $accReport['male_participants'],
                 'female_participants' => $accReport['female_participants'],
+                'proponents_implementors' => $accReport['proponents_implementors'],
                 'focus' => '0',
             ]);
 
