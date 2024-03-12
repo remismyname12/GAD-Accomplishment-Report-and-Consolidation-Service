@@ -30,7 +30,6 @@ class accReport extends Model
         'cooperating_agencies_units',
         'proponents_implementors',
         'focus'
-        
     ];
 
     //
@@ -52,5 +51,10 @@ class accReport extends Model
     public function mandates(): BelongsTo
     {
         return $this->belongsTo(Mandates::class);
+    }
+
+    public function image(): HasMany
+    {
+        return $this->hasMany(Image::class);
     }
 }

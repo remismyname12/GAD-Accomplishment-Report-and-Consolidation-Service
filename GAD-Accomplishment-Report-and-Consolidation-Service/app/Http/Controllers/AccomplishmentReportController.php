@@ -7,6 +7,8 @@ use App\Http\Requests\AddMandate;
 use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
+use App\Models\Image;
+use Illuminate\Support\Facades\Storage;
 
 class AccomplishmentReportController extends Controller
 {
@@ -29,6 +31,23 @@ class AccomplishmentReportController extends Controller
     public function accomplishment_report_store(ACReportRequest_E_I $request) {
         $accReport = $request->validated('accReport');
         $expenditures = $request->validated('expenditures');
+        $imageFormData = $request->validated('imageFormData');
+        // Create Accomplishment Report
+        $createdAccReport = accReport::create([
+            'forms_id' => $accReport['forms_id'],
+            'title' => $accReport['title'],
+            'date_of_activity' => $accReport['date_of_activity'],
+            'venue' => $accReport['venue'],
+            'no_of_participants' => $accReport['no_of_participants'],
+            'male_participants' => $accReport['male_participants'],
+            'female_participants' => $accReport['female_participants'],
+            'focus' => '0',
+        ]);
+    
+        // Find the first item with the given title
+        $firstItem = accReport::where('title', $accReport['title'])->first();
+    
+        // Save Images
 
             accReport::create([
                 'forms_id' => $accReport['forms_id'],
@@ -42,24 +61,22 @@ class AccomplishmentReportController extends Controller
                 'focus' => '0',
             ]);
 
-            // Find the first item with the given title
-            $firstItem = accReport::where('title', $accReport['title'])->first();
 
-            foreach ($expenditures as $expenditure) {
-                ActualExpendature::create([
-                    'acc_report_id' => $firstItem->id,
-                    'type' => $expenditure['type'],
-                    'items' => $expenditure['item'],
-                    'approved_budget' => $expenditure['approved_budget'],
-                    'actual_expenditure' => $expenditure['actual_expenditure'],
-                ]);
-            }
-            
-        //update parent tables or not?
+        // Save Actual Expenditures
+        foreach ($expenditures as $expenditure) {
+            ActualExpendature::create([
+                'acc_report_id' => $firstItem->id,
+                'type' => $expenditure['type'],
+                'items' => $expenditure['item'],
+                'approved_budget' => $expenditure['approved_budget'],
+                'actual_expenditure' => $expenditure['actual_expenditure'],
+            ]);
+        }
 
         return response([
             'success' => true,
-            'message' => 'Accomplishment Report Successfully Created'
+            'message' => 'Accomplishment Report Successfully Created',
+            'test' => $imageFormData
     ]);
     }
 
