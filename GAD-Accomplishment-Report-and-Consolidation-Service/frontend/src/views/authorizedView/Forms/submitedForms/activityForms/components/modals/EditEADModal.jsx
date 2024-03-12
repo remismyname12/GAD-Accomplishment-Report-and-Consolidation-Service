@@ -77,11 +77,12 @@ export default function EditEADModal({selectedForm}) {
   }
 
   const [formData, setFormData] = useState({
+    program_title: selectedForm.program_title,
+    project_title: selectedForm.project_title,
     title: selectedForm.title,
-    date_of_activity: selectedForm.date_of_activity,
+    date_and_venue: selectedForm.date_and_venue,
     venue: selectedForm.venue,
-    clientele_type: selectedForm.clientele_type,
-    clientele_number: selectedForm.clientele_number,
+    clientele_type_and_number: selectedForm.clientele_type_and_number,
     estimated_cost: selectedForm.estimated_cost,
     cooperating_agencies_units: selectedForm.cooperating_agencies_units,
     expected_outputs: selectedForm.expected_outputs,
@@ -135,7 +136,7 @@ export default function EditEADModal({selectedForm}) {
           required
           value={formData[name]}
           onChange={handleChange}
-          className="bg-white"
+          className="bg-gray-100"
           rows={4} // Set the number of rows to accommodate long text
         />
       ) : (
@@ -147,7 +148,7 @@ export default function EditEADModal({selectedForm}) {
           required
           value={formData[name]}
           onChange={handleChange}
-          className="bg-white"
+          className="bg-gray-100"
         />
       )}
     </div>
@@ -166,11 +167,11 @@ export default function EditEADModal({selectedForm}) {
       </h1>
 
       <form onSubmit={handleSubmit} >
-        {renderInput("title", "Title: ")}
-        {renderInput("date_of_activity", "Date of Activity: ")}
-        {renderInput("venue", "Venue: ")}
-        {renderInput("clientele_type", "Clientele Type: ")}
-        {renderInput("clientele_number", "Clientele Number: ")}
+        {renderInput("program_title", "Program Title: ")}
+        {renderInput("project_title", "Project Title: ")}
+        {renderInput("title", "Activity Title: ")}
+        {renderInput("date_and_venue", "Date and Venue of Activity: ")}
+        {renderInput("clientele_type_and_number", "Clientele Type and Number: ")}
         {renderInput("estimated_cost", "Estimated Cost: ")}
         {renderInput("cooperating_agencies_units", "Cooperating Agencies/Units: ")}
         {renderInput("expected_outputs", "Expected Outputs: ")}
