@@ -28,8 +28,7 @@ class accReport extends Model
         'clientele_number',
         'actual_cost',
         'cooperating_agencies_units',
-        'focus'
-        
+        'focus',
     ];
 
     //
@@ -51,5 +50,10 @@ class accReport extends Model
     public function mandates(): BelongsTo
     {
         return $this->belongsTo(Mandates::class);
+    }
+
+    public function image(): HasMany
+    {
+        return $this->hasMany(Image::class);
     }
 }
