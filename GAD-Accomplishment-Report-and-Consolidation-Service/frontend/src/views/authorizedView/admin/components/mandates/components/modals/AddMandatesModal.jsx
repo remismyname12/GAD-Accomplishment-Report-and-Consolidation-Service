@@ -30,8 +30,8 @@ export default function AddMandatesModal() {
           required
         >
           <option value="">Select Focus</option>
-          <option value="Client-Focused">Client-Focused</option>
-          <option value="Organization-Focused">Organization-Focused</option>
+          <option value="Client">Client-Focused</option>
+          <option value="Organization">Organization-Focused</option>
         </select>
       ):(
           <textarea 
