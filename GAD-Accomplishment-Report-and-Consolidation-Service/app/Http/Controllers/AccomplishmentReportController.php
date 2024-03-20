@@ -8,6 +8,7 @@ use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
 use App\Models\Image;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 
 class AccomplishmentReportController extends Controller
@@ -29,9 +30,10 @@ class AccomplishmentReportController extends Controller
     }
 
     public function accomplishment_report_store(ACReportRequest_E_I $request) {
-        $accReport = $request->validated('accReport');
+        $accReport = $request->validated();
         $expenditures = $request->validated('expenditures');
-        $imageFormData = $request->validated('imageFormData');
+        $images = $request->validated('images');
+        
         // Create Accomplishment Report
         $createdAccReport = accReport::create([
             'forms_id' => $accReport['forms_id'],
@@ -46,8 +48,7 @@ class AccomplishmentReportController extends Controller
     
         // Find the first item with the given title
         $firstItem = accReport::where('title', $accReport['title'])->first();
-
-
+      
         // Save Actual Expenditures
         foreach ($expenditures as $expenditure) {
             ActualExpendature::create([
@@ -58,13 +59,33 @@ class AccomplishmentReportController extends Controller
                 'actual_expenditure' => $expenditure['actual_expenditure'],
             ]);
         }
+    
+        // Store images
+        $imageModels = [];
+        foreach ($images as $image) {
+            // Store each image in the storage directory
+            $storedImagePath = $image->store('public/images');
 
+            // Get the full image path
+            $fullImagePath = Storage::url($storedImagePath);
+
+            // Create an array of attributes for each image
+            $imageModels[] = ['path' => $fullImagePath];
+        }
+
+        // Save the image paths to the database
+        $createdAccReport->images()->createMany($imageModels);
+
+
+        // Return the response with the stored image paths
         return response([
             'success' => true,
             'message' => 'Accomplishment Report Successfully Created',
-            'test' => $imageFormData
-    ]);
+            'images' => $imageModels  // Return the stored image paths in the response
+        ]);
+
     }
+    
 
     public function accomplishment_report_update() {
         //Update on the parent (Forms)

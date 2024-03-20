@@ -12,7 +12,7 @@ class Image extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'activity_design_image'
+        'path'
     ];
 
     public function accReport(): BelongsTo

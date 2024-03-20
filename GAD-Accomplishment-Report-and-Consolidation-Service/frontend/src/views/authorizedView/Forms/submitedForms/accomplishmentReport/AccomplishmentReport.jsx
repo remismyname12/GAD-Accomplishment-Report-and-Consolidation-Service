@@ -4,8 +4,8 @@ import axiosClient from '../../../../axios/axios';
 import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/outline';
 import ReactModal from 'react-modal';
 import ViewEADReportModal from '../activityForms/components/modals/ViewEADReportModal';
-import ArchiveReportModal from './components/modals/ArchiveReportModal';
 import EditActivityModal from '../activityForms/components/modals/EditActivityModal';
+import ShowActivityModal from './components/modals/ShowActivityModal';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -35,7 +35,7 @@ export default function AccomplishmentReport() {
   };
 
   // For Form EDIT
-  const handleEditClick = (selected_form) => {
+  const handleViewClick = (selected_form) => {
     setIsEditModalOpen(true)
     setSelectedForm(selected_form)
   }
@@ -81,15 +81,15 @@ export default function AccomplishmentReport() {
                   key={(formEntry).id}
                   className="relative rounded-md p-3 hover:bg-gray-100"
                 >
+                    <button onClick={() => handleViewClick((formEntry))}>
                   <h3 className="text-sm font-medium leading-5">
                     <li>{formEntry.title}</li>
                   </h3>
 
                   <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">  
-                    <button onClick={() => handleEditClick((formEntry))}>
                       <li>{formEntry.proponents_implementors}</li>
-                    </button>
                   </ul>
+                  </button>
 
                   <ul>
                       
@@ -107,33 +107,18 @@ export default function AccomplishmentReport() {
 
       {/** Modal For User EDIT */}
       <ReactModal
-    isOpen={isEditModalOpen}
-    onRequestClose={() => setIsEditModalOpen(false)}
-    className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[5%] mx-auto p-5 overflow-auto"
->
-    <div>
-        {selectedForm && selectedForm.forms && selectedForm.forms.form_type === 'EAD' ? (
-            <ViewEADReportModal closeModal={() => setIsEditModalOpen(false)} selectedForm={selectedForm} />
-        ) : (
-            <EditActivityModal closeModal={() => setIsEditModalOpen(false)} selectedForm={selectedForm} />
-        )}
-    </div>
-</ReactModal>
-
-
-        {/** Modal For User ARCHIVE */}                
-        <ReactModal
-            isOpen={isArchiveModalOpen}
-            onRequestClose={() => setIsArchiveModalOpen(false)}
-            className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
-        >
-            <div>
-                <ArchiveReportModal
-                 closeModal={() => setIsArchiveModalOpen(false)}
-                 selectedForm={selectedForm}
-                 />
-            </div>
-        </ReactModal>
+      isOpen={isEditModalOpen}
+      onRequestClose={() => setIsEditModalOpen(false)}
+      className="w-full md:w-[30%] lg:w-[60%] h-[80%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[1%] mx-auto p-5 overflow-auto"
+      >
+          <div>
+              {selectedForm && selectedForm.forms && selectedForm.forms.form_type === 'EAD' ? (
+                  <ViewEADReportModal closeModal={() => setIsEditModalOpen(false)} selectedForm={selectedForm} />
+              ) : (
+                  <ShowActivityModal closeModal={() => setIsEditModalOpen(false)} selectedForm={selectedForm} />
+              )}
+          </div>
+      </ReactModal>
     </div>
   )
 }

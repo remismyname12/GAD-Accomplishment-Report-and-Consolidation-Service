@@ -22,16 +22,18 @@ class ACReportRequest_E_I extends FormRequest
     public function rules(): array
     {
         return [
-            'accReport' => 'required|array',
-            'accReport.forms_id' => 'required|integer',
-            'accReport.title' => 'required|string',
-            'accReport.date_of_activity' => 'required|string',
-            'accReport.venue' => 'required|string',
-            'accReport.proponents_implementors' => 'required|string',
-            'accReport.male_participants' => 'string',
-            'accReport.female_participants' => 'string',
-            'accReport.no_of_participants' => 'string',
+            'forms_id' => 'required|integer',
+            'title' => 'required|string',
+            'date_of_activity' => 'required|string',
+            'venue' => 'required|string',
+            'proponents_implementors' => 'required|string',
+            'male_participants' => 'nullable|numeric',
+            'female_participants' => 'nullable|numeric',
+            'no_of_participants' => 'required|numeric',
             
+            'images' => 'required|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
+
             'expenditures' => 'required|array',
             'expenditures.*.type' => 'required|string',
             'expenditures.*.item' => 'required|string',
@@ -39,4 +41,5 @@ class ACReportRequest_E_I extends FormRequest
             'expenditures.*.actual_expenditure' => 'required|string',
         ];
     }
+    
 }

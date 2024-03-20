@@ -1,39 +1,20 @@
-import { MinusCircleIcon } from '@heroicons/react/20/solid';
 import React, { useState, useRef } from 'react';
 
-export default function AddImages({ onImagesChange }) {
+const AddImages = ({ onImagesChange }) => {
   const [images, setImages] = useState([]);
   const inputRef = useRef(null);
 
   const handleImageChange = (event) => {
-    const selectedImages = event.target.files;
-
-    const uniqueImages = Array.from(selectedImages).filter(
-      (newImage) => !images.some((existingImage) => existingImage.name === newImage.name)
-    );
-
-    setImages((prevImages) => [...prevImages, ...uniqueImages]);
-
-    const formData = new FormData();
-    images.forEach((image) => formData.append('images[]', image));
-    onImagesChange(formData);
+    const selectedImages = Array.from(event.target.files);
+    setImages(selectedImages);
+    onImagesChange(selectedImages); // Passing selected images to the parent component
   };
 
   const handleDrop = (event) => {
     event.preventDefault();
-
-    const droppedFiles = event.dataTransfer.files;
-
-    const uniqueFiles = Array.from(droppedFiles).filter(
-      (newFile) => !images.some((existingImage) => existingImage.name === newFile.name)
-    );
-
-    setImages((prevImages) => [...prevImages, ...uniqueFiles]);
-
-    const formData = new FormData();
-    uniqueFiles.forEach((file) => formData.append('images[]', file));
-    onImagesChange(formData);
-
+    const droppedFiles = Array.from(event.dataTransfer.files);
+    setImages(droppedFiles);
+    onImagesChange(droppedFiles); // Passing dropped images to the parent component
     if (inputRef.current) {
       inputRef.current.value = null;
     }
@@ -46,11 +27,7 @@ export default function AddImages({ onImagesChange }) {
   const handleRemoveImage = (index) => {
     const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
-
-    const formData = new FormData();
-    updatedImages.forEach((image) => formData.append('images[]', image));
-
-    onImagesChange(formData);
+    onImagesChange(updatedImages); // Passing updated images to the parent component
   };
 
   const handleClick = () => inputRef.current && inputRef.current.click();
@@ -78,9 +55,7 @@ export default function AddImages({ onImagesChange }) {
             {images.map((image, index) => (
               <div key={index} style={{ marginBottom: '10px' }}>
                 <img src={URL.createObjectURL(image)} alt={`Selected Image ${index}`} style={{ maxWidth: '100px', maxHeight: '100px' }} />
-                <button onClick={() => handleRemoveImage(index)}>
-                  <MinusCircleIcon className="w-6 h-6 text-red-500 cursor-pointer transform transition-transform hover:scale-125" />
-                </button>
+                <button onClick={() => handleRemoveImage(index)}>Remove</button>
               </div>
             ))}
           </div>
@@ -89,3 +64,5 @@ export default function AddImages({ onImagesChange }) {
     </div>
   );
 }
+
+export default AddImages;
