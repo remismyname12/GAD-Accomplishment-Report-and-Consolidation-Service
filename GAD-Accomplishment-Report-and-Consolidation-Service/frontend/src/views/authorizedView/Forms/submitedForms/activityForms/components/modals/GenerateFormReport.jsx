@@ -4,17 +4,13 @@ import NeutralButton from '../../../../../../components/buttons/NeutralButton';
 import { TemplateHandler } from 'easy-template-x';
 import axiosClient from '../../../../../../axios/axios';
 import InsetEmployeeAccomplishmentReport from '../../../../../../components/printing/forms/InsetEmployeeAccomplishmentReport.docx'
+import Addimages from '../../../../../../components/image/Addimages';
 
 //For Feedback
 import Feedback from '../../../../../../components/feedbacks/Feedback';
 import { MinusCircleIcon } from '@heroicons/react/20/solid';
 
-
 export default function GenerateFormReport({ selectedForm }) {
-  //save acc report to acc report table
-  //save acutal expenditure to actual expenditure table
-  //fix the requests, controller, axios endpoints, model and relationships
-  //for both acc report and actual expenditures table
   
   const [formData, setFormData] = useState({
     forms_id: selectedForm.id,
@@ -24,7 +20,6 @@ export default function GenerateFormReport({ selectedForm }) {
     clientele_number: 'n/a',
     actual_cost: 'n/a',
     cooperating_agencies_units: 'n/a',
-    //Change date_of_activity to date_of_LEAD_activity depending of the form_type
     ...(selectedForm.form_type !== "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     ...(selectedForm.form_type === "INSET" && { date_of_activity: selectedForm.date_of_activity }),
     venue: selectedForm.venue,
@@ -32,6 +27,7 @@ export default function GenerateFormReport({ selectedForm }) {
     male_participants: '',
     female_participants: '',
     proponents_implementors: selectedForm.proponents_implementors,
+    images: [], //for images
   });
 
   const [actualExpendatures, setActualExpendatures] = useState([{
@@ -41,6 +37,19 @@ export default function GenerateFormReport({ selectedForm }) {
     actual_expenditure: '',
   }]);
 
+  const handleImagesChange = (selectedImages) => {
+    // Update the formData state with the array of selected images
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      images: selectedImages
+    }));
+  };
+  
+  // useEffect to log updated formData state
+  useEffect(() => {
+    console.log('Updated FormData with images:', formData);
+  }, [formData]); // Trigger the effect whenever formData changes
+  
   const expendituresArray = selectedForm.expenditures;
 
   const [proposedExpenditures, setProposedExpenditures] = useState([
@@ -58,8 +67,7 @@ export default function GenerateFormReport({ selectedForm }) {
   const populateDocx = async () => {
     try {
         const blob = await fetchData(fileUrl);
-        console.log('Received blob:', blob); // Check the type and content of the blob
-        const data = {
+         const data = {
             title: formData.title,
             dateOfActivity: formData.date_of_activity,
             venue: formData.venue,
@@ -128,28 +136,45 @@ export default function GenerateFormReport({ selectedForm }) {
   const handleSubmit = async (ev) => {
     ev.preventDefault();
     setError({ __html: "" });
+  
+    // Create FormData object
+    const formDataToSend = new FormData();
+  
+    // Append form data
+    for (const key in formData) {
+      formDataToSend.append(key, formData[key]);
+    }
+  
+    // Append image files
+    formData.images.forEach((image, index) => {
+      formDataToSend.append(`images[${index}]`, image);
+    });
+  
+    // Append expenditures data as array
+    actualExpendatures.forEach((expenditure, index) => {
+      for (const key in expenditure) {
+        formDataToSend.append(`expenditures[${index}][${key}]`, expenditure[key]);
+      }
+    });
+    
+    console.log('formDataToSend',formDataToSend);
 
     try {
-      const response = await axiosClient.post('/accomplishment_report', {
-          accReport: formData,
-          expenditures: actualExpendatures,
-      });
+      const response = await axiosClient.post('/accomplishment_report', formDataToSend);
       setAxiosMessage(response.data.message); // Set success message
       setAxiosStatus(response.data.success);
-      console.log();
       if (response.data.success === true){
         populateDocx(); // Run the download of DOCX
       }
       setTimeout(() => {
-          setAxiosMessage(''); // Clear success message
-          setAxiosStatus('');
+        setAxiosMessage(''); // Clear success message
+        setAxiosStatus('');
       }, 3000); // Timeout after 3 seconds
     } catch (error) {
       setAxiosMessage(error.response.data.message); // Set success message
     }
   };
-
-
+  
   const handleFormChange = (index, event) => {
     let data = [...actualExpendatures];
     data[index][event.target.name] = event.target.value;
@@ -178,6 +203,7 @@ const renderInput = (name, label) => {
   // Check if the input field should be required based on form type and field name
   const isRequired = selectedForm.form_type !== "INSET" && name == "no_of_target_participants";
 
+  console.log('test',formData.images);
   return (
     <div className='flex flex-1 flex-col'>
       
@@ -211,7 +237,7 @@ const renderInput = (name, label) => {
         ></div>
       )}
 
-    <form onSubmit={handleSubmit} className="flex flex-1 flex-col">
+    <form onSubmit={handleSubmit} className="flex flex-1 flex-col" encType="multipart/form-data">
       {renderInput("title", "Title: ")}
       {renderInput(selectedForm.form_type === "INSET" ? "date_of_activity" : "date_of_activity", "Date of Activity: ")}
       {renderInput("venue", "Venue: ")}
@@ -337,20 +363,23 @@ const renderInput = (name, label) => {
           </tbody>
         </table>
         
-        
-
-        {/*------------------------------------------------------------------------------*/}
+          {/*------------------------------------------------------------------------------*/}
           <div className="flex justify-center">
 
-          <NeutralButton label="Add more.." onClick={() => addFields()} />
+            <NeutralButton label="Add more.." onClick={() => addFields()} />
           {/* <button onClick={addFields} className='m-1'>Add More..</button> */}
           </div>
         
-      </div>
-  <div className="mt-5">
-    <Submit label="Submit"/>
-  </div>
-</form>
+        </div>
+        
+        <div className='flex justify-center mt-5'>
+          <Addimages onImagesChange={handleImagesChange} />
+        </div>
+
+        <div className="mt-5">
+          <Submit label="Submit"/>
+        </div>
+      </form>
 
     </div>
   );

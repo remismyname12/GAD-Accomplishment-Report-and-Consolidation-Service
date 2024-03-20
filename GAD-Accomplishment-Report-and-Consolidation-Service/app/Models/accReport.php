@@ -52,7 +52,7 @@ class accReport extends Model
         return $this->belongsTo(Mandates::class);
     }
 
-    public function image(): HasMany
+    public function images(): HasMany
     {
         return $this->hasMany(Image::class);
     }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->string('activity_design_image')->nullable();
+            $table->foreignId('acc_report_id')->constrained('acc_report')->onDelete('cascade');
+            $table->string('path')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
