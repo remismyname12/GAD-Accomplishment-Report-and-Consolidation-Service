@@ -5,14 +5,15 @@ import * as XLSX from 'xlsx';
 
 
 export default function AnnualReport() {
-    const [mandate, setMandate] = useState([]);
+    
     const [clientMandate, setClientMandate] = useState([]);
     const [organizationMandate, setOrganizationMandate] = useState([]);
-    console.log('Mandate: ', mandate);
-    //const clientMandate = mandate.ClientFocused;
-    console.log('Client: ', clientMandate);
-    //const organizationMandate = mandate.OrganizationFocused;
-    console.log('Organ: ', organizationMandate);
+
+    const [totalMale, setTotalMale] = useState('');
+    const [totalFemale, setTotalFemale] = useState('');
+
+    const [totalExpenses, setTotalExpenses] = useState('');
+    //const [totalAttribution, setTotalAttribution] = useState('');
 
 
     useEffect(() => {
@@ -23,9 +24,8 @@ export default function AnnualReport() {
         try {
             const response = await axiosClient.get('/showact_mandates');
             if (response.data) {
-                setMandate(response.data);
-                setClientMandate(response.data.ClientFocused)
-                setOrganizationMandate(response.data.OrganizationFocused)
+                setClientMandate(response.data.Client)
+                setOrganizationMandate(response.data.Organization)
             } else {
                 console.error('Invalid response format:', response.data);
             }
@@ -44,7 +44,7 @@ export default function AnnualReport() {
     };
 
     const trStyles = {
-        border: '1px solid black',
+        border: '2px solid black',
         padding: '5px',
         backgroundColor: 'white',
         verticalAlign: 'top',
@@ -99,14 +99,14 @@ export default function AnnualReport() {
     XLSX.writeFile(wb, 'report.xlsx');
     };
 
-
     return (
         <div>
             <button onClick={exportToExcel}>Export to Excel</button>
+            <br></br>
             <table id="report-table">
                 <thead>
                     <tr>
-                        <th colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
+                        <th style={tvStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
                     </tr>
                     <tr>
                         <th style={thStyles}></th>
@@ -145,10 +145,10 @@ export default function AnnualReport() {
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
                         <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Client-Focused Activities</th>
                     </tr>
-                    {clientMandate.map((item) => (
+                    {clientMandate.map((item, rowNum) => (
                         <React.Fragment key={item.id}>
                             <tr>
-                                <td style={tvStyles}>1</td>
+                                <td style={tvStyles}>{rowNum+=1}</td>
                                 <td style={tvStyles}>{item.gender_issue}</td>
                                 <td style={tvStyles}>{item.cause_of_gender_issue}</td>
                                 <td style={tvStyles}>{item.gad_result_statement}</td>
@@ -167,7 +167,7 @@ export default function AnnualReport() {
                                         {expenditureIndex === 0 && (
                                             <>
                                                 <td rowspan={report.actual_expenditure.length} style={tnStyles}></td>
-                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{report.title}</td>
+                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{reportIndex+=1}) {report.title}</td>
                                                 <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{report.male_participants}</td>
                                                 <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{report.female_participants}</td>
                                             </>
@@ -204,17 +204,17 @@ export default function AnnualReport() {
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
-                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
-                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>EXPENSES SUB-TOTAL</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#C5E0B3' }}>ATTRIBUTION SUB-TOTAL</td>
                     </tr>
                     <tr>
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
                         <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Organization-Focused Activities</th>
                     </tr>
-                    {organizationMandate.map((item) => (
+                    {organizationMandate.map((item, rowNum) => (
                         <React.Fragment key={item.id}>
                             <tr>
-                                <td style={tvStyles}>1</td>
+                                <td style={tvStyles}>{rowNum+=1}</td>
                                 <td style={tvStyles}>{item.gender_issue}</td>
                                 <td style={tvStyles}>{item.cause_of_gender_issue}</td>
                                 <td style={tvStyles}>{item.gad_result_statement}</td>
@@ -233,7 +233,7 @@ export default function AnnualReport() {
                                         {expenditureIndex === 0 && (
                                             <>
                                                 <td rowspan={report.actual_expenditure.length} style={tnStyles}></td>
-                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{report.title}</td>
+                                                <td rowspan={report.actual_expenditure.length} colSpan="6" style={tnStyles}>{reportIndex+=1}) {report.title}</td>
                                                 <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#00B0F0' }}>{report.male_participants}</td>
                                                 <td rowspan={report.actual_expenditure.length} style={{ ...tvStyles, backgroundColor: '#FF66FF' }}>{report.female_participants}</td>
                                             </>
@@ -270,8 +270,8 @@ export default function AnnualReport() {
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
                         <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
-                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
-                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}></td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>EXPENSES SUB-TOTAL</td>
+                        <td style={{ ...tnStyles, backgroundColor: '#FFFF00' }}>ATTRIBUTION SUB-TOTAL</td>
                     </tr>
                     <tr>
                         <td style={tnStyles}></td>

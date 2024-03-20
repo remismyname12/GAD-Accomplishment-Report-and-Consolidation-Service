@@ -269,6 +269,7 @@ const renderInput = (name, label) => {
                 <td className="px-6 py-4 whitespace-no-wrap">{input.per_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.no_item}</td>
                 <td className="px-6 py-4 whitespace-no-wrap">{input.times}</td>
+                <td className="px-6 py-4 whitespace-no-wrap">{input.total}</td>
               </tr>
             ))}
           </tbody>

@@ -48,7 +48,7 @@ class AccomplishmentReportController extends Controller
     
         // Find the first item with the given title
         $firstItem = accReport::where('title', $accReport['title'])->first();
-     
+      
         // Save Actual Expenditures
         foreach ($expenditures as $expenditure) {
             ActualExpendature::create([
