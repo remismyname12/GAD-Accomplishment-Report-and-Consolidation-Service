@@ -12,7 +12,8 @@ class Image extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'path'
+        'original_path',
+        'thumbnail_path'
     ];
 
     public function accReport(): BelongsTo

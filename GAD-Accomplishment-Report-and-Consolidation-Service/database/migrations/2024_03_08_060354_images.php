@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('acc_report_id')->constrained('acc_report')->onDelete('cascade');
-            $table->string('path')->nullable();
+            $table->string('original_path')->nullable();
+            $table->string('thumbnail_path')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

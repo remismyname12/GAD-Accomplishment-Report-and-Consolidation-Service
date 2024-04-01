@@ -1,13 +1,34 @@
-import React from 'react';
-import Submit from '../../../../../../components/buttons/Submit';
+import React, { useEffect, useState } from 'react';
+import axiosClient from '../../../../../../axios/axios';
+import ReactModal from 'react-modal';
 
 export default function ShowActivityModal({ selectedForm }) {
+  const [images, setImages] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);  // State to track clicked image
+  const [isModalOpen, setIsModalOpen] = useState(false);  // State to track modal open/close
+  const [zoomLevel, setZoomLevel] = useState(1);  // State to track zoom level
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axiosClient.get(`/getimages/${selectedForm.id}`);
+        if (response.data && response.data.length > 0) {
+          setImages(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching images:", error);
+      }
+    };
+
+    if (selectedForm.id) {
+      fetchData();
+    }
+  }, [selectedForm.id]);
 
   const renderFields = (name, label) => {
     return (
       <div>
         <label htmlFor={name} className="font-bold">{label}</label>
-
         <input
           id={name}
           name={name}
@@ -22,10 +43,29 @@ export default function ShowActivityModal({ selectedForm }) {
     );
   }
 
-  const tableBorder = "border border-black border-solid";
-  
+  const tableBorder = "text-center border border-black border-solid";
+
+  const openModal = (imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedImage(null);
+    setIsModalOpen(false);
+    setZoomLevel(1);  // Reset zoom level when closing modal
+  };
+
+  const handleDoubleClick = () => {
+    if (zoomLevel < 3) {
+      setZoomLevel(prevZoom => prevZoom + 0.1);
+    } else {
+      setZoomLevel(1);
+    }
+  };
+
   return (
-    <div>
+    <div className="p-4">
       {renderFields("title", "Title: ")}
       {renderFields("date_of_activity", "Date of Activity: ")}
       {renderFields("venue", "Venue: ")}
@@ -66,25 +106,53 @@ export default function ShowActivityModal({ selectedForm }) {
         <table className='min-w-full'>
           <thead>
             <tr>
-                <th className={`w-1/2 ${tableBorder}`}>
+                <th className="w-1/2 text-center border border-black border-solid">
                   Activity Designs
-                </th>
-                <th className={`w-1/2 ${tableBorder}`}>
-                  Accomplishment Reports
                 </th>
             </tr>
           </thead>
           <tbody>
-            <td className={`w-1/2 ${tableBorder}`}>
-
-            </td>
-            <td className={`w-1/2 ${tableBorder}`}>
-
+            <td className="w-1/2 text-center border border-black border-solid">
+              {images && images.length > 0 ? (
+                images.map((image, index) => (
+                  <img 
+                    key={index} 
+                    src={`${import.meta.env.VITE_API_BASE_URL}${image}`} 
+                    alt={`Image-${index}`} 
+                    className="w-full cursor-pointer" 
+                    onClick={() => openModal(`${import.meta.env.VITE_API_BASE_URL}${image}`)}
+                  />
+                ))
+              ) : (
+                <p className="text-center">No images available</p>
+              )}
             </td>
           </tbody>
         </table>
       </div>
-      
+
+      {/* Modal */}
+      <ReactModal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Full View Image"
+      >
+        <div className="w-full h-screen flex flex-col items-center justify-center">
+          <button onClick={closeModal} className="absolute top-4 right-4 text-white bg-red-500 p-2 rounded">Close</button>
+          <div className="relative w-full h-full" onDoubleClick={handleDoubleClick}>
+            <img 
+              src={selectedImage} 
+              alt="Full view"
+              style={{ transform: `scale(${zoomLevel})` }}
+              className="max-w-full max-h-full object-contain"
+            />
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex">
+              <button onClick={() => setZoomLevel(prev => prev + 0.1)} className="text-white bg-blue-500 p-2 rounded m-2">Zoom In</button>
+              <button onClick={() => setZoomLevel(prev => prev - 0.1)} className="text-white bg-blue-500 p-2 rounded m-2">Zoom Out</button>
+            </div>
+          </div>
+        </div>
+      </ReactModal>
     </div>
   );
 }
