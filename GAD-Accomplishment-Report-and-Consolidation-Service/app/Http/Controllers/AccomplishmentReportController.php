@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\ACReportRequest_E_I;
 use App\Http\Requests\AddMandate;
 use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
-use App\Models\Image;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 class AccomplishmentReportController extends Controller
 {
@@ -28,6 +31,17 @@ class AccomplishmentReportController extends Controller
 
         return response($forms_id);
     }
+
+    public function getimages($id)
+    {
+        try {
+            $report = accReport::with('images')->find($id);
+            return response()->json($report->images->pluck('original_path')->toArray());
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+    
 
     public function accomplishment_report_store(ACReportRequest_E_I $request) {
         $accReport = $request->validated();
@@ -63,14 +77,21 @@ class AccomplishmentReportController extends Controller
         // Store images
         $imageModels = [];
         foreach ($images as $image) {
-            // Store each image in the storage directory
-            $storedImagePath = $image->store('public/images');
+            $manager = new ImageManager(new Driver());
 
-            // Get the full image path
+            // Store each image in the storage directory
+            $storedImagePath = $image->store('public/images/');
             $fullImagePath = Storage::url($storedImagePath);
 
+            $thumbnailPath = 'public/thumbnails/' . $image->hashName();
+            $thumbnail = $manager->read($image)->resize(100, 100);
+            Storage::put($thumbnailPath, $thumbnail->encode());
+            
             // Create an array of attributes for each image
-            $imageModels[] = ['path' => $fullImagePath];
+            $imageModels[] = [
+                'original_path' => $fullImagePath,
+                'thumbnail_path' => $thumbnailPath
+            ];
         }
 
         // Save the image paths to the database
@@ -85,7 +106,6 @@ class AccomplishmentReportController extends Controller
         ]);
 
     }
-    
 
     public function accomplishment_report_update() {
         //Update on the parent (Forms)
