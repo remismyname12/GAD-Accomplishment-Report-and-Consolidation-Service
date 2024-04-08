@@ -62,9 +62,9 @@ export default function AdminLayout() {
                     </Disclosure.Button>
                   </div>
 
-                  <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                  <div className="flex h-full items-center sm:items-stretch sm:justify-start">
 
-                    <div className="flex flex-shrink-0 items-center">
+                    <div className="flex items-center">
                       <img
                         className="h-8 w-auto"
                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -73,15 +73,15 @@ export default function AdminLayout() {
                     </div>
 
                     <div className="hidden sm:ml-6 sm:block">
-                      <div className="flex space-x-4">
+                      <div className="flex justify-center items-center h-full space-x-4">
                         {navigation.map((item) => (
                           <NavLink
                             key={item.name}
                             to={item.to}
                             className={({ isActive }) => classNames(
-                              isActive ? 'bg-accent text-black shadow-2xl' 
-                                       : 'text-black hover:bg-white hover:bg-opacity-[20%] hover:text-black hover:shadow-2xl',
-                              'block rounded-md px-3 py-2 text-base md:text-sm xl:text-md text-center font-medium'
+                              isActive ? 'bg-accent text-black drop-shadow-gs' 
+                                       : 'text-black hover:bg-accent hover:text-black hover:drop-shadow-gs',
+                              'flex justify-center items-center px-3 py-2 h-full text-base md:text-sm xl:text-md font-medium'
                             )}
                           >
                             {item.name}
