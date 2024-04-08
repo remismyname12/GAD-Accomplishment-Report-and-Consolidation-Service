@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AddUserRequest;
+use App\Models\Forms;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
     //for show all users
     public function index()
     {
-        $users = User::all();
-
-        return response()->json($users);
+        $data = User::withCount(['forms', 'accomplishmentReport'])
+                    ->get(['id', 'name', 'email']); // Assuming you want to select only specific columns from the User table
+            
+        return response()->json($data);
     }
+    
 
     public function adduser(AddUserRequest $request){
         $data = $request->validated();

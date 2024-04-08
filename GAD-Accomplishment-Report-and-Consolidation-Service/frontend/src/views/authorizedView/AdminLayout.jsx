@@ -7,15 +7,15 @@ import axiosClient from '../axios/axios';
 import SideBar from '../components/sidebar/sidebar'; 
 
 const navigation = [
-  { name: 'Home', href: '#', current: false },
+  { name: 'Dashboard', to: '/admin/dashboard'},
   { name: 'Mandates', to: '/admin/mandates'},
   { name: 'Activity Design Forms', to: '/admin/forms'},
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Accomplishment Report', to: '/admin/accomplishmentreport'},
   { name: 'Annual Report', to: '/admin/annualreport'},
-  { name: 'TestTable', to: '/admin/annualreporttest'},
-  { name: 'ExcelImport', to: '/admin/exceltest'},
-  { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
+  // { name: 'TestTable', to: '/admin/annualreporttest'},
+  // { name: 'ExcelImport', to: '/admin/exceltest'},
+  // { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
 
 
@@ -42,15 +42,15 @@ export default function AdminLayout() {
     return (
       <>
         {/*NavBar*/}
-        <Disclosure as="nav" className="bg-gray-800">
+        <Disclosure as="nav" className="bg-primary">
           {({ open }) => (
             <>
               <div className="mx-auto max-w-8xl px-2 sm:px-6 lg:px-8">
 
                 <div className="relative flex h-16 items-center justify-between">
 
+                  {/* Mobile menu button*/}
                   <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                    {/* Mobile menu button*/}
                     <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="absolute -inset-0.5" />
                       <span className="sr-only">Open main menu</span>
@@ -79,9 +79,9 @@ export default function AdminLayout() {
                             key={item.name}
                             to={item.to}
                             className={({ isActive }) => classNames(
-                              isActive ? 'bg-gray-900 text-white' 
-                                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                              'block rounded-md px-3 py-2 text-base font-medium'
+                              isActive ? 'bg-accent text-black shadow-2xl' 
+                                       : 'text-black hover:bg-white hover:bg-opacity-[20%] hover:text-black hover:shadow-2xl',
+                              'block rounded-md px-3 py-2 text-base md:text-sm xl:text-md text-center font-medium'
                             )}
                           >
                             {item.name}
@@ -195,10 +195,10 @@ export default function AdminLayout() {
         </Disclosure>
 
     <main className="flex"> {/* Apply flex to the main container */}
-      <div className="sidebar bg-purple-400 h-screen w-fit px-[1%]"> {/* Add sidebar styling */}
+      <div className="sidebar shadow-2xl  h-screen max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
         <SideBar />
       </div>
-      <div className="mx-auto max-w-8xl sm:px-6 lg:px-8"> {/* Maintain the content container */}
+      <div className="max-w-[85%] min-w-[85%] mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}
         <div>
           <Outlet />
         </div>

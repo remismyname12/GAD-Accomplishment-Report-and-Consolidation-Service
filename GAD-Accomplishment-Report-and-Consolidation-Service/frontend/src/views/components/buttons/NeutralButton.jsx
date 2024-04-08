@@ -6,7 +6,7 @@ export default function NeutralButton({ label, onClick, /*disabled*/ }) {
     <div>
       <button
         type="button"
-        className={`flex w-[100%] justify-center rounded-md bg-blue-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-400`}
+        className={`flex w-[100%] justify-center rounded-md bg-primary px-3 py-1.5 text-xs xl:text-md font-semibold leading-6 text-white text-center shadow-sm hover:bg-blue-400`}
         //disabled={disabled}
         onClick={onClick}
       >

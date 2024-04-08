@@ -44,14 +44,14 @@ export default function Login() {
   };
 
   return (
-    <div className="bg-gray-400 p-5">
+    <div className="p-5 h-full flex justify-center items-center">
       <Error isOpen={error !== ''} onClose={() => setError('')} errorMessage={error} />
       
       {/* Integrate the Success component */}
       <Feedback isOpen={success !== ''} onClose={() => setSuccess('')} successMessage={success} />
 
-      <form action="" className="flex flex-1 flex-col">
-        <label htmlFor="Email">Email: </label>
+      <form onSubmit={onSubmit} className="flex flex-col w-full items-center">
+        <label htmlFor="Email" className="mb-1">Email: </label>
         <input
           placeholder={'example@email.com'}
           id="email"
@@ -61,21 +61,23 @@ export default function Login() {
           required
           value={email}
           onChange={(ev) => setEmail(ev.target.value)}
+          className='w-[80%] border-solid border-2 border-primary focus:border-accent focus:outline-none rounded-lg p-2'
         />
-        <label htmlFor="password">Password: </label>
+        <label htmlFor="password" className="my-1 ">Password: </label>
         <input
           placeholder={'Input Password'}
           id="password"
           name="password"
-          type="text"
+          type="password"
           autoComplete="password"
           required
           value={password}
           onChange={(ev) => setPassword(ev.target.value)}
+          className='w-[80%] border-solid border-2 border-primary focus:border-accent focus:outline-none rounded-lg p-2'
         />
 
         <div className="mt-5">
-          <Submit label="Login" onClick={onSubmit} /*disabled={ your condition }*/ />
+          <Submit label="Login" />
         </div>
       </form> 
     </div>

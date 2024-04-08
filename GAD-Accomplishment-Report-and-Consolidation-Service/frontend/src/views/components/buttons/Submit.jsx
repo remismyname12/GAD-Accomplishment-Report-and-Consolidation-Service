@@ -6,7 +6,7 @@ export default function Submit({ label, onClick, /*disabled*/ }) {
     <div>
       <button
         type="submit"
-        className={`flex w-[100%] justify-center rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-400`}
+        className={`rounded-md bg-green-700 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-400`}
         //disabled={disabled}
         onClick={onClick}
       >
