@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,9 +50,13 @@ class User extends Authenticatable
     //FOR FORMS/TRAINING DESIGN
     public function forms(): HasMany
     {
-        return $this->hasMany(formEmployee::class);
+        return $this->hasMany(Forms::class);
     }
 
+    public function accomplishmentReport(): HasManyThrough
+    {
+        return $this->hasManyThrough(accReport::class, Forms::class);
+    }
 
     //FOR GAD ACTIVITES
     public function gadActivities(): HasMany

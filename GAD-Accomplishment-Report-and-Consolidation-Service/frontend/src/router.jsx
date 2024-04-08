@@ -10,6 +10,7 @@ import AnnualReport from "./views/authorizedView/admin/components/annualReport/A
 import TestTables from "./views/authorizedView/admin/components/annualreporttest/TestTables";
 import ExcelImport from "./views/authorizedView/admin/components/exceltest/ExcelImport";
 import Mandates from "./views/authorizedView/admin/components/mandates/Mandates";
+import Dashboard from "./views/authorizedView/admin/components/dashboard/Dashboard";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         path: '/admin',
         element: <AdminLayout />,
         children:[
+            {
+                path: 'dashboard',
+                element: <Dashboard />
+            },
             {
                 path: 'manageusers',
                 element: <ManageUsers />
