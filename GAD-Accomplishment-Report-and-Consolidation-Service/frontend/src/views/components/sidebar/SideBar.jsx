@@ -32,10 +32,13 @@ export default function SideBar() {
     ];
 
     return (
-        <div className="sidebar">
-            <ul className="sidebar-list">
+        <div>
+            <ul>
                 {sidebarItems.map((item, index) => (
-                    <li key={index} className='pt-3 text-center md:text-sm xl:text-md'>
+                    <li 
+                        key={index} 
+                        className='pt-3 text-center md:text-sm xl:text-md hover:bg-accent hover:drop-shadow-gs'
+                    >
                         <NeutralButton label={item.label} onClick={item.onClick} />
                     </li>
                 ))}
