@@ -39,7 +39,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='pt-2 h-full'>
+    <div className='h-full'>
       <div className='bg-white flex h-[95%] overflow-y-auto rounded-xl'>
         <table className='w-screen text-center'>
           <thead>

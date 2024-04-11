@@ -199,7 +199,7 @@ export default function AdminLayout() {
           <div className="sidebar shadow-2xl max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
             <SideBar />
           </div>
-          <div className="max-h-full max-w-[85%] min-w-[85%] mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}
+          <div className="max-h-full max-w-[85%] min-w-[85%] pt-5 mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}
               <Outlet />
           </div>
         </main>
