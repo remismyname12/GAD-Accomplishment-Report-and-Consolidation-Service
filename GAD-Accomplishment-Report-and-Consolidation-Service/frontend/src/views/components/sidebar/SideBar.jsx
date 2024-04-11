@@ -37,7 +37,7 @@ export default function SideBar() {
                 {sidebarItems.map((item, index) => (
                     <li 
                         key={index} 
-                        className='pt-3 text-center md:text-sm xl:text-md hover:bg-accent hover:drop-shadow-gs'
+                        className='pt-3 text-center md:text-sm xl:text-md'
                     >
                         <NeutralButton label={item.label} onClick={item.onClick} />
                     </li>

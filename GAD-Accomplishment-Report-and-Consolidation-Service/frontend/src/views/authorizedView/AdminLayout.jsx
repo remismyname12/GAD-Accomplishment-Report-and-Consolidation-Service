@@ -195,7 +195,7 @@ export default function AdminLayout() {
         </Disclosure>
 
     <main className="flex"> {/* Apply flex to the main container */}
-      <div className="sidebar shadow-2xl  h-screen max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
+      <div className="sidebar shadow-2xl h-screen max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
         <SideBar />
       </div>
       <div className="max-w-[85%] min-w-[85%] mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}

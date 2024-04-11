@@ -39,9 +39,10 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='pt-2'>
-      <div className='bg-white flex'>
-        <table className='w-screen text-center'>
+    <div className='pt-2
+    '>
+      <div className='bg-white flex h-15 overflow-y-auto'>
+        <table className='w-screen text-center '>
           <thead>
             <tr className='bg-secondary'>
               <td className='w-[40%]'>USERS <div>TOTAL</div></td>
