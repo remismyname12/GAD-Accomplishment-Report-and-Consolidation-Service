@@ -40,7 +40,8 @@ export default function AdminLayout() {
     }
 
     return (
-      <>
+    <>
+      <div className='h-screen'>
         {/*NavBar*/}
         <Disclosure as="nav" className="bg-primary">
           {({ open }) => (
@@ -194,16 +195,15 @@ export default function AdminLayout() {
           )}
         </Disclosure>
 
-    <main className="flex"> {/* Apply flex to the main container */}
-      <div className="sidebar shadow-2xl h-screen max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
-        <SideBar />
+        <main className="flex h-[89%]"> {/* Apply flex to the main container */}
+          <div className="sidebar shadow-2xl max-w-[15%] px-[1%]"> {/* Add sidebar styling */}
+            <SideBar />
+          </div>
+          <div className="max-h-full max-w-[85%] min-w-[85%] pt-5 mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}
+              <Outlet />
+          </div>
+        </main>
       </div>
-      <div className="max-w-[85%] min-w-[85%] mx-auto sm:px-6 lg:px-8"> {/* Maintain the content container */}
-        <div>
-          <Outlet />
-        </div>
-      </div>
-    </main>
     </>
   );
 }

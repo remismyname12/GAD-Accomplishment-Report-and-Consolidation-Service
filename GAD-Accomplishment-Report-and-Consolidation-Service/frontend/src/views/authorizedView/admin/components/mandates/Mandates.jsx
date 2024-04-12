@@ -8,8 +8,8 @@ export default function Mandates() {
   const[isAddMandateModalOpen, setIsAddMandateModalOpen] = useState(false);
 
   return (
-    <div className='w-full h-full px-4 mt-3'>
-        <div className='mx-auto w-full max-h-screen max-w-9xl rounded-2xl bg-white p-2 overflow-auto'>
+    <div className='h-full'>
+        <div className='mx-auto w-full h-[95%] rounded-2xl bg-white p-2 overflow-auto'>
           <NeutralButton label="Add Mandate" onClick={() => setIsAddMandateModalOpen(true)} />
 
           <div className='pt-5'>

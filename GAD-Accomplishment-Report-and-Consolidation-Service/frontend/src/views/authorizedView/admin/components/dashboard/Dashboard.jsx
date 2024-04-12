@@ -39,19 +39,18 @@ export default function Dashboard() {
   };
 
   return (
-    <div className='pt-2
-    '>
-      <div className='bg-white flex h-15 overflow-y-auto'>
-        <table className='w-screen text-center '>
+    <div className='h-full'>
+      <div className='bg-white flex h-[95%] overflow-y-auto rounded-xl'>
+        <table className='w-screen text-center'>
           <thead>
-            <tr className='bg-secondary'>
+            <tr className='bg-secondary sticky top-0 z-10'>
               <td className='w-[40%]'>USERS <div>TOTAL</div></td>
               <td>SUBMITTED ACTIVITY <div>TOTAL</div></td>
               <td>COMPLETED ACTIVITY <div>TOTAL</div></td>
               <td>ACTION</td>
             </tr>
           </thead>
-          <tbody>
+          <tbody className=''>
             {filteredData.map((user, index) => (
               <tr 
                 key={index} 
