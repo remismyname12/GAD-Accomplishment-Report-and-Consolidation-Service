@@ -48,8 +48,8 @@ export default function AccomplishmentReport() {
   
 
   return (
-    <div className='flex justify-center'>
-      <div className="w-full max-w-md px-2 py-5 sm:px-0">
+    <div className='flex justify-center bg-white px-2 rounded-2xl'>
+      <div className="w-full py-2 sm:px-0">
         <Tab.Group>
           <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 px-5">
             <Tab
