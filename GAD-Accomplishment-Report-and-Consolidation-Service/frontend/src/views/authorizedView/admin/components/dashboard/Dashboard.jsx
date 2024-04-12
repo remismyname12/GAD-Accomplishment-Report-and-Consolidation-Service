@@ -42,11 +42,11 @@ export default function Dashboard() {
     <div className='h-full'>
       <div className='bg-white flex h-[95%] overflow-y-auto rounded-xl'>
         <table className='w-screen text-center'>
-          <thead>
-            <tr className='bg-secondary sticky top-0 z-10'>
+          <thead className='bg-secondary sticky top-0 z-10'>
+            <tr>
               <td className='w-[40%]'>USERS <div>TOTAL</div></td>
-              <td>SUBMITTED ACTIVITY <div>TOTAL</div></td>
-              <td>COMPLETED ACTIVITY <div>TOTAL</div></td>
+              <td>SUBMITTED ACTIVITY DESIGN<div>TOTAL</div></td>
+              <td>ACCOMPLISHMENT REPORTS<div>TOTAL</div></td>
               <td>ACTION</td>
             </tr>
           </thead>
