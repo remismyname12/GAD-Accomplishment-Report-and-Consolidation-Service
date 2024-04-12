@@ -50,7 +50,7 @@ export default function Dashboard() {
               <td>ACTION</td>
             </tr>
           </thead>
-          <tbody className=''>
+          <tbody>
             {filteredData.map((user, index) => (
               <tr 
                 key={index} 

@@ -4,7 +4,7 @@ import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import axiosClient from '../axios/axios';
-import SideBar from '../components/sidebar/sidebar'; 
+import SideBar from '../components/sidebar/SideBar';
 
 const navigation = [
   { name: 'Dashboard', to: '/admin/dashboard'},

@@ -151,28 +151,28 @@ export default function EditActivityModal({ selectedForm }) {
     }
   };
 
-// For Unified Inputs 
-const renderInput = (name, label) => {
-  // Check if the input field should be required based on form type and field name
-  const isRequired = selectedForm.form_type !== "INSET" && name == "no_of_target_participants";
+  // For Unified Inputs 
+  const renderInput = (name, label) => {
+    // Check if the input field should be required based on form type and field name
+    const isRequired = selectedForm.form_type !== "INSET" && name == "no_of_target_participants";
 
-  return (
-    <div className='flex flex-1 flex-col'>
-      <label htmlFor={name}>{label}</label>
-      <input
-        id={name}
-        name={name}
-        type="text"
-        autoComplete={name}
-        // Include "required" attribute only if it's not INSET and not no_of_target_participants
-        {...(isRequired ? { required: true } : {})}
-        value={formData[name]}
-        onChange={handleChange}
-        className="bg-gray-100"
-      />
-    </div>
-  );
-};
+    return (
+      <div className='flex flex-1 flex-col'>
+        <label htmlFor={name}>{label}</label>
+        <input
+          id={name}
+          name={name}
+          type="text"
+          autoComplete={name}
+          // Include "required" attribute only if it's not INSET and not no_of_target_participants
+          {...(isRequired ? { required: true } : {})}
+          value={formData[name]}
+          onChange={handleChange}
+          className="bg-gray-100"
+        />
+      </div>
+    );
+  };
 
   return (
     <div>

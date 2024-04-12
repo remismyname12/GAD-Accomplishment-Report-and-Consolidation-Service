@@ -73,18 +73,15 @@ export default function SubmitedForms() {
     setSelectedForm(selected_form)
   }
 
-  const tabClassName = (selected) => classNames(
-    'flex-1 px-4 py-2 text-sm font-medium text-purple-900 rounded-lg focus:outline-none focus:ring',
-  selected
-    ? 'bg-purple-200'
-    : 'bg-purple-100'
-);
+  const tabClassName = classNames(
+    'flex-1 px-4 py-2 text-sm font-medium text-black rounded-lg bg-secondary hover:bg-accent focus:bg-accent',
+  );
   
   return (
     <div className='h-full flex justify-center'>
       <div className="w-full mx-auto rounded-2xl bg-white p-2 h-[95%] overflow-y-auto ">
         <Tab.Group>
-          <Tab.List className="flex p-1 space-x-1 bg-purple-100 rounded-lg">
+          <Tab.List className="flex p-1 space-x-1 bg-green-100 rounded-lg">
           <Tab
               key="Employee"
               className={tabClassName}
@@ -110,33 +107,32 @@ export default function SubmitedForms() {
               key="Employee"
               className={classNames(
                 'rounded-xl bg-white p-3',
-                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
               )}
             >
               <ul>
                 {employeeForms.map((form) => (
                   <li
-                  key={form.id}
-                  className="relative rounded-md p-3 hover:bg-gray-100"
-                >
-                  <h3 className="text-sm font-medium leading-5">
-                  {form.title}
-                  </h3>
+                    key={form.id}
+                    className="relative rounded-md p-3 hover:bg-accent"
+                  >
+                    <h3 className="text-sm font-medium leading-5">
+                    {form.title}
+                    </h3>
 
-                  <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
-                    <li>{form.proponents_implementors}</li>
-                  </ul>
+                    <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
+                      <li>{form.proponents_implementors}</li>
+                    </ul>
 
-                  <ul>
-                      <button title="Edit Activity Design" onClick={() => handleEditClick(form)}>
-                          <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
-                      <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
-                          <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
-                      <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
-                          <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                      </button>
+                    <ul>
+                        <button title="Edit Activity Design" onClick={() => handleEditClick(form)}>
+                            <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                        </button>
+                        <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
+                            <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                        </button>
+                        <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
+                            <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                        </button>
                     </ul>
                   </li>
                 ))}
@@ -146,7 +142,7 @@ export default function SubmitedForms() {
               key="Inset"
               className={classNames(
                 'rounded-xl bg-white p-3',
-                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                'ring-white/60 ring-offset-2 ring-offset-accent focus:outline-none focus:ring-2'
               )}
             >
               <ul>
@@ -182,7 +178,7 @@ export default function SubmitedForms() {
               key="EAD"
               className={classNames(
                 'rounded-xl bg-white p-3',
-                'ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                'ring-white/60 ring-offset-2 ring-offset-accent focus:outline-none focus:ring-2'
               )}
             >
               <ul>
