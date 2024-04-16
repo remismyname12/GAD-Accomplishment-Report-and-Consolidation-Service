@@ -79,7 +79,7 @@ export default function SubmitedForms() {
   
   return (
     <div className='h-full flex justify-center'>
-      <div className="w-full mx-auto rounded-2xl bg-white p-2 h-[95%] overflow-y-auto ">
+      <div className="w-full mx-auto rounded-2xl bg-white p-2 h-full overflow-y-auto ">
         <Tab.Group>
           <Tab.List className="flex p-1 space-x-1 bg-green-100 rounded-lg">
           <Tab
@@ -106,20 +106,20 @@ export default function SubmitedForms() {
             <Tab.Panel
               key="Employee"
               className={classNames(
-                'rounded-xl bg-white p-3',
+                'rounded-xl bg-white p-3 h-it',
               )}
             >
-              <ul>
+              <ul className='text-center'>
                 {employeeForms.map((form) => (
                   <li
                     key={form.id}
-                    className="relative rounded-md p-3 hover:bg-accent"
+                    className="border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs"
                   >
                     <h3 className="text-sm font-medium leading-5">
                     {form.title}
                     </h3>
 
-                    <ul className="mt-1 flex space-x-1 text-xs font-normal leading-4 text-gray-500">
+                    <ul className="mt-1  text-xs font-normal  text-gray-500">
                       <li>{form.proponents_implementors}</li>
                     </ul>
 

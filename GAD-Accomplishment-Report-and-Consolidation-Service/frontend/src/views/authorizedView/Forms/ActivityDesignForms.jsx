@@ -17,7 +17,7 @@ export default function ActivityDesignForms() {
 
   return (
     <div className='h-full'>
-      <div className="max-h-[95%] overflow-auto">
+      <div className="h-full overflow-auto">
         <div className="mx-auto rounded-2xl bg-white p-2">
           <Tab.Group>
             <Tab.List className="flex p-1 space-x-1 bg-green-100 rounded-lg">

@@ -8,6 +8,7 @@ import ArchivedUser from '../../authorizedView/admin/components/ManageUser/Archi
 import ArchivedActivityForms from '../../authorizedView/Forms/submitedForms/activityForms/ArchivedActivityForms';
 import ArchivedReports from '../../authorizedView/Forms/submitedForms/accomplishmentReport/components/ArchivedReports';
 import ShowArchiveMandates from '../../authorizedView/admin/components/mandates/components/ShowArchiveMandates';
+import AddMandatesModal from '../../authorizedView/admin/components/mandates/components/modals/AddMandatesModal';
 
 export default function SideBar() {
     // For Modals
@@ -17,6 +18,7 @@ export default function SideBar() {
         archivedForm: false,
         archivedReports: false,
         showArchiveMandate: false,
+        showAddMandateModal: false
     });
 
     const toggleModal = (modalName, value) => {
@@ -25,10 +27,11 @@ export default function SideBar() {
 
     const sidebarItems = [
         { label: 'Add User', onClick: () => toggleModal('addUser', true) },
+        { label: 'Add Mandate', onClick: () => toggleModal('showAddMandateModal', true) },
         { label: 'Archived Users List', onClick: () => toggleModal('archivedUser', true) },
+        { label: 'Archived Mandates List', onClick: () => toggleModal('showArchiveMandate', true) },
         { label: 'Archived Forms List', onClick: () => toggleModal('archivedForm', true) },
         { label: 'Archived Accomplishment Report List', onClick: () => toggleModal('archivedReports', true) },
-        { label: 'Archived Mandates List', onClick: () => toggleModal('showArchiveMandate', true) },
     ];
 
     return (
@@ -45,7 +48,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.addUser}
                 onRequestClose={() => toggleModal('addUser', false)}
-                className="modal-style"
+                className="modal-style "
             >
                 <div>
                     <AddUserModal closeModal={() => toggleModal('addUser', false)} />
@@ -90,6 +93,16 @@ export default function SideBar() {
                 <div>
                     <ShowArchiveMandates closeModal={() => toggleModal('showArchiveMandate', false)} />
                 </div>
+            </ReactModal>
+
+            <ReactModal
+              isOpen={modals.showAddMandateModal}
+              onRequestClose={() => toggleModal('showAddMandateModal', false)}
+              className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[1%] mx-auto p-5"
+            >
+              <AddMandatesModal 
+                closeModal={() => toggleModal('showAddMandateModal',false)}
+              />
             </ReactModal>
         </div>
     );

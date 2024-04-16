@@ -52,39 +52,43 @@ export default function ManageUsers() {
             setSelectedUser(selected_user)
         }
 
+        const TableHeader = ({ title }) => (
+          <th className="mx-1 py-2 px-5">{title}</th>
+        );
+
   return (
     <>
-        <div className="table-container overflow-y-auto">
-
-            <table className='border-solid border-2 border-sky-500'>
-                <thead className='border-solid border-2 border-sky-500'>
+        <div className="h-full">
+          <div className="bg-white flex h-full overflow-y-auto rounded-xl">
+            <table className='w-screen text-center h-fit'>
+                <thead className='bg-secondary sticky top-0'>
                     <tr>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">User Name</th>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Email</th>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Actions</th>
+                      <TableHeader title="User Name" />
+                      <TableHeader title="Email" />
+                      <TableHeader title="Actions" />
                     </tr>
                 </thead>
-
                 <tbody>
                     {filteredData.map((users, index) => (
                           <tr 
                             key={index} 
-                            className={`${index % 2 === 0 ? 'odd:bg-green-100' : ''}`}
+                            className='border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs'
                           >
                               <td className="text-center p-2">{users.username}</td>
                               <td className="text-center p-2">{users.email}</td>
-                              <td className= "flex items-center p-3">
+                              <td className= "items-center ">
                                 <button title="Edit User" onClick={() => handleEditClick(users)}>
-                                    <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                                    <PencilIcon className='h-5 w-5 mx-1 cursor-pointer hover:scale-125' />
                                 </button>
                                 <button title="Archive User" onClick={() => handleArchiveClick(users)}>
-                                    <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                                    <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer hover:scale-125' />
                                 </button>
                               </td>
                             </tr>
                             ))}
                 </tbody>
             </table>
+          </div>
         </div>
         
         {/** Modal For User EDIT */}

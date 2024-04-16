@@ -47,9 +47,9 @@ export default function AccomplishmentReport() {
 
   return (
     <div className='h-full'>
-      <div className="bg-white flex h-[95%] overflow-y-auto rounded-xl">
+      <div className="bg-white flex h-full overflow-y-auto rounded-xl">
         <table className="w-screen text-center">
-          <thead className='bg-secondary sticky top-0 z-10'>
+          <thead className='bg-secondary sticky top-0 z-20'>
             <tr>
               <th className={UnifiedStyle.thClassName}>Title</th>
               <th className={UnifiedStyle.thClassName}>Proponents/Implementors</th>
