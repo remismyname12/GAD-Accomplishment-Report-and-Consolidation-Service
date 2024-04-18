@@ -34,6 +34,8 @@ export default function SideBar() {
         { label: 'Archived Accomplishment Report List', onClick: () => toggleModal('archivedReports', true) },
     ];
 
+    const style = "w-full md:w-[30%] h-[95%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+    
     return (
         <div className="sidebar">
             <ul className="sidebar-list">
@@ -48,7 +50,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.addUser}
                 onRequestClose={() => toggleModal('addUser', false)}
-                className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+                className={style}
             >
                 <div>
                     <AddUserModal closeModal={() => toggleModal('addUser', false)} />
@@ -58,7 +60,7 @@ export default function SideBar() {
             <ReactModal
               isOpen={modals.showAddMandateModal}
               onRequestClose={() => toggleModal('showAddMandateModal', false)}
-              className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+              className={style}
             >
               <AddMandatesModal 
                 closeModal={() => toggleModal('showAddMandateModal',false)}
@@ -68,7 +70,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.archivedUser}
                 onRequestClose={() => toggleModal('archivedUser', false)}
-                className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+                className={style}
             >
                 <div>
                     <ArchivedUser closeModal={() => toggleModal('archivedUser', false)} />
@@ -78,7 +80,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.archivedForm}
                 onRequestClose={() => toggleModal('archivedForm', false)}
-                className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+                className={style}
             >
                 <div>
                     <ArchivedActivityForms closeModal={() => toggleModal('archivedForm', false)} />
@@ -88,7 +90,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.archivedReports}
                 onRequestClose={() => toggleModal('archivedReports', false)}
-                className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+                className={style}
             >
                 <div>
                     <ArchivedReports closeModal={() => toggleModal('archivedReports', false)} />
@@ -98,7 +100,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.showArchiveMandate}
                 onRequestClose={() => toggleModal('showArchiveMandate', false)}
-                className="w-full md:w-[30%] h-full bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+                className={style}
             >
                 <div>
                     <ShowArchiveMandates closeModal={() => toggleModal('showArchiveMandate', false)} />
