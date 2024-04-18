@@ -34,7 +34,7 @@ export default function SideBar() {
         { label: 'Archived Accomplishment Report List', onClick: () => toggleModal('archivedReports', true) },
     ];
 
-    const style = "w-full md:w-[30%] h-[95%] bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+    const style = "w-full md:w-[30%] max-h-[95%] min-h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
     
     return (
         <div className="sidebar">
@@ -52,9 +52,7 @@ export default function SideBar() {
                 onRequestClose={() => toggleModal('addUser', false)}
                 className={style}
             >
-                <div>
                     <AddUserModal closeModal={() => toggleModal('addUser', false)} />
-                </div>
             </ReactModal>
 
             <ReactModal
