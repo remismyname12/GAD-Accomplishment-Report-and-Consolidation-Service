@@ -1,9 +1,9 @@
 import { React, useState, useEffect } from 'react'
-import axiosClient from '../../axios/axios';
+import axiosClient from '../../../../axios/axios';
 import { PencilIcon, ArchiveBoxArrowDownIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
-import EditUserModal from '../admin/components/ManageUser/Modals/EditUserModal';
-import ArchiveUserModal from './components/ManageUser/Modals/ArchiveUserModal';
+import EditUserModal from './Modals/EditUserModal';
+import ArchiveUserModal from './Modals/ArchiveUserModal';
 
 export default function ManageUsers() {
 
