@@ -49,11 +49,6 @@ export default function Mandates() {
           <thead className='bg-secondary sticky top-0'>
             <tr>
               <TableHeader title="Gender Issue" />
-              <TableHeader title="Cause of Gender Issue" />
-              <TableHeader title="GAD Result Statement" />
-              <TableHeader title="GAD Activity" />
-              <TableHeader title="Performance Indicators" />
-              <TableHeader title="Target Result" />
               <TableHeader title="Activity Focus" />
               <TableHeader title="Actions" />
             </tr>
@@ -61,14 +56,10 @@ export default function Mandates() {
           <tbody>
             {mandates.map((mandate, index) => (
               <tr key={index}
+              onClick={() => handleEditClick(mandate)}
               className='px-10 border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs transition-transform hover:scale-sm'
               >
                 <td className="text-center p-2">{index+1}) {mandate.gender_issue}</td>
-                <td className="text-center p-2">{mandate.cause_of_gender_issue}</td>
-                <td className="text-center p-2">{mandate.gad_result_statement}</td>
-                <td className="text-center p-2">{mandate.gad_activity}</td>
-                <td className="text-center p-2">{mandate.performance_indicators}</td>
-                <td className="text-center p-2">{mandate.target_result}</td>
                 <td className="text-center p-2">{mandate.focus}</td>
                 <td className="text-center p-2">
                   <ul className='flex flex-row items-center justify-center'>
