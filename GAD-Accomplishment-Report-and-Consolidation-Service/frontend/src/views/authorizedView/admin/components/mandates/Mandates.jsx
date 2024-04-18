@@ -46,7 +46,7 @@ export default function Mandates() {
     <div className='h-full'>
       <div className='bg-white flex h-full overflow-y-auto rounded-xl'>
         <table className='w-screen text-center h-fit'>
-          <thead className='bg-secondary sticky top-0 z-10'>
+          <thead className='bg-secondary sticky top-0'>
             <tr>
               <TableHeader title="Gender Issue" />
               <TableHeader title="Cause of Gender Issue" />
@@ -61,7 +61,7 @@ export default function Mandates() {
           <tbody>
             {mandates.map((mandate, index) => (
               <tr key={index}
-              className='border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs'
+              className='px-10 border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs transition-transform hover:scale-sm'
               >
                 <td className="text-center p-2">{index+1}) {mandate.gender_issue}</td>
                 <td className="text-center p-2">{mandate.cause_of_gender_issue}</td>
@@ -73,10 +73,10 @@ export default function Mandates() {
                 <td className="text-center p-2">
                   <ul className='flex flex-row items-center justify-center'>
                     <li>
-                      <PencilIcon onClick={() => handleEditClick(mandate)} className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      <PencilIcon onClick={() => handleEditClick(mandate)} className='h-5 w-5 mx-1 cursor-pointer transition-transform hover:scale-1xl' />
                     </li>
                     <li>
-                      <ArchiveBoxArrowDownIcon onClick={() => handleArchiveClick(mandate)} className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                      <ArchiveBoxArrowDownIcon onClick={() => handleArchiveClick(mandate)} className='h-5 w-5 mx-1 cursor-pointer transition-transform hover:scale-1xl' />
                     </li>
                   </ul>
                 </td>

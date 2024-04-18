@@ -51,37 +51,38 @@ export default function ArchivedUser() {
 
   return (
     <>
-    <div className="table-container overflow-y-auto">
-            <table className='border-solid border-2 border-sky-500'>
-                <thead className='border-solid border-2 border-sky-500'>
-                    <tr>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">User Name</th>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Email</th>
-                        <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Actions</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {filteredData.map((users, index) => (
-                          <tr 
-                            key={index} 
-                            className={`${index % 2 === 0 ? 'odd:bg-green-100' : ''}`}
-                          >
-                              <td className="text-center p-2">{users.username}</td>
-                              <td className="text-center p-2">{users.email}</td>
-                              <td className= "flex items-center p-3">
-                                <button title="Restore User" onClick={() => handleRestoreUserClick(users)}>
-                                    <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                                </button>
-                                <button title="Delete User" onClick={() => handleDeleteUserClick(users)}>
-                                    <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
-                                </button>
-                              </td>
-                            </tr>
-                            ))}
-                </tbody>
-            </table>
-        </div>
+    <div className="h-full">
+      <div className='bg-white flex h-full overflow-y-auto '>
+        <table className='w-screen text-center h-fit'>
+          <thead className='bg-secondary sticky top-0'>
+              <tr>
+                  <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">User Name</th>
+                  <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Email</th>
+                  <th className="text-left bg-gray-200 p-2 border-solid border-2 border-sky-500">Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+            {filteredData.map((users, index) => (
+              <tr 
+                key={index} 
+                className={`${index % 2 === 0 ? 'odd:bg-green-100' : ''}`}
+              >
+                <td className="text-center p-2">{users.username}</td>
+                <td className="text-center p-2">{users.email}</td>
+                <td className= "flex items-center p-3">
+                  <button title="Restore User" onClick={() => handleRestoreUserClick(users)}>
+                      <ArrowLeftStartOnRectangleIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                  </button>
+                  <button title="Delete User" onClick={() => handleDeleteUserClick(users)}>
+                      <TrashIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                  </button>
+                </td>
+              </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
 
         {/** Modal For User ARCHIVE */}                
         <ReactModal

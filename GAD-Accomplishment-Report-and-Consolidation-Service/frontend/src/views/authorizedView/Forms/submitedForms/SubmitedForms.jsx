@@ -113,7 +113,7 @@ export default function SubmitedForms() {
                 {employeeForms.map((form) => (
                   <li
                     key={form.id}
-                    className="border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs"
+                    className='px-10 border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs transition-transform hover:scale-sm'
                   >
                     <h3 className="text-sm font-medium leading-5">
                     {form.title}
@@ -125,13 +125,13 @@ export default function SubmitedForms() {
 
                     <ul>
                         <button title="Edit Activity Design" onClick={() => handleEditClick(form)}>
-                            <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                            <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-1xl' />
                         </button>
                         <button title="Archive Activity Design" onClick={() => handleArchiveClick(form)}>
-                            <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                            <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-1xl' />
                         </button>
                         <button title="Create Accomplishment Report" onClick={() => handleGenerateAccomplishmentReportClick(form)}>
-                            <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                            <SparklesIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-1xl' />
                         </button>
                     </ul>
                   </li>

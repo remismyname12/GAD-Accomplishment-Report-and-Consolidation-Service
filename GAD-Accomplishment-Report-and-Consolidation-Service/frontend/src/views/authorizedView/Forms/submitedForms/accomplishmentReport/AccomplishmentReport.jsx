@@ -49,7 +49,7 @@ export default function AccomplishmentReport() {
     <div className='h-full'>
       <div className="bg-white flex h-full overflow-y-auto rounded-xl">
         <table className="w-screen text-center">
-          <thead className='bg-secondary sticky top-0 z-20'>
+          <thead className='bg-secondary sticky top-0'>
             <tr>
               <th className={UnifiedStyle.thClassName}>Title</th>
               <th className={UnifiedStyle.thClassName}>Proponents/Implementors</th>
@@ -59,15 +59,15 @@ export default function AccomplishmentReport() {
           <tbody>
             {accomplishmentReport.map((formEntry) => (
               <tr key={formEntry.id} onClick={() => handleViewClick(formEntry)} 
-                className="border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs">
+                className='px-10 border-b-2 border-secondary hover:bg-accent hover:drop-shadow-gs transition-transform hover:scale-sm'>
                   <td className={UnifiedStyle.tdClassName}>{formEntry.title}</td>
                   <td className={UnifiedStyle.tdClassName}>{formEntry.proponents_implementors}</td>
                   <td className={UnifiedStyle.tdClassName}>
                   <button onClick={() => handleViewClick(formEntry)}>
-                    <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                    <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transition-transform hover:scale-1xl' />
                   </button>
                   <button onClick={() => handleArchiveClick(formEntry)}>
-                    <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transform transition-transform hover:scale-125' />
+                    <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer  transition-transform hover:scale-1xl' />
                   </button>
                 </td>
               </tr>
