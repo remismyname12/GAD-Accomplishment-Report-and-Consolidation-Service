@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import React, { useState } from 'react';
 import NeutralButton from '../buttons/NeutralButton';
 import ReactModal from 'react-modal';
 
@@ -9,6 +8,7 @@ import ArchivedUser from '../../authorizedView/admin/components/ManageUser/Archi
 import ArchivedActivityForms from '../../authorizedView/Forms/submitedForms/activityForms/ArchivedActivityForms';
 import ArchivedReports from '../../authorizedView/Forms/submitedForms/accomplishmentReport/components/ArchivedReports';
 import ShowArchiveMandates from '../../authorizedView/admin/components/mandates/components/ShowArchiveMandates';
+import AddMandatesModal from '../../authorizedView/admin/components/mandates/components/modals/AddMandatesModal';
 
 export default function SideBar() {
     // For Modals
@@ -18,6 +18,7 @@ export default function SideBar() {
         archivedForm: false,
         archivedReports: false,
         showArchiveMandate: false,
+        showAddMandateModal: false
     });
 
     const toggleModal = (modalName, value) => {
@@ -26,44 +27,48 @@ export default function SideBar() {
 
     const sidebarItems = [
         { label: 'Add User', onClick: () => toggleModal('addUser', true) },
+        { label: 'Add Mandate', onClick: () => toggleModal('showAddMandateModal', true) },
         { label: 'Archived Users List', onClick: () => toggleModal('archivedUser', true) },
+        { label: 'Archived Mandates List', onClick: () => toggleModal('showArchiveMandate', true) },
         { label: 'Archived Forms List', onClick: () => toggleModal('archivedForm', true) },
         { label: 'Archived Accomplishment Report List', onClick: () => toggleModal('archivedReports', true) },
-        { label: 'Archived Mandates List', onClick: () => toggleModal('showArchiveMandate', true) },
     ];
 
+    const style = "w-full md:w-[30%] max-h-[95%] min-h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl my-[1%] mx-auto p-5"
+    
     return (
         <div className="sidebar">
-          <ul className="sidebar-list">
-            <li className='pt-3'>
-                <NeutralButton label="Add User" onClick={() => {setIsAddUserModalOpen(true)}} />
-            </li>
-            <li className='pt-3'>
-                <NeutralButton label="Archived Users List" onClick={() => {setIsArchivedUserModalOpen(true)}} />
-            </li>
-            <li className='pt-3'>
-                <NeutralButton label="Archived Forms List" onClick={() => {setIsArchivedFormModalOpen(true)}} />
-            </li>
-            <li className='pt-3'>
-                <NeutralButton label="Archived Accomplishment Report List" onClick={() => {setIsArchivedReportsModalOpen(true)}} />
-            </li>
-          </ul>
+            <ul className="sidebar-list">
+                {sidebarItems.map((item, index) => (
+                    <li key={index} className='pt-3'>
+                        <NeutralButton label={item.label} onClick={item.onClick} />
+                    </li>
+                ))}
+            </ul>
 
             {/* Modals */}
             <ReactModal
                 isOpen={modals.addUser}
                 onRequestClose={() => toggleModal('addUser', false)}
-                className="modal-style"
+                className={style}
             >
-                <div>
                     <AddUserModal closeModal={() => toggleModal('addUser', false)} />
-                </div>
+            </ReactModal>
+
+            <ReactModal
+              isOpen={modals.showAddMandateModal}
+              onRequestClose={() => toggleModal('showAddMandateModal', false)}
+              className={style}
+            >
+              <AddMandatesModal 
+                closeModal={() => toggleModal('showAddMandateModal',false)}
+              />
             </ReactModal>
 
             <ReactModal
                 isOpen={modals.archivedUser}
                 onRequestClose={() => toggleModal('archivedUser', false)}
-                className="modal-style"
+                className={style}
             >
                 <div>
                     <ArchivedUser closeModal={() => toggleModal('archivedUser', false)} />
@@ -73,7 +78,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.archivedForm}
                 onRequestClose={() => toggleModal('archivedForm', false)}
-                className="modal-style"
+                className={style}
             >
                 <div>
                     <ArchivedActivityForms closeModal={() => toggleModal('archivedForm', false)} />
@@ -83,7 +88,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.archivedReports}
                 onRequestClose={() => toggleModal('archivedReports', false)}
-                className="modal-style"
+                className={style}
             >
                 <div>
                     <ArchivedReports closeModal={() => toggleModal('archivedReports', false)} />
@@ -93,7 +98,7 @@ export default function SideBar() {
             <ReactModal
                 isOpen={modals.showArchiveMandate}
                 onRequestClose={() => toggleModal('showArchiveMandate', false)}
-                className="modal-style"
+                className={style}
             >
                 <div>
                     <ShowArchiveMandates closeModal={() => toggleModal('showArchiveMandate', false)} />

@@ -14,7 +14,12 @@ module.exports = {
     
       dropShadow: {
         'gs': ['0 20px 13px rgb(0 0 0 / 0.03)', '0 8px 5px rgb(0 0 0 / 0.3)']
-      }
+      },
+
+      scale: {
+        'sm': '1.05',
+        '1xl': '1.5'
+      },
     },
   },
   plugins: [],
