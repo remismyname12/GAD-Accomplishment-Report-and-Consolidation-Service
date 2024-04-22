@@ -21,30 +21,50 @@ class UserController extends Controller
     
 
     public function adduser(AddUserRequest $request){
-        $data = $request->validated();
-    
-        // Check if the email already exists
-        if (User::where('email', $data['email'])->exists()) {
+        try {
+            $data = $request->validated();
+        
+            // Check if the email already exists
+            if (User::where('email', $data['email'])->exists()) {
+                return response([
+                    'success' => false,
+                    'message' => 'Email already exists.',
+                ], 400); // You can choose an appropriate HTTP status code (e.g., 400 Bad Request)
+            }
+        
+            // Create a new user if the email doesn't exist
+            /** @var \App\Models\User $user */
+            $user = User::create([
+                'username' => $data['username'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'password' => bcrypt($data['password'])
+            ]);
+        
+            return response([
+                'success' => true,
+                'message' => 'User created Successfully',
+            ]);
+        } catch (\Exception $e) {
+            if ($e->getCode() == '23000') {
+                // Log the exception
+                \Log::error('Email already exists: ' . $e->getMessage());
+        
+                return response([
+                    'success' => false,
+                    'message' => 'Email already exists.',
+                ]); // You can choose an appropriate HTTP status code
+            }
+        
+            // For other exceptions
+            \Log::error('Error creating user: ' . $e->getMessage());
+        
             return response([
                 'success' => false,
-                'message' => 'Email already exists.',
-            ], 400); // You can choose an appropriate HTTP status code (e.g., 400 Bad Request)
-        }
-    
-        // Create a new user if the email doesn't exist
-        /** @var \App\Models\User $user */
-        $user = User::create([
-            'username' => $data['username'],
-            'email' => $data['email'],
-            'role' => $data['role'],
-            'password' => bcrypt($data['password'])
-        ]);
-    
-        return response([
-            'success' => true,
-            'message' => 'User created Successfully',
-        ]);
-    }
+                'message' => 'Error creating user: ' . $e->getMessage(),
+            ]); 
+        }        
+    }    
     
     public function updateuser(Request $request, $id){
         // Validate the incoming data (e.g., name, role, email, lastedit)

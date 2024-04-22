@@ -2,11 +2,9 @@ import { React, useState} from 'react'
 import { Menu } from '@headlessui/react';
 import { ChevronUpIcon } from '@heroicons/react/20/solid';
 import Submit from '../../../../../components/buttons/Submit'
-import postAxios from '../../../../../axios/axiosMethods/postAxios';
-
-//For Feedback
+import axiosClient from '../../../../../axios/axios';
 import Feedback from '../../../../../components/feedbacks/Feedback';
-import Error from '../../../../../components/feedbacks/Error';
+
 
 export default function AddUserModal() {
     const [email, setEmail] = useState('');
@@ -14,42 +12,36 @@ export default function AddUserModal() {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('');
 
-      //For feedback
-    const [error, setError] = useState('');
     const [message, setAxiosMessage] = useState('');
     const [status, setAxiosStatus] = useState('');
 
-    const onSubmit = async (ev) => {
-      ev.preventDefault();
-      setError({ __html: "" });
-  
-          // Call getAxios to make the POST request
-          const response = await postAxios({
-              endPoint: "adduser",
-              data: { email, username: userName, password, role: role },
-          })
-          if (response.status === true) { // Check status for success
-              setAxiosMessage(response.response.data.message); // Set success message
-              setAxiosStatus(response.response.data.status);
-              setTimeout(() => {
-                  setAxiosMessage(''); // Clear success message
-                  setAxiosStatus('');
-              }, 3000); // Timeout after 3 seconds
-          } else { // Handle failure
-              setError(response.error); // Set error message
-              
-          console.log('This is the ERROR',error);
-          }
+
+      const onSubmit = async (ev) => {
+        ev.preventDefault();
+    
+        setAxiosMessage('Loading...');
+        setAxiosStatus('Loading');
+    
+        try {
+          const response = await axiosClient.post('/adduser', { email, username: userName, password, role });
+          console.log(response);
+          setAxiosMessage(response.data.message);
+          setAxiosStatus(response.data.success);
+        } catch (error) {
+          console.log(error);
+          setAxiosMessage(error.response.data.message);
+          setAxiosStatus(false);
+        }
       }
   
     const style = 'text-center'
 
   return (
     <div className='h-full grid place-items-center text-center'>
-    
-      <Feedback isOpen={message !== ''} onClose={() => setSuccess('')} successMessage={message}  status={status}/>
-    
-      <div className=''>
+
+    <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message} status={status} refresh={false}/>
+
+      <div>
         <form onSubmit={onSubmit} className='flex flex-1 flex-col'>
           {/**For inputs */}
           <div className='flex flex-col'>
