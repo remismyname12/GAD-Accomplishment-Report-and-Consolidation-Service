@@ -55,7 +55,6 @@ export default function Dashboard() {
               <td className={`${headerStyles} w-[40%]`}>USERS <div className='text-xs'>TOTAL</div></td>
               <td className={headerStyles}>SUBMITTED ACTIVITY DESIGN<div className='font-normal'>TOTAL</div></td>
               <td className={headerStyles}>ACCOMPLISHMENT REPORTS<div className='font-normal'>TOTAL</div></td>
-              <td className={headerStyles}>ACTION</td>
             </tr>
           </thead>
           <tbody>
@@ -67,14 +66,6 @@ export default function Dashboard() {
                 <td className="text-center p-2">{user.username}</td>
                 <td className="text-center p-2">{user.forms_count}</td> {/* Display submitted activity count */}
                 <td className="text-center p-2">{user.accomplishment_report_count}</td> {/* Display completed activity count */}
-                <td className= "flex items-center p-3">
-                  <button title="Edit User" onClick={() => handleEditClick(user)}>
-                    <PencilIcon className='h-5 w-5 mx-1 cursor-pointer transition-transform hover:scale-1xl' />
-                  </button>
-                  <button title="Archive User" onClick={() => handleArchiveClick(user)}>
-                    <ArchiveBoxArrowDownIcon className='h-5 w-5 mx-1 cursor-pointer transition-transform hover:scale-1xl' />
-                  </button>
-                </td>
               </tr>
             ))}
           </tbody>
