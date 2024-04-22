@@ -49,12 +49,15 @@ export default function Mandates() {
   
   return (
     <div className='h-full'>
+      <div className='bg-white flex h-full overflow-y-auto rounded-xl relative'>
 
-      <div>
-        <LoadingHorizontalLine isLoading={isHorizontalLoading}/>
-      </div>
+        {/* Loading Horizontal Line */}
+        {isHorizontalLoading && (
+          <div className="absolute top-[5%] left-0 w-full">
+            <LoadingHorizontalLine isLoading={isHorizontalLoading}/>
+          </div>
+        )}
 
-      <div className='bg-white flex h-full overflow-y-auto rounded-xl'>
         <table className='w-screen text-center h-fit'>
           <thead className='bg-secondary sticky top-0'>
             <tr>
