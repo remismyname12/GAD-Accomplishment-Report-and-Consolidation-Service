@@ -5,10 +5,12 @@ import ReactModal from 'react-modal';
 import ViewEADReportModal from '../activityForms/components/modals/ViewEADReportModal';
 import EditActivityModal from '../activityForms/components/modals/EditActivityModal';
 import ShowActivityModal from './components/modals/ShowActivityModal';
+import LoadingHorizontalLine from '../../../../components/feedbacks/LoadingHorizontalLine';
 
 export default function AccomplishmentReport() {
   const [accomplishmentReport, setAccomplishmentreport] = useState([]);
   const [selectedForm, setSelectedForm] = useState('');
+  const [isHorizontalLoading, setIsHorizontalLoading] = useState(false);
 
   // For Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -19,9 +21,12 @@ export default function AccomplishmentReport() {
   }, []);
 
   const fetchForms = async () => {
+    setIsHorizontalLoading(true);
+
     try {
       const response = await axiosClient.get('/show_accomplishment_report');
       setAccomplishmentreport(response.data);
+      setIsHorizontalLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -47,8 +52,16 @@ export default function AccomplishmentReport() {
 
   return (
     <div className='h-full'>
-      <div className="bg-white flex h-full overflow-y-auto rounded-xl">
-        <table className="w-screen text-center">
+    <div className="bg-white flex h-full overflow-y-auto rounded-xl relative">
+      
+      {/* Loading Horizontal Line */}
+      {isHorizontalLoading && (
+        <div className="absolute top-[5%] left-0 w-full">
+          <LoadingHorizontalLine isLoading={isHorizontalLoading}/>
+        </div>
+      )}
+      
+      <table className="w-screen text-center">
           <thead className='bg-secondary sticky top-0'>
             <tr>
               <th className={UnifiedStyle.thClassName}>Title</th>
