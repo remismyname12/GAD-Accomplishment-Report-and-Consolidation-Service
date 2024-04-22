@@ -44,7 +44,7 @@ export default function Mandates() {
   }, []);
 
   const TableHeader = ({ title }) => (
-    <th className="mx-1 py-2 px-5">{title}</th>
+    <th className="mx-1 py-2 px-5 text-xs">{title}</th>
   );
   
   return (
