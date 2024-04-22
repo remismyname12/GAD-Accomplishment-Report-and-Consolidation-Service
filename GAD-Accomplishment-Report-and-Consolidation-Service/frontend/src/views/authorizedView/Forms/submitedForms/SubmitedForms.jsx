@@ -8,6 +8,7 @@ import ArchiveActivityModal from '../submitedForms/activityForms/components/moda
 import GenerateAccomplishmentReport from '../submitedForms/activityForms/components/modals/GenerateAccomplishmentReport';
 import GenerateFormReport from '../submitedForms/activityForms/components/modals/GenerateFormReport';
 import EditEADModal from '../submitedForms/activityForms/components/modals/EditEADModal';
+import LoadingHorizontalLine from '../../../components/feedbacks/LoadingHorizontalLine';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -19,6 +20,7 @@ export default function SubmitedForms() {
   const [eadForm, setEadForm] = useState([]);
   const [selectedForm, setSelectedForm] = useState('')
   const [isGenerateAccomplishmentReportOpen, setIsGenerateAccomplishmentReportOpen] = useState(false);
+  const [isHorizontalLoading, setIsHorizontalLoading] = useState(false);
 
   //For Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -30,6 +32,8 @@ export default function SubmitedForms() {
   }, []);
   
   const fetchForms = async () => {
+    setIsHorizontalLoading(true);
+
     try {
       const employeeFormData = await axiosClient.get('/show_form_employee');
       const insetFormData = await axiosClient.get('/show_form_inset');
@@ -44,6 +48,7 @@ export default function SubmitedForms() {
       if (eadFormData.data) {
         setEadForm(eadFormData.data);
       } 
+      setIsHorizontalLoading(false);
     } catch (error) {
       console.error(error);
     }
@@ -109,6 +114,12 @@ export default function SubmitedForms() {
                 'rounded-xl bg-white p-3 h-it',
               )}
             >
+
+              {/**For Axios.GET method loading */}
+              <div>
+                <LoadingHorizontalLine isLoading={isHorizontalLoading}/>
+              </div>
+
               <ul className='text-center'>
                 {employeeForms.map((form) => (
                   <li

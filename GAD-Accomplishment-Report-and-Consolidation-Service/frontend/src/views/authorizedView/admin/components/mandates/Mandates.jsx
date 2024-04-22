@@ -4,10 +4,12 @@ import { ArchiveBoxArrowDownIcon, PencilIcon } from '@heroicons/react/24/solid';
 import ReactModal from 'react-modal';
 import EditMandatesModal from './components/modals/EditMandatesModal';
 import ArchiveMandateModal from './components/modals/ArchiveMandateModal';
+import LoadingHorizontalLine from '../../../../components/feedbacks/LoadingHorizontalLine';
 
 export default function Mandates() {
   const [mandates, setMandates] = useState([]);
   const [selectedMandate, setSelectedMandate] = useState('')
+  const [isHorizontalLoading, setIsHorizontalLoading] = useState(false);
 
   //For Modals
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -27,9 +29,12 @@ export default function Mandates() {
 
   useEffect(() => {
     const fetchMandates = async () => {
+      setIsHorizontalLoading(true);
+
       try {
         const { data } = await axiosClient.get('/showmandates');
         Array.isArray(data) ? setMandates(data) : console.error('Invalid response format:', data);
+        setIsHorizontalLoading(false);
       } catch (error) {
         console.error('Error fetching mandates:', error);
       }
@@ -39,12 +44,20 @@ export default function Mandates() {
   }, []);
 
   const TableHeader = ({ title }) => (
-    <th className="mx-1 py-2 px-5">{title}</th>
+    <th className="mx-1 py-2 px-5 text-xs">{title}</th>
   );
   
   return (
     <div className='h-full'>
-      <div className='bg-white flex h-full overflow-y-auto rounded-xl'>
+      <div className='bg-white flex h-full overflow-y-auto rounded-xl relative'>
+
+        {/* Loading Horizontal Line */}
+        {isHorizontalLoading && (
+          <div className="absolute top-[5%] left-0 w-full">
+            <LoadingHorizontalLine isLoading={isHorizontalLoading}/>
+          </div>
+        )}
+
         <table className='w-screen text-center h-fit'>
           <thead className='bg-secondary sticky top-0'>
             <tr>
