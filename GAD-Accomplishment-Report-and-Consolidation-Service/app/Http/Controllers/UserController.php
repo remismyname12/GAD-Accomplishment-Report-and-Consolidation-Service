@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddUserRequest;
 use App\Models\Forms;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -65,29 +66,67 @@ class UserController extends Controller
             ]); 
         }        
     }    
-    
+
     public function updateuser(Request $request, $id){
-        // Validate the incoming data (e.g., name, role, email, lastedit)
-        $validatedData = $request->validate([
-            'username' => 'nullable|string',
-            'email' => 'nullable|email'
-            //'lastedit' => 'required|date', // Modify this validation rule as needed
-        ]);
-
-        // Retrieve the user based on the provided ID
-        $user = User::find($id);
-
-        if (!$user) {
-            // Handle the case where the user with the provided ID is not found
-            return response()->json(['message' => 'User not found'], 404);
+        try {
+            // Validate the incoming data (e.g., username, email)
+            $validatedData = $request->validate([
+                'username' => 'nullable|string',
+                'email' => 'nullable|email'
+            ]);
+    
+            // Retrieve the user based on the provided ID
+            $user = User::find($id);
+    
+            if (!$user) {
+                // Handle the case where the user with the provided ID is not found
+                return response()->json([
+                    'message' => 'User not found',
+                    'success' => false
+                ]);
+            }
+    
+            // Update the user's information with the validated data
+            $user->update($validatedData);
+    
+            // Return a success response
+            return response()->json([
+                'message' => 'User updated successfully',
+                'success' => true
+            ]);
+    
+        } catch (QueryException $e) {
+            // Check for duplicate entry error
+            if ($e->errorInfo[1] == 1062) { // MySQL error code for duplicate entry
+                // Extract the specific field causing the duplicate entry error
+                $matches = [];
+                if (preg_match("/'([^']+)'/", $e->getMessage(), $matches)) {
+                    $duplicateField = $matches[1];
+                    $errorMessage = "The provided '{$duplicateField}' already exists.";
+                } else {
+                    $errorMessage = 'Duplicate entry error.';
+                }
+            } else {
+                $errorMessage = $e->getMessage();
+            }
+    
+            // Return an error response
+            return response()->json([
+                'message' => $errorMessage,
+                'success' => false
+            ], 400); // HTTP status code 400 for Bad Request
+            
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            return response()->json([
+                'message' => 'An error occurred while updating the user',
+                'error' => $e->getMessage(),
+                'success' => false
+            ], 500); // HTTP status code 500 for Internal Server Error
         }
-
-        // Update the user's information with the validated data
-        $user->update($validatedData);
-
-        // Return a success response
-        return response()->json(['message' => 'User updated successfully']);
     }
+    
+
 
     public function archiveuser($id)
     {

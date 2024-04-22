@@ -24,11 +24,9 @@ export default function AddUserModal() {
     
         try {
           const response = await axiosClient.post('/adduser', { email, username: userName, password, role });
-          console.log(response);
           setAxiosMessage(response.data.message);
           setAxiosStatus(response.data.success);
         } catch (error) {
-          console.log(error);
           setAxiosMessage(error.response.data.message);
           setAxiosStatus(false);
         }
