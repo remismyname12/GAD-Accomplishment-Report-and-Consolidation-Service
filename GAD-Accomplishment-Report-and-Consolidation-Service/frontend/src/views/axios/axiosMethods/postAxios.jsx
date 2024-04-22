@@ -1,25 +1,26 @@
 import { useState } from "react";
 import axiosClient from "../axios";
+import Feedback from "../../components/feedbacks/Feedback";
 
 export default async function postAxios({ endPoint, data }) {
-    console.log('This is the data: ', data);
+    const [message, setAxiosMessage] = useState('');
+    const [status, setAxiosStatus] = useState('');
+
+    setAxiosMessage('Loading...');
+    setAxiosStatus('Loading');
+
     try {
         const response = await axiosClient.post(endPoint, data);
-        return { response };
+        setAxiosMessage(response.data.message); // Set success message
+        setAxiosStatus(response.data.status);
+        console.log(response);
     } catch (error) {
-        if (error.response) {
-            const { message, errors } = error.response.data;
-            const finalErrors = [];
-            // Push each error message to finalErrors array
-            for (const key in errors) {
-                if (errors.hasOwnProperty(key)) {
-                    finalErrors.push(...errors[key]);
-                }
-            }
-            // Construct the error object with HTML format
-            return { error: { __html: `${message}` } };
-        } else {
-            return { error: { __html: "An unexpected error occurred." } };
-        }
+        setAxiosMessage(error.data.message); // Set success message
+        setAxiosStatus(error.data.status);
+        console.log(error);
     }
+
+    return(
+        <Feedback isOpen={message !== ''} onClose={() => setAxiosMessage('')} successMessage={message} status={status} refresh={false}/>
+    );
 }
