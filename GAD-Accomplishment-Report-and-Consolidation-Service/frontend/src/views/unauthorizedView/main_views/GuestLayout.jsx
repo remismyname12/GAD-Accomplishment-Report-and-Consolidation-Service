@@ -11,7 +11,7 @@ export default function GuestLayout() {
 
   /**When the LOGIN is SUCCESS user token is used to redirect inside the webpage */
   if (userToken && currentUser.role === 'admin') {
-    return <Navigate to="/admin" />;
+    return <Navigate to="/admin/dashboard" />;
   } else if (userToken && currentUser.role === 'college') {
     return <Navigate to="/college" />;
   }

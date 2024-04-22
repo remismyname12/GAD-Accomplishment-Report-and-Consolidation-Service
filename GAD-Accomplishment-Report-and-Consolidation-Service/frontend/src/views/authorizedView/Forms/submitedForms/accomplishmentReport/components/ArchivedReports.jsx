@@ -43,7 +43,7 @@ export default function ArchivedReports() {
 
     return (
         <>
-            <div className="table-container overflow-y-auto">
+            <div className="flex justify-center overflow-y-auto">
                 <table className='border-solid border-2 border-sky-500'>
                     <thead className='border-solid border-2 border-sky-500'>
                         <tr>
