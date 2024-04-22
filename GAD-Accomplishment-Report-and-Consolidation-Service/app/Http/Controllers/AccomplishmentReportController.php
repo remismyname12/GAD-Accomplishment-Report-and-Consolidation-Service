@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ACReportRequest_E_I;
 use App\Http\Requests\AddMandate;
+use App\Http\Requests\SetMandate;
 use App\Models\accReport;
 use App\Models\ActualExpendature;
 use App\Models\Expenditures;
+use App\Models\Mandates;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManager;
@@ -189,5 +191,30 @@ class AccomplishmentReportController extends Controller
         }
 
         return response()->json(['message' => 'Mandates set successfully!']);
+    }
+
+    public function setmandates(Setmandate $request){
+        $requestData = $request->validated();
+        $acc_list = $request->input('reportList');
+        $mandate_id = $request->input('mandate_id');
+
+        $mandate = Mandates::where('id', $mandate_id)->first();
+
+        try {
+
+            foreach ($acc_list as $report) {
+                accReport::where('title', $report['title'])->update(['mandates_id' => $mandate_id]);
+            }
+
+            return response()->json([
+                'message' => 'Succesfully set mandates.',
+                'success' => true,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to set mandates.',
+                'success' => false,
+            ]);
+        }
     }
 }

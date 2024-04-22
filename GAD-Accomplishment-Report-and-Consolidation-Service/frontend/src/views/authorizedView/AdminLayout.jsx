@@ -13,9 +13,9 @@ const navigation = [
   { name: 'Submitted Forms', to: '/admin/submitedforms'},
   { name: 'Accomplishment Report', to: '/admin/accomplishmentreport'},
   { name: 'Annual Report', to: '/admin/annualreport'},
-  // { name: 'TestTable', to: '/admin/annualreporttest'},
-  // { name: 'ExcelImport', to: '/admin/exceltest'},
-  // { name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
+  { name: 'TestTable', to: '/admin/annualreporttest'},
+  { name: 'ExcelImport', to: '/admin/exceltest'},
+  //{ name: 'Employee Activity Form', to: '/admin/printemployeeactivityform'}
 ]
 
 
