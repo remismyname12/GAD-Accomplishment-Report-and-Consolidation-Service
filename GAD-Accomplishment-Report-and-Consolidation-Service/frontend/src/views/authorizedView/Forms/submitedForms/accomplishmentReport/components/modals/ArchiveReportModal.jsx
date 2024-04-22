@@ -5,6 +5,7 @@ import axiosClient from '../../../../../../axios/axios';
 export default function ArchiveReportModal({selectedForm}) {
   const [error, setError] = useState("");
 
+  console.log(selectedForm);
   const onSubmit = (ev) => {
     ev.preventDefault();
     setError({ __html: "" });
@@ -27,7 +28,7 @@ export default function ArchiveReportModal({selectedForm}) {
   return (
     <div>
       <h1>
-        Are you sure you want to delete <b>{selectedForm.forms.title}</b>
+        Are you sure you want to delete <b>{selectedForm.title}</b>
       </h1>
       {/**BUTTONS */}
       <div className='mt-5'>

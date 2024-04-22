@@ -6,6 +6,8 @@ import ViewEADReportModal from '../activityForms/components/modals/ViewEADReport
 import EditActivityModal from '../activityForms/components/modals/EditActivityModal';
 import ShowActivityModal from './components/modals/ShowActivityModal';
 import LoadingHorizontalLine from '../../../../components/feedbacks/LoadingHorizontalLine';
+import ArchivedReports from './components/ArchivedReports';
+import ArchiveReportModal from './components/modals/ArchiveReportModal';
 
 export default function AccomplishmentReport() {
   const [accomplishmentReport, setAccomplishmentreport] = useState([]);
@@ -102,6 +104,20 @@ export default function AccomplishmentReport() {
             <ShowActivityModal closeModal={() => setIsEditModalOpen(false)} selectedForm={selectedForm} />
           )}
         </div>
+      </ReactModal>
+
+      {/** Modal For Mandate ARCHIVE */}                
+      <ReactModal
+          isOpen={isArchiveModalOpen}
+          onRequestClose={() => setIsArchiveModalOpen(false)}
+          className="w-full md:w-[30%] h-fit bg-[#FFFFFF] rounded-3xl ring-1 ring-black shadow-2xl mt-[10%] mx-auto p-5"
+      >
+          <div>
+              <ArchiveReportModal
+               closeModal={() => setIsArchiveModalOpen(false)}
+               selectedForm={selectedForm}
+               />
+          </div>
       </ReactModal>
     </div>
   );
