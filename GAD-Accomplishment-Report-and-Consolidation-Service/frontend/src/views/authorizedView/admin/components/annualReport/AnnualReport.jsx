@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosClient from '../../../../axios/axios';
 import * as XLSX from 'xlsx';
+import NeutralButton from '../../../../components/buttons/NeutralButton';
 //#D8D8D8 ---> grey
 
 
@@ -40,7 +41,8 @@ export default function AnnualReport() {
         padding: '10px',
         textAlign: 'center',
         backgroundColor: '#FFFF00',
-        whiteSpace: 'pre-wrap'
+        whiteSpace: 'pre-wrap',
+        fontSize: '12px'
     };
 
     const trStyles = {
@@ -57,7 +59,8 @@ export default function AnnualReport() {
         backgroundColor: 'white',
         textAlign: 'left',
         verticalAlign: 'top',
-        whiteSpace: 'pre-wrap'
+        whiteSpace: 'pre-wrap',
+        fontSize: '12px'
     };
 
     const tvStyles = {
@@ -66,7 +69,8 @@ export default function AnnualReport() {
         backgroundColor: 'white',
         textAlign: 'center',
         verticalAlign: 'top',
-        whiteSpace: 'pre-wrap'
+        whiteSpace: 'pre-wrap',
+        fontSize: '12px'
     };
     //-----CSS
 
@@ -100,10 +104,11 @@ export default function AnnualReport() {
     };
 
     return (
-        <div>
-            <button onClick={exportToExcel}>Export to Excel</button>
-            <br></br>
-            <table id="report-table">
+        <div className='bg-white h-full overflow-y-auto rounded-xl'>
+            <div className='p-2 mx-auto w-[20%]'>
+                <NeutralButton label={'Export to Excel'} onClick={exportToExcel} />
+            </div>
+            <table id="report-table" className='w-screen overflow-x-auto'>
                 <thead>
                     <tr>
                         <th style={tvStyles} colSpan="12">BENGUET STATE UNIVERSITY ANNUAL GENDER AND DEVELOPMENT (GAD) ACCOMPLISHMENT FY 20XX</th>
@@ -209,7 +214,7 @@ export default function AnnualReport() {
                     </tr>
                     <tr>
                         <th style={{ ...thStyles, backgroundColor: 'white' }}></th>
-                        <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white' }}>Organization-Focused Activities</th>
+                        <th colSpan="11" style={{ ...thStyles, backgroundColor: 'white', fontSize: '12px' }}>Organization-Focused Activities</th>
                     </tr>
                     {organizationMandate.map((item, rowNum) => (
                         <React.Fragment key={item.id}>
